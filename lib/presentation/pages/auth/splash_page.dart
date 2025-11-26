@@ -5,10 +5,6 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('ini adalah splash page'),
-      ),
-    );
+    return Scaffold(body: Center(child: Text('ini adalah splash page')));
   }
 }
