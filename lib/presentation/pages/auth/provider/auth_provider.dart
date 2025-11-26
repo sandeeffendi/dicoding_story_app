@@ -10,6 +10,9 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider({required this.createAccountUsecase});
 
+  bool _isSubmitting = false;
+  bool get isSubmitting => _isSubmitting;
+
   AuthState _state = AuthState();
   AuthState get state => _state;
 
@@ -48,5 +51,10 @@ class AuthProvider extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
+
+  void setSubmitting(bool value) {
+    _isSubmitting = value;
+    notifyListeners();
   }
 }
