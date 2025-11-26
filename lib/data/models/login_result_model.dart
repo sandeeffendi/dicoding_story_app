@@ -7,16 +7,16 @@ class LoginResultModel extends LoginResultEntity {
     required super.token,
   });
 
-  factory LoginResultModel.fromJson(Map<String, dynamic> json) => LoginResultModel(
+  factory LoginResultModel.fromJson(Map<String, dynamic> json) =>
+      LoginResultModel(
         userId: json["userId"],
         name: json["name"],
         token: json["token"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
-        "userId": userId,
-        "name": name,
-        "token": token,
-    };
-  
+  Map<String, dynamic> toJson() => {
+    "userId": userId,
+    "name": name,
+    "token": token,
+  };
 }

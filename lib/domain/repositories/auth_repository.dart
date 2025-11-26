@@ -8,7 +8,10 @@ abstract class AuthRepository {
     required String name,
   });
 
-  Future<LoginResultEntity> logIn({required String email, required String password});
+  Future<LoginResultEntity> logIn({
+    required String email,
+    required String password,
+  });
 
   Future<void> logOut();
 }
