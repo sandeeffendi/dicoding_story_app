@@ -1,5 +1,5 @@
 import 'package:intermediate_first_submission/data/datasource/main_remote_datasource.dart';
-import 'package:intermediate_first_submission/domain/enitities/login_result_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
 import 'package:intermediate_first_submission/domain/enitities/register_response_entity.dart';
 import 'package:intermediate_first_submission/domain/repositories/auth_repository.dart';
 
@@ -26,12 +26,20 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<LoginResultEntity> logIn({
+  Future<LoginResponseEntity> logIn({
     required String email,
     required String password,
-  }) {
-    // TODO: implement logIn
-    throw UnimplementedError();
+  }) async {
+    final response = await remoteDatasource.logIn(
+      email: email,
+      password: password,
+    );
+
+    return LoginResponseEntity(
+      error: response.error,
+      message: response.message,
+      loginResult: response.loginResult,
+    );
   }
 
   @override

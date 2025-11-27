@@ -1,4 +1,4 @@
-import 'package:intermediate_first_submission/domain/enitities/login_result_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
 import 'package:intermediate_first_submission/domain/enitities/register_response_entity.dart';
 
 abstract class AuthRepository {
@@ -8,7 +8,7 @@ abstract class AuthRepository {
     required String name,
   });
 
-  Future<LoginResultEntity> logIn({
+  Future<LoginResponseEntity> logIn({
     required String email,
     required String password,
   });

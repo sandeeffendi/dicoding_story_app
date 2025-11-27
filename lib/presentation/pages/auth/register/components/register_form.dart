@@ -35,9 +35,16 @@ class RegisterFormState extends State<RegisterForm>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
+  late AuthProvider authProvider;
+
   @override
   void initState() {
     super.initState();
+
+    Future.microtask(() {
+      if (!mounted) return;
+      authProvider = context.read<AuthProvider>();
+    });
 
     _animationController = AnimationController(
       vsync: this,
@@ -102,12 +109,12 @@ class RegisterFormState extends State<RegisterForm>
       _formKey.currentState!.save();
       KeyboardUtil.hideKeyboard(context);
 
-      context.read<AuthProvider>().setSubmitting(true);
+      authProvider.setSubmitting(true);
 
       context.read<AuthProvider>().createAccount(
+        _usernameController.text.trim(),
         _emailController.text.trim(),
         _passwordController.text,
-        _usernameController.text.trim(),
       );
     }
   }
@@ -329,9 +336,6 @@ class RegisterFormState extends State<RegisterForm>
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.watch<AuthProvider>();
-    final isSubmitting = authProvider.isSubmitting;
-
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Form(
@@ -729,8 +733,8 @@ class RegisterFormState extends State<RegisterForm>
               onPressed: _handleRegister,
               onError: _showErrorDialog,
               onSuccess: () {
-                if (isSubmitting) {
-                  context.read<AuthProvider>().setSubmitting(false);
+                if (authProvider.isSubmitting == true) {
+                  authProvider.setSubmitting(false);
                   _showSuccessDialog();
                 }
               },
@@ -774,7 +778,7 @@ class _RegisterButtonState extends State<_RegisterButton> {
 
             if (state.status == AuthStatus.error) {
               widget.onError(state.message);
-            } else if (state.status == AuthStatus.initial) {
+            } else if (state.status == AuthStatus.success) {
               widget.onSuccess();
             }
           });
