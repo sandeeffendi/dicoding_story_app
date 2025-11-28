@@ -1,0 +1,19 @@
+class ListStoryEntity {
+  String id;
+  String name;
+  String description;
+  String photoUrl;
+  DateTime createdAt;
+  double lat;
+  double lon;
+
+  ListStoryEntity({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.photoUrl,
+    required this.createdAt,
+    required this.lat,
+    required this.lon,
+  });
+}
