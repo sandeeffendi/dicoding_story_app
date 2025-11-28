@@ -1,4 +1,4 @@
-class ListStoryEntity {
+class StoryEntity {
   String id;
   String name;
   String description;
@@ -7,7 +7,7 @@ class ListStoryEntity {
   double lat;
   double lon;
 
-  ListStoryEntity({
+  StoryEntity({
     required this.id,
     required this.name,
     required this.description,

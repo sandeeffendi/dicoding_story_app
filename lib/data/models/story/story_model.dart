@@ -1,7 +1,7 @@
-import 'package:intermediate_first_submission/domain/enitities/story/list_story_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/story/story_entity.dart';
 
-class ListStoryModel extends ListStoryEntity {
-  ListStoryModel({
+class StoryModel extends StoryEntity {
+  StoryModel({
     required super.id,
     required super.name,
     required super.description,
@@ -11,7 +11,7 @@ class ListStoryModel extends ListStoryEntity {
     required super.lon,
   });
 
-  factory ListStoryModel.fromJson(Map<String, dynamic> json) => ListStoryModel(
+  factory StoryModel.fromJson(Map<String, dynamic> json) => StoryModel(
     id: json["id"],
     name: json["name"],
     description: json["description"],

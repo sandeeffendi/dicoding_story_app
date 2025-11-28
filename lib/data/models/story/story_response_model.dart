@@ -1,4 +1,4 @@
-import 'package:intermediate_first_submission/data/models/story/list_story_model.dart';
+import 'package:intermediate_first_submission/data/models/story/story_model.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_response_entity.dart';
 
 class StoryResponseModel extends StoryResponseEntity {
@@ -12,12 +12,16 @@ class StoryResponseModel extends StoryResponseEntity {
       StoryResponseModel(
         error: json["error"],
         message: json["message"],
-        listStory: ListStoryModel.fromJson(json),
+        listStory: (json["listStory"] as List)
+            .map((item) => StoryModel.fromJson(item))
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => {
     "error": error,
     "message": message,
-    "listStory": ListStoryModel,
+    "listStory": listStory
+        .map((story) => (story as StoryModel).toJson())
+        .toList(),
   };
 }

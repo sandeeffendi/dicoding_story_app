@@ -41,10 +41,4 @@ class AuthRepositoryImpl implements AuthRepository {
       loginResult: response.loginResult,
     );
   }
-
-  @override
-  Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
-  }
 }
