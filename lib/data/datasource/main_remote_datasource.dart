@@ -1,0 +1,141 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
+import 'package:intermediate_first_submission/data/models/login_response_model.dart';
+import 'package:intermediate_first_submission/data/models/register_response_model.dart';
+
+class MainRemoteDatasource {
+  final String baseUrl;
+
+  const MainRemoteDatasource({required this.baseUrl});
+
+  // register request
+  Future<RegisterResponseModel> createAccount({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final uri = Uri.parse('$baseUrl/register');
+
+      final response = await http.post(
+        uri,
+        body: {'name': name, 'email': email, 'password': password},
+      );
+
+      switch (response.statusCode) {
+        // ok
+        case 200 || 201:
+          Map<String, dynamic> json = jsonDecode(response.body);
+          return RegisterResponseModel.fromJson(json);
+
+        // bad request
+        case 400:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException(
+            'Bad request (400): Invalid request sent to server. $message',
+          );
+
+        // unauthorized
+        case 401:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException(
+            'Unauthorized (401): Invalid API key or token. $message',
+          );
+
+        // not found
+        case 404:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException('Not Found (404): Resource not found. $message');
+
+        // server error
+        case 500:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException(
+            'Server Error (500): Internal server error. $message',
+          );
+
+        // default
+        default:
+          throw HttpException('Unexpected status code: ${response.statusCode}');
+      }
+    } on SocketException {
+      throw Exception('No Internet connection');
+    } on FormatException {
+      throw Exception('Invalid repsonse format (not a valid JSON).');
+    } on HttpException catch (e) {
+      throw Exception('HTTP error: ${e.message}');
+    } catch (e) {
+      throw Exception('Unexpected error: $e');
+    }
+  }
+
+  // login request
+  Future<LoginResponseModel> logIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final uri = Uri.parse('$baseUrl/login');
+
+      final response = await http.post(
+        uri,
+        body: {'email': email, 'password': password},
+      );
+
+      switch (response.statusCode) {
+        // ok
+        case 200 || 201:
+          Map<String, dynamic> json = jsonDecode(response.body);
+          return LoginResponseModel.fromJson(json);
+
+        // bad request
+        case 400:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException(
+            'Bad request (400): Invalid request sent to server. $message',
+          );
+
+        // unauthorized
+        case 401:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException(
+            'Unauthorized (401): Invalid API key or token. $message',
+          );
+
+        // not found
+        case 404:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException('Not Found (404): Resource not found. $message');
+
+        // server error
+        case 500:
+          final body = jsonDecode(response.body);
+          final message = body['message'];
+          throw HttpException(
+            'Server Error (500): Internal server error. $message',
+          );
+
+        // default
+        default:
+          throw HttpException('Unexpected status code: ${response.statusCode}');
+      }
+    } on SocketException {
+      throw Exception('No Internet connection');
+    } on FormatException {
+      throw Exception('Invalid repsonse format (not a valid JSON).');
+    } on HttpException catch (e) {
+      throw Exception('HTTP error: ${e.message}');
+    } catch (e) {
+      throw Exception('Unexpected error: $e');
+    }
+  }
+}
