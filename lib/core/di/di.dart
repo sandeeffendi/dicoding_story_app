@@ -3,8 +3,8 @@ import 'package:intermediate_first_submission/core/services/session_services.dar
 import 'package:intermediate_first_submission/data/datasource/main_remote_datasource.dart';
 import 'package:intermediate_first_submission/data/repositories/auth_repository_impl.dart';
 import 'package:intermediate_first_submission/domain/repositories/auth_repository.dart';
-import 'package:intermediate_first_submission/domain/usecases/create_account_usecase.dart';
-import 'package:intermediate_first_submission/domain/usecases/login_usecase.dart';
+import 'package:intermediate_first_submission/domain/usecases/auth/create_account_usecase.dart';
+import 'package:intermediate_first_submission/domain/usecases/auth/login_usecase.dart';
 import 'package:intermediate_first_submission/env/env.dart';
 import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,5 +1,5 @@
-import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
-import 'package:intermediate_first_submission/domain/enitities/register_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/register_response_entity.dart';
 
 abstract class AuthRepository {
   Future<RegisterResponseEntity> createAccount({

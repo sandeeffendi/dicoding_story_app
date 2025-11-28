@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
-import 'package:intermediate_first_submission/domain/enitities/login_result_entity.dart';
-import 'package:intermediate_first_submission/domain/enitities/register_response_entity.dart';
-import 'package:intermediate_first_submission/domain/usecases/create_account_usecase.dart';
-import 'package:intermediate_first_submission/domain/usecases/login_usecase.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_result_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/register_response_entity.dart';
+import 'package:intermediate_first_submission/domain/usecases/auth/create_account_usecase.dart';
+import 'package:intermediate_first_submission/domain/usecases/auth/login_usecase.dart';
 import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_state.dart';
 
 class AuthProvider extends ChangeNotifier {

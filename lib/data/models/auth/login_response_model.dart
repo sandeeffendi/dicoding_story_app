@@ -1,5 +1,5 @@
-import 'package:intermediate_first_submission/data/models/login_result_model.dart';
-import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
+import 'package:intermediate_first_submission/data/models/auth/login_result_model.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_response_entity.dart';
 
 class LoginResponseModel extends LoginResponseEntity {
   LoginResponseModel({

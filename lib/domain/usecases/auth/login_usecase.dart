@@ -1,4 +1,4 @@
-import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_response_entity.dart';
 import 'package:intermediate_first_submission/domain/repositories/auth_repository.dart';
 
 class LoginUsecase {

@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:intermediate_first_submission/data/models/login_response_model.dart';
-import 'package:intermediate_first_submission/data/models/register_response_model.dart';
+import 'package:intermediate_first_submission/data/models/auth/login_response_model.dart';
+import 'package:intermediate_first_submission/data/models/auth/register_response_model.dart';
 
 class MainRemoteDatasource {
   final String baseUrl;

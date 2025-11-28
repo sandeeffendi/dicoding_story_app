@@ -1,6 +1,6 @@
 import 'package:intermediate_first_submission/data/datasource/main_remote_datasource.dart';
-import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
-import 'package:intermediate_first_submission/domain/enitities/register_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/register_response_entity.dart';
 import 'package:intermediate_first_submission/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {

@@ -1,4 +1,4 @@
-import 'package:intermediate_first_submission/domain/enitities/login_result_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_result_entity.dart';
 
 class LoginResponseEntity {
   bool error;

@@ -398,6 +398,9 @@ class _LoginFormState extends State<LoginForm>
                     accessToken: authProvider.loginData!.token,
                   );
 
+                  final token = sessionServices.getAccessToken();
+                  print('token: $token');
+
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     StoryAppRouter.home,
