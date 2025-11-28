@@ -16,7 +16,7 @@ class StoryApp extends StatelessWidget {
       theme: theme.light(),
       darkTheme: theme.dark(),
       title: 'Dicoding Flutter Story App First Submission',
-      initialRoute: StoryAppRouter.splash,
+      initialRoute: StoryAppRouter.login,
       onGenerateRoute: StoryAppRouter.generateRoute,
     );
   }

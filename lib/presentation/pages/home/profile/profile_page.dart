@@ -1,86 +1,139 @@
+// Profile Screen
 import 'package:flutter/material.dart';
-import 'package:intermediate_first_submission/presentation/pages/home/archive/archive_page.dart';
-import 'package:intermediate_first_submission/presentation/pages/home/explore/explore_page.dart';
-import 'package:intermediate_first_submission/presentation/pages/home/feed/feed_page.dart';
-import 'package:intermediate_first_submission/presentation/pages/home/profile/profile_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const FeedPage(),
-    const ExplorePage(),
-    const ArchivePage(),
-    const ProfilePage(),
-  ];
-
-  void _onCreatePost() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CreatePostScreen()),
-    );
-  }
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final userPosts = List.generate(
+      24,
+      (index) => {'id': 'post_$index', 'photoUrl': 'assets/images/mock.png'},
+    );
+
     return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          if (index == 2) {
-            _onCreatePost();
-          } else {
-            setState(() {
-              _currentIndex = index > 2 ? index - 1 : index;
-            });
-          }
-        },
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: theme.colorScheme.primary,
-        unselectedItemColor: theme.colorScheme.onSurface.withAlpha(
-          (0.6 * 255).round(),
-        ),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+      appBar: AppBar(
         backgroundColor: theme.colorScheme.surface,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
+        elevation: 0,
+        title: Text(
+          'username',
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Explore'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_box_outlined),
-            label: 'Post',
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.add_box_outlined,
+              color: theme.colorScheme.onSurface,
+            ),
+            onPressed: () {},
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.archive_outlined),
-            activeIcon: Icon(Icons.archive),
-            label: 'Archive',
+          IconButton(
+            icon: Icon(Icons.menu, color: theme.colorScheme.onSurface),
+            onPressed: () {},
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
+        ],
+      ),
+      body: ListView(
+        children: [
+          // Profile info
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage('assets/images/mock.png'),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildStatColumn(context, '123', 'Posts'),
+                          _buildStatColumn(context, '1.2K', 'Followers'),
+                          _buildStatColumn(context, '456', 'Following'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Display Name',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text('Bio goes here...', style: theme.textTheme.bodyMedium),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: theme.colorScheme.outline),
+                      foregroundColor: theme.colorScheme.onSurface,
+                    ),
+                    child: Text(
+                      'Edit Profile',
+                      style: theme.textTheme.labelLarge,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            color: theme.colorScheme.outline.withAlpha((0.2 * 255).round()),
+          ),
+          // Grid of posts
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(2),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
+            ),
+            itemCount: userPosts.length,
+            itemBuilder: (context, index) {
+              return Image.asset(
+                userPosts[index]['photoUrl']!,
+                fit: BoxFit.cover,
+              );
+            },
           ),
         ],
       ),
     );
   }
+
+  Widget _buildStatColumn(BuildContext context, String count, String label) {
+    final theme = Theme.of(context);
+
+    return Column(
+      children: [
+        Text(
+          count,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(label, style: theme.textTheme.bodyMedium),
+      ],
+    );
+  }
 }
 
-// create post page
+// Create Post Screen
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
 

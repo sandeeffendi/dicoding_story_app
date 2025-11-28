@@ -18,11 +18,15 @@ class AuthState {
   bool get isRegisterSuccess => status == AuthStatus.registerSuccess;
   bool get isLoginSuccess => status == AuthStatus.loginSuccess;
 
-  AuthState copyWith({AuthStatus? status, String? message, LoginResultEntity? loginData}) {
+  AuthState copyWith({
+    AuthStatus? status,
+    String? message,
+    LoginResultEntity? loginData,
+  }) {
     return AuthState(
       status: status ?? this.status,
       message: message ?? this.message,
-      loginData: loginData
+      loginData: loginData,
     );
   }
 }

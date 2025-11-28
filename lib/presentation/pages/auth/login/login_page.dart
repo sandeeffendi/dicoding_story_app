@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,11 +27,6 @@ class LoginPage extends StatelessWidget {
 
                 // Login Form
                 const LoginForm(),
-
-                const SizedBox(height: 32),
-
-                // Divider with "Or continue with"
-                _buildDivider(context),
 
                 const SizedBox(height: 32),
 
@@ -78,30 +73,12 @@ class LoginPage extends StatelessWidget {
         Text(
           "Sign in to continue to your account",
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Colors.grey[600],
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withAlpha((6 * 255).round()),
             fontSize: 16,
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildDivider(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: Divider(color: Colors.grey[300], thickness: 1)),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            "Or continue with",
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        Expanded(child: Divider(color: Colors.grey[300], thickness: 1)),
       ],
     );
   }
@@ -113,9 +90,11 @@ class LoginPage extends StatelessWidget {
         children: [
           Text(
             "Don't have an account? ",
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withAlpha((6 * 255).round()),
+            ),
           ),
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, StoryAppRouter.register),
