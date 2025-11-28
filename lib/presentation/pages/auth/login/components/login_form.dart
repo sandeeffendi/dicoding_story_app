@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/constants/form_error_constant.dart';
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
 import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_provider.dart';
 import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_state.dart';
@@ -23,14 +25,24 @@ class _LoginFormState extends State<LoginForm>
   final _errors = <String>[];
 
   bool _remember = false;
-  bool _isSubmitting = false;
   bool _obscurePassword = true;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
+  late AuthProvider authProvider;
+  late SessionServices sessionServices;
+
   @override
   void initState() {
     super.initState();
+
+    sessionServices = GetIt.instance<SessionServices>();
+
+    Future.microtask(() {
+      if (!mounted) return;
+      authProvider = context.read<AuthProvider>();
+    });
+
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 600),
@@ -46,9 +58,6 @@ class _LoginFormState extends State<LoginForm>
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
-    _animationController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
     _animationController.dispose();
@@ -72,7 +81,7 @@ class _LoginFormState extends State<LoginForm>
       _formKey.currentState!.save();
       KeyboardUtil.hideKeyboard(context);
 
-      setState(() => _isSubmitting = true);
+      authProvider.setSubmitting(true);
 
       context.read<AuthProvider>().logIn(
         _emailController.text.trim(),
@@ -380,16 +389,21 @@ class _LoginFormState extends State<LoginForm>
             _LoginButton(
               onPressed: _handleLogin,
               onError: _showErrorDialog,
-              onSuccess: () {
+              onSuccess: () async {
                 // todo: navigate to home
-                // if (_isSubmitting) {
-                //   _isSubmitting = false;
-                //   Navigator.pushNamedAndRemoveUntil(
-                //     context,
-                //     StoryAppRouter.register,
-                //     (_) => false,
-                //   );
-                // }
+                if (authProvider.isSubmitting == true) {
+                  authProvider.setSubmitting(false);
+
+                  sessionServices.saveToken(
+                    accessToken: authProvider.loginData!.token,
+                  );
+
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    StoryAppRouter.home,
+                    (_) => false,
+                  );
+                }
               },
             ),
           ],

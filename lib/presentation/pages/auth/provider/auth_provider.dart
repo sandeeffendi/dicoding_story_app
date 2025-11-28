@@ -22,7 +22,7 @@ class AuthProvider extends ChangeNotifier {
   AuthState get state => _state;
 
   LoginResultEntity? _loginData;
-  LoginResultEntity? get user => _loginData;
+  LoginResultEntity? get loginData => _loginData;
 
   RegisterResponseEntity? _registerResponse;
   RegisterResponseEntity? get registerResponse => _registerResponse;
