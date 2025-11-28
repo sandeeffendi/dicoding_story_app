@@ -778,7 +778,7 @@ class _RegisterButtonState extends State<_RegisterButton> {
 
             if (state.status == AuthStatus.error) {
               widget.onError(state.message);
-            } else if (state.status == AuthStatus.success) {
+            } else if (state.status == AuthStatus.registerSuccess) {
               widget.onSuccess();
             }
           });
