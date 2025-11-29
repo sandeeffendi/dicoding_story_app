@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/constants/form_error_constant.dart';
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_provider.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_state.dart';
+import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/presentation/auth/provider/auth_state.dart';
 import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {

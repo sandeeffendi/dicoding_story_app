@@ -25,7 +25,7 @@ class FeedPage extends StatelessWidget {
         backgroundColor: theme.colorScheme.surface,
         elevation: 0,
         title: Text(
-          'Instagram',
+          'Dicodinggram',
           style: theme.textTheme.headlineMedium?.copyWith(
             color: theme.colorScheme.onSurface,
           ),

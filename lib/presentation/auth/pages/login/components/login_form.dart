@@ -4,8 +4,8 @@ import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/constants/form_error_constant.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_provider.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_state.dart';
+import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/presentation/auth/provider/auth_state.dart';
 import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
@@ -398,12 +398,9 @@ class _LoginFormState extends State<LoginForm>
                     accessToken: authProvider.loginData!.token,
                   );
 
-                  final token = sessionServices.getAccessToken();
-                  print('token: $token');
-
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    StoryAppRouter.home,
+                    StoryAppRouter.splash,
                     (_) => false,
                   );
                 }

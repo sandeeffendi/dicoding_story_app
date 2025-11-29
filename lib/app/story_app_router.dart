@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/login/login_page.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/register/register_page.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/splash_page.dart';
-import 'package:intermediate_first_submission/presentation/pages/home/home_page.dart';
+import 'package:intermediate_first_submission/presentation/auth/pages/login/login_page.dart';
+import 'package:intermediate_first_submission/presentation/auth/pages/register/register_page.dart';
+import 'package:intermediate_first_submission/presentation/auth/splash_page.dart';
+import 'package:intermediate_first_submission/presentation/home/home_page.dart';
 
 class StoryAppRouter {
   static const String splash = '/splash';

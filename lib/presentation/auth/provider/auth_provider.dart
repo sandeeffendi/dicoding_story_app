@@ -4,7 +4,7 @@ import 'package:intermediate_first_submission/domain/enitities/auth/login_result
 import 'package:intermediate_first_submission/domain/enitities/auth/register_response_entity.dart';
 import 'package:intermediate_first_submission/domain/usecases/auth/create_account_usecase.dart';
 import 'package:intermediate_first_submission/domain/usecases/auth/login_usecase.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_state.dart';
+import 'package:intermediate_first_submission/presentation/auth/provider/auth_state.dart';
 
 class AuthProvider extends ChangeNotifier {
   final CreateAccountUsecase createAccountUsecase;

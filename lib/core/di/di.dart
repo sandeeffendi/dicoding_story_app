@@ -10,7 +10,7 @@ import 'package:intermediate_first_submission/domain/usecases/auth/login_usecase
 import 'package:intermediate_first_submission/domain/usecases/story/get_all_story_usecase.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
 import 'package:intermediate_first_submission/env/env.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;

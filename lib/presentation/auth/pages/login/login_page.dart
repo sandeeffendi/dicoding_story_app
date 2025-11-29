@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
-import 'package:intermediate_first_submission/presentation/pages/auth/login/components/login_form.dart';
+import 'package:intermediate_first_submission/presentation/auth/pages/login/components/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
