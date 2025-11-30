@@ -1,15 +1,15 @@
 import 'package:intermediate_first_submission/data/models/story/story_model.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_response_entity.dart';
 
-class StoryResponseModel extends StoryResponseEntity {
-  StoryResponseModel({
+class ListStoryResponseModel extends ListStoryResponseEntity {
+  ListStoryResponseModel({
     required super.error,
     required super.message,
     required super.listStory,
   });
 
-  factory StoryResponseModel.fromJson(Map<String, dynamic> json) =>
-      StoryResponseModel(
+  factory ListStoryResponseModel.fromJson(Map<String, dynamic> json) =>
+      ListStoryResponseModel(
         error: json["error"],
         message: json["message"],
         listStory: (json["listStory"] as List)

@@ -5,7 +5,7 @@ class GetAllStoryUsecase {
   final StoryRepository storyRepository;
   const GetAllStoryUsecase(this.storyRepository);
 
-  Future<StoryResponseEntity> call({required String token}) {
+  Future<ListStoryResponseEntity> call({required String token}) {
     return storyRepository.getAllStory(token: token);
   }
 }

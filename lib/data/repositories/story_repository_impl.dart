@@ -8,10 +8,10 @@ class StoryRepositoryImpl implements StoryRepository {
   const StoryRepositoryImpl(this.remoteDatasource);
 
   @override
-  Future<StoryResponseEntity> getAllStory({required String token}) async {
+  Future<ListStoryResponseEntity> getAllStory({required String token}) async {
     final response = await remoteDatasource.getAllStory(token: token);
 
-    return StoryResponseEntity(
+    return ListStoryResponseEntity(
       error: response.error,
       message: response.message,
       listStory: response.listStory,

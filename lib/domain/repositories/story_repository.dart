@@ -3,7 +3,7 @@ import 'package:intermediate_first_submission/domain/enitities/story/story_respo
 
 abstract class StoryRepository {
   // get all story
-  Future<StoryResponseEntity> getAllStory({required String token});
+  Future<ListStoryResponseEntity> getAllStory({required String token});
 
   // get story by id
   Future<DetailStoryResponseEntity> getStoryById({

@@ -144,7 +144,7 @@ class MainRemoteDatasource {
 
   /* -- Story Data Chain -- */
   // Get All Stories
-  Future<StoryResponseModel> getAllStory({required String token}) async {
+  Future<ListStoryResponseModel> getAllStory({required String token}) async {
     try {
       final uri = Uri.parse('$baseUrl/story');
 
@@ -157,7 +157,7 @@ class MainRemoteDatasource {
         // ok
         case 200 || 201:
           Map<String, dynamic> json = jsonDecode(response.body);
-          return StoryResponseModel.fromJson(json);
+          return ListStoryResponseModel.fromJson(json);
 
         // bad request
         case 400:
