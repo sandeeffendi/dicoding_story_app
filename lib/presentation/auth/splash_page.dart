@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 
@@ -34,10 +35,11 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(const Duration(milliseconds: 600));
 
     if (!mounted) return;
+
     if (_isLoggedIn()) {
-      Navigator.pushReplacementNamed(context, StoryAppRouter.home);
+      context.go(StoryAppRouter.home);
     } else {
-      Navigator.pushReplacementNamed(context, StoryAppRouter.login);
+      context.go(StoryAppRouter.login);
     }
   }
 

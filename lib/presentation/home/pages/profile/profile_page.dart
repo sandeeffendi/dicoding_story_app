@@ -1,6 +1,7 @@
 // Profile Screen
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 
@@ -56,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Icon(Icons.logout, color: theme.colorScheme.onSurface),
             onPressed: () {
               logOut();
-              Navigator.pushReplacementNamed(context, StoryAppRouter.splash);
+              context.go(StoryAppRouter.login);
             },
           ),
         ],

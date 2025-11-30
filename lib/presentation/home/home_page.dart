@@ -1,51 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/archive/archive_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/explore/explore_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/feed/feed_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/post/post_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/profile/profile_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intermediate_first_submission/app/story_app_router.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Widget child;
+
+  const HomePage({super.key, required this.child});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const FeedPage(),
-    const ExplorePage(),
-    const ArchivePage(),
-    const ProfilePage(),
-  ];
-
-  void _onCreatePost() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CreatePostPage()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final String location = GoRouterState.of(context).uri.toString();
+    int currentIndex = 0;
+
+    if (location.startsWith(StoryAppRouter.feed)) {
+      currentIndex = 0;
+    } else if (location.startsWith(StoryAppRouter.explore)) {
+      currentIndex = 1;
+    } else if (location.startsWith(StoryAppRouter.post)) {
+      currentIndex = 2;
+    } else if (location.startsWith(StoryAppRouter.archive)) {
+      currentIndex = 3;
+    } else if (location.startsWith(StoryAppRouter.profile)) {
+      currentIndex = 4;
+    }
+
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: widget.child,
 
       // bottom navigation
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
         onTap: (index) {
-          if (index == 2) {
-            _onCreatePost();
-          } else {
-            setState(() {
-              _currentIndex = index > 2 ? index - 1 : index;
-            });
+          switch (index) {
+            case 0:
+              context.go('/feed');
+              break;
+            case 1:
+              context.go('/explore');
+              break;
+            case 2:
+              context.push('/post');
+              break;
+            case 3:
+              context.go('/archive');
+              break;
+            case 4:
+              context.go('/profile');
+              break;
           }
         },
         type: BottomNavigationBarType.fixed,

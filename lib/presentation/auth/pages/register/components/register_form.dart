@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/constants/form_error_constant.dart';
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
@@ -222,12 +223,7 @@ class RegisterFormState extends State<RegisterForm>
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      StoryAppRouter.login,
-                      (_) => false,
-                    );
+                    context.go(StoryAppRouter.login);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,

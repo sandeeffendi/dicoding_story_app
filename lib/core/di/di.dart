@@ -35,7 +35,9 @@ Future<void> init(SharedPreferences prefs) async {
   );
 
   // repositories
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(sl(), sl()),
+  );
   sl.registerLazySingleton<StoryRepository>(() => StoryRepositoryImpl(sl()));
 
   /* -- usecases --*/
