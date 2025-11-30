@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/presentation/auth/pages/login/login_page.dart';
 import 'package:intermediate_first_submission/presentation/auth/pages/register/register_page.dart';
 import 'package:intermediate_first_submission/presentation/auth/splash_page.dart';
@@ -9,14 +11,18 @@ import 'package:intermediate_first_submission/presentation/home/pages/feed/feed_
 import 'package:intermediate_first_submission/presentation/home/pages/post/post_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/profile/profile_page.dart';
 
+final storyAppRouter = StoryAppRouter();
+
 class StoryAppRouter {
-  // auth page
+  late final GoRouter router;
+
+  // auth page constant
   static const String splash = '/splash';
   static const String login = '/login';
   static const String register = 'register';
-  static const String home = 'home';
+  static const String home = '/home';
 
-  // home page
+  // home page constant
   static const String feed = '/feed';
   static const String post = '/post';
   static const String explore = '/explore';
@@ -24,54 +30,47 @@ class StoryAppRouter {
   static const String profile = '/profile';
 
   /* --- Routes --- */
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      /* --- Auth Pages Router --- */
-      // splash route
-      case splash:
-        return MaterialPageRoute(
-          builder: (_) => SplashPage(),
-          settings: settings,
-        );
+  StoryAppRouter() {
+    router = GoRouter(
+      // redirect route handler
+      redirect: (context, state) {
+        final session = GetIt.instance<SessionServices>();
+        final isLoggedIn = session.isLoggedIn();
 
-      // login route
-      case login:
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        if (state.matchedLocation == splash) return null;
 
-      // register route
-      case register:
-        return MaterialPageRoute(builder: (_) => RegisterPage());
+        if (!isLoggedIn) return login;
 
-      /* --- Home Pages Router -- */
-      // home route
-      case home:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        if (isLoggedIn && (state.matchedLocation == login)) {
+          return home;
+        }
+        return null;
+      },
 
-      // feed route
-      case feed:
-        return MaterialPageRoute(builder: (_) => FeedPage());
+      // initial route
+      initialLocation: '/splash',
 
-      // explore route
-      case explore:
-        return MaterialPageRoute(builder: (_) => ExplorePage());
+      // generate rote
+      routes: [
+        /* --- Auth Pages Route --- */
+        GoRoute(path: splash, builder: (context, state) => SplashPage()),
+        GoRoute(path: login, builder: (context, state) => LoginPage()),
+        GoRoute(path: register, builder: (context, state) => RegisterPage()),
 
-      // post route
-      case post:
-        return MaterialPageRoute(builder: (_) => CreatePostPage());
+        /* --- Main Routes & Shell Routes --- */
+        ShellRoute(
+          builder: (context, state, child) => HomePage(child: child),
+          routes: [
+            GoRoute(path: home, builder: (context, state) => FeedPage()),
+            GoRoute(path: feed, builder: (context, state) => FeedPage()),
+            GoRoute(path: explore, builder: (context, state) => ExplorePage()),
+            GoRoute(path: archive, builder: (context, state) => ArchivePage()),
+            GoRoute(path: profile, builder: (context, state) => ProfilePage()),
+          ],
+        ),
 
-      // archive route
-      case archive:
-        return MaterialPageRoute(builder: (_) => ArchivePage());
-
-      // profile page
-      case profile:
-        return MaterialPageRoute(builder: (_) => ProfilePage());
-
-      default:
-        return MaterialPageRoute(
-          builder: (_) =>
-              Scaffold(body: Center(child: Text('404 - Page not Found'))),
-        );
-    }
+        GoRoute(path: post, builder: (context, state) => CreatePostPage()),
+      ],
+    );
   }
 }

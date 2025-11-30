@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/presentation/auth/pages/login/components/login_form.dart';
 
@@ -97,7 +98,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, StoryAppRouter.register),
+            onTap: () => context.go(StoryAppRouter.register),
             child: Text(
               "Sign Up",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

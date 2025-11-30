@@ -11,13 +11,12 @@ class StoryApp extends StatelessWidget {
     TextTheme textTheme = createTextTheme(context, 'Montserrat', 'Poppins');
     MaterialTheme theme = MaterialTheme(textTheme);
 
-    return MaterialApp(
+    return MaterialApp.router(
       themeMode: ThemeMode.system,
       theme: theme.light(),
       darkTheme: theme.dark(),
       title: 'Dicoding Flutter Story App First Submission',
-      initialRoute: StoryAppRouter.splash,
-      onGenerateRoute: StoryAppRouter.generateRoute,
+      routerConfig: storyAppRouter.router,
     );
   }
 }

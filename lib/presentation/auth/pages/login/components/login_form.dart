@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/constants/form_error_constant.dart';
-import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_state.dart';
 import 'package:provider/provider.dart';
-
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
@@ -30,13 +28,10 @@ class _LoginFormState extends State<LoginForm>
   late Animation<double> _fadeAnimation;
 
   late AuthProvider authProvider;
-  late SessionServices sessionServices;
 
   @override
   void initState() {
     super.initState();
-
-    sessionServices = GetIt.instance<SessionServices>();
 
     Future.microtask(() {
       if (!mounted) return;
@@ -133,8 +128,7 @@ class _LoginFormState extends State<LoginForm>
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, StoryAppRouter.register);
+                        context.go(StoryAppRouter.register);
                       },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -394,15 +388,7 @@ class _LoginFormState extends State<LoginForm>
                 if (authProvider.isSubmitting == true) {
                   authProvider.setSubmitting(false);
 
-                  sessionServices.saveToken(
-                    accessToken: authProvider.loginData!.token,
-                  );
-
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    StoryAppRouter.splash,
-                    (_) => false,
-                  );
+                  context.go(StoryAppRouter.splash);
                 }
               },
             ),
