@@ -4,19 +4,19 @@ import 'package:intermediate_first_submission/domain/enitities/story/story_entit
 import 'package:intermediate_first_submission/domain/enitities/story/story_response_entity.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_all_story_usecase.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/feed/provider/feed_state.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/feed_state.dart';
 
-class FeedProvider extends ChangeNotifier {
+class HomeFeedProvider extends ChangeNotifier {
   final GetAllStoryUsecase getAllStoryUsecase;
   final GetStoryByIdUsecase getStoryByIdUsecase;
 
-  FeedProvider({
+  HomeFeedProvider({
     required this.getAllStoryUsecase,
     required this.getStoryByIdUsecase,
   });
 
-  FeedState _state = FeedState();
-  FeedState get state => _state;
+  HomeState _state = HomeState();
+  HomeState get state => _state;
 
   List<StoryEntity>? _listStoryData;
   List<StoryEntity>? get listStoryData => _listStoryData;
@@ -33,7 +33,7 @@ class FeedProvider extends ChangeNotifier {
 
   // get all story trigger method
   Future<void> getAllStory(String token) async {
-    _state = _state.copyWith(status: FeedStatus.loading);
+    _state = _state.copyWith(status: HomeStatus.loading);
     notifyListeners();
 
     try {
@@ -41,16 +41,16 @@ class FeedProvider extends ChangeNotifier {
 
       if (result.error == true) {
         _state = _state.copyWith(
-          status: FeedStatus.error,
+          status: HomeStatus.error,
           message: result.message,
         );
       } else {
         _listStoryResponse = result;
         _listStoryData = result.listStory;
-        _state = _state.copyWith(status: FeedStatus.success);
+        _state = _state.copyWith(status: HomeStatus.success);
       }
     } catch (e) {
-      _state = _state.copyWith(status: FeedStatus.error, message: e.toString());
+      _state = _state.copyWith(status: HomeStatus.error, message: e.toString());
     } finally {
       notifyListeners();
     }
