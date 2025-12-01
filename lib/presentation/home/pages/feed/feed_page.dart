@@ -7,6 +7,8 @@ import 'package:intermediate_first_submission/presentation/home/provider/feed_pr
 import 'package:intermediate_first_submission/presentation/home/provider/feed_state.dart';
 import 'package:provider/provider.dart';
 
+import 'package:timeago/timeago.dart' as timeago;
+
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
 
@@ -117,28 +119,36 @@ class _FeedPageState extends State<FeedPage> {
           }
 
           // Success state
-          return ListView.builder(
-            itemCount: listStories!.length,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return Column(
-                  children: [
-                    _BuildStoryList(context: context, stories: listStories),
-                    Divider(
-                      height: 1,
-                      color: theme.colorScheme.outline.withAlpha(
-                        (0.2 * 255).round(),
+          return RefreshIndicator(
+            onRefresh: () => homeProvider.getAllStory(
+              sessionServices.getAccessToken().toString(),
+            ),
+            child: ListView.builder(
+              itemCount: listStories!.length,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Column(
+                    children: [
+                      _BuildStoryList(context: context, stories: listStories),
+                      Divider(
+                        height: 1,
+                        color: theme.colorScheme.outline.withAlpha(
+                          (0.2 * 255).round(),
+                        ),
                       ),
-                    ),
-                    _BuildPostItem(context: context, story: listStories[index]),
-                  ],
+                      _BuildPostItem(
+                        context: context,
+                        story: listStories[index],
+                      ),
+                    ],
+                  );
+                }
+                return _BuildPostItem(
+                  context: context,
+                  story: listStories[index],
                 );
-              }
-              return _BuildPostItem(
-                context: context,
-                story: listStories[index],
-              );
-            },
+              },
+            ),
           );
         },
       ),
@@ -268,7 +278,7 @@ class _BuildPostItem extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '2 hours ago',
+                timeago.format(story.createdAt),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withAlpha(
                     (0.6 * 255).round(),
