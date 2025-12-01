@@ -1,5 +1,10 @@
 // create post page
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_provider.dart';
+import 'package:provider/provider.dart';
 
 class CreatePostPage extends StatefulWidget {
   const CreatePostPage({super.key});
@@ -55,61 +60,94 @@ class _CreatePostPageState extends State<CreatePostPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Image preview
-          Container(
-            width: double.infinity,
-            height: 300,
-            color: theme.colorScheme.surfaceContainerHighest,
-            child: Icon(
-              Icons.add_photo_alternate_outlined,
-              size: 80,
-              color: theme.colorScheme.onSurface.withAlpha((0.4 * 255).round()),
-            ),
-          ),
-          // Description input
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _descriptionController,
-              maxLines: 5,
-              style: theme.textTheme.bodyMedium,
-              decoration: InputDecoration(
-                hintText: 'Write a caption...',
-                hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurface.withAlpha(
-                    (0.6 * 255).round(),
+      body: SingleChildScrollView(
+        child: Consumer<PostProvider>(
+          builder: (context, postProvider, child) {
+            return Column(
+              children: [
+                // Image preview
+                Container(
+                  width: double.infinity,
+                  height: 300,
+                  color: theme.colorScheme.surfaceContainerHighest,
+                  child: GestureDetector(
+                    onTap: () async {
+                      final picker = ImagePicker();
+                      XFile? picked = await picker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+
+                      if (picked == null) return;
+                      final file = File(picked.path);
+                      postProvider.setPickedImage(file);
+                    },
+                    child: postProvider.pickedImage != null
+                        ? Image.file(
+                            postProvider.pickedImage!,
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                        : Icon(
+                            Icons.add_photo_alternate_outlined,
+                            size: 80,
+                            color: theme.colorScheme.onSurface.withAlpha(
+                              (0.4 * 255).round(),
+                            ),
+                          ),
                   ),
                 ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: theme.colorScheme.outline),
+                // Description input
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: _descriptionController,
+                    maxLines: 5,
+                    style: theme.textTheme.bodyMedium,
+                    decoration: InputDecoration(
+                      hintText: 'Write a caption...',
+                      hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurface.withAlpha(
+                          (0.6 * 255).round(),
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: theme.colorScheme.outline,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: theme.colorScheme.outline,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: theme.colorScheme.outline),
+                // Location button
+                ListTile(
+                  leading: Icon(
+                    Icons.location_on_outlined,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  title: Text('Add Location', style: theme.textTheme.bodyLarge),
+                  trailing: Icon(
+                    Icons.chevron_right,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  onTap: () {
+                    // Handle location selection
+                  },
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: theme.colorScheme.primary),
-                ),
-              ),
-            ),
-          ),
-          // Location button
-          ListTile(
-            leading: Icon(
-              Icons.location_on_outlined,
-              color: theme.colorScheme.onSurface,
-            ),
-            title: Text('Add Location', style: theme.textTheme.bodyLarge),
-            trailing: Icon(
-              Icons.chevron_right,
-              color: theme.colorScheme.onSurface,
-            ),
-            onTap: () {
-              // Handle location selection
-            },
-          ),
-        ],
+              ],
+            );
+          },
+        ),
       ),
     );
   }
