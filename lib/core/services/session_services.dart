@@ -4,7 +4,14 @@ class SessionServices {
   static const String _accessTokenKey = 'access_token';
 
   final SharedPreferences _prefs;
+  bool _splashFinished = false;
+  bool get splashFinished => _splashFinished;
+
   SessionServices(this._prefs);
+
+  void finishSplash(bool value) {
+    _splashFinished = value;
+  }
 
   // save token method
   Future<void> saveToken({required String accessToken}) async {

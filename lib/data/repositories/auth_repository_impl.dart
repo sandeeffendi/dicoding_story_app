@@ -1,11 +1,13 @@
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/data/datasource/main_remote_datasource.dart';
-import 'package:intermediate_first_submission/domain/enitities/login_response_entity.dart';
-import 'package:intermediate_first_submission/domain/enitities/register_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/login_response_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/auth/register_response_entity.dart';
 import 'package:intermediate_first_submission/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final MainRemoteDatasource remoteDatasource;
-  const AuthRepositoryImpl(this.remoteDatasource);
+  final SessionServices sessionServices;
+  const AuthRepositoryImpl(this.remoteDatasource, this.sessionServices);
 
   @override
   Future<RegisterResponseEntity> createAccount({
@@ -35,16 +37,12 @@ class AuthRepositoryImpl implements AuthRepository {
       password: password,
     );
 
+    await sessionServices.saveToken(accessToken: response.loginResult.token);
+
     return LoginResponseEntity(
       error: response.error,
       message: response.message,
       loginResult: response.loginResult,
     );
-  }
-
-  @override
-  Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
   }
 }
