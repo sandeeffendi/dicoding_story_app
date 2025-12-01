@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate_first_submission/app/story_app.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/feed_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/di/di.dart' as di;
@@ -14,7 +15,10 @@ void main() async {
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => di.sl<AuthProvider>())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => di.sl<AuthProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<HomeFeedProvider>()),
+      ],
       child: StoryApp(),
     ),
   );

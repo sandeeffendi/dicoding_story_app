@@ -146,7 +146,7 @@ class MainRemoteDatasource {
   // Get All Stories
   Future<ListStoryResponseModel> getAllStory({required String token}) async {
     try {
-      final uri = Uri.parse('$baseUrl/story');
+      final uri = Uri.parse('$baseUrl/stories');
 
       final response = await http.get(
         uri,

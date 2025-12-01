@@ -98,7 +98,9 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => context.go(StoryAppRouter.register),
+            onTap: () {
+              context.go(StoryAppRouter.register);
+            },
             child: Text(
               "Sign Up",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

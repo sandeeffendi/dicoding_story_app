@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   final Widget child;
 
   const HomePage({super.key, required this.child});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-      body: widget.child,
+      body: child,
 
       // bottom navigation
       bottomNavigationBar: BottomNavigationBar(

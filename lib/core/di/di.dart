@@ -11,6 +11,7 @@ import 'package:intermediate_first_submission/domain/usecases/story/get_all_stor
 import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
 import 'package:intermediate_first_submission/env/env.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/feed_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -24,10 +25,6 @@ Future<void> init(SharedPreferences prefs) async {
   sl.registerSingleton<SessionServices>(SessionServices(prefs));
 
   /* --- Data Chain --- */
-  // state
-  sl.registerFactory(
-    () => AuthProvider(createAccountUsecase: sl(), loginUsecase: sl()),
-  );
 
   // datasource
   sl.registerLazySingleton<MainRemoteDatasource>(
@@ -51,4 +48,12 @@ Future<void> init(SharedPreferences prefs) async {
   /* -- Story usecases -- */
   sl.registerLazySingleton(() => GetAllStoryUsecase(sl()));
   sl.registerLazySingleton(() => GetStoryByIdUsecase(sl()));
+
+  /* -- State -- */
+  sl.registerFactory(
+    () => AuthProvider(createAccountUsecase: sl(), loginUsecase: sl()),
+  );
+  sl.registerFactory(
+    () => HomeFeedProvider(getAllStoryUsecase: sl(), getStoryByIdUsecase: sl()),
+  );
 }
