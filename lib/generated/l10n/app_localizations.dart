@@ -103,6 +103,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Liked By '**
   String get likedTitle;
+
+  /// No description provided for @languagePreferencesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languagePreferencesTitle;
+
+  /// No description provided for @postsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Posts'**
+  String get postsTitle;
+
+  /// No description provided for @followerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Follower'**
+  String get followerTitle;
+
+  /// No description provided for @followingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get followingTitle;
+
+  /// No description provided for @andTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'And'**
+  String get andTitle;
+
+  /// No description provided for @searchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchTitle;
+
+  /// No description provided for @archiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get archiveTitle;
+
+  /// No description provided for @newPostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New Post'**
+  String get newPostTitle;
+
+  /// No description provided for @shareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareTitle;
+
+  /// No description provided for @addLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add location'**
+  String get addLocationTitle;
+
+  /// No description provided for @writeCaptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a caption...'**
+  String get writeCaptionTitle;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Dicoding Gram'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue to your account'**
+  String get welcomeSubtitle;
+
+  /// No description provided for @rememberMeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember me'**
+  String get rememberMeTitle;
+
+  /// No description provided for @continueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueTitle;
+
+  /// No description provided for @dontHaveAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccountTitle;
+
+  /// No description provided for @signUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUpTitle;
+
+  /// No description provided for @registerAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Regsiter Account'**
+  String get registerAccountTitle;
+
+  /// No description provided for @registerAccountSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your details'**
+  String get registerAccountSubtitle;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfileTitle;
+
+  /// No description provided for @logOutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logOutTitle;
 }
 
 class _AppLocalizationsDelegate

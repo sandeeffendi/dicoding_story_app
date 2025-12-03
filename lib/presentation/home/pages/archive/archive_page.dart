@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 
 class ArchivePage extends StatelessWidget {
   const ArchivePage({super.key});
@@ -21,7 +22,7 @@ class ArchivePage extends StatelessWidget {
         backgroundColor: theme.colorScheme.surface,
         elevation: 0,
         title: Text(
-          'Archive',
+          AppLocalizations.of(context)!.archiveTitle,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),

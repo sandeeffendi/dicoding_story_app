@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/presentation/auth/pages/register/components/register_form.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -18,13 +19,13 @@ class RegisterPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 16),
                   Text(
-                    "Register Account",
+                    AppLocalizations.of(context)!.registerAccountTitle,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Complete your details",
+                    AppLocalizations.of(context)!.registerAccountSubtitle,
                     textAlign: TextAlign.center,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,

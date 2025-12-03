@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/presentation/auth/pages/login/components/login_form.dart';
 
 class LoginPage extends StatelessWidget {
@@ -62,7 +63,7 @@ class LoginPage extends StatelessWidget {
 
         // Welcome Text
         Text(
-          "Welcome to Dicoding Gram",
+          AppLocalizations.of(context)!.welcomeTitle,
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontWeight: FontWeight.bold,
             fontSize: 25,
@@ -72,7 +73,7 @@ class LoginPage extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          "Sign in to continue to your account",
+          AppLocalizations.of(context)!.welcomeSubtitle,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             color: Theme.of(
               context,
@@ -90,7 +91,7 @@ class LoginPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Don't have an account? ",
+            AppLocalizations.of(context)!.dontHaveAccountTitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Theme.of(
                 context,
@@ -102,7 +103,7 @@ class LoginPage extends StatelessWidget {
               context.push(StoryAppRouter.register);
             },
             child: Text(
-              "Sign Up",
+              AppLocalizations.of(context)!.signUpTitle,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,

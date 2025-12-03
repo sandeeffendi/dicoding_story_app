@@ -38,6 +38,7 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     await sessionServices.saveToken(accessToken: response.loginResult.token);
+    await sessionServices.saveUsername(username: response.loginResult.name);
 
     return LoginResponseEntity(
       error: response.error,

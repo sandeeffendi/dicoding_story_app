@@ -4,6 +4,8 @@ import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/app/theme/story_app_text_theme.dart';
 import 'package:intermediate_first_submission/app/theme/story_app_theme.dart';
 import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/profile_proivder/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class StoryApp extends StatelessWidget {
   const StoryApp({super.key});
@@ -12,6 +14,7 @@ class StoryApp extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = createTextTheme(context, 'Montserrat', 'Poppins');
     MaterialTheme theme = MaterialTheme(textTheme);
+    final provider = context.watch<ProfileProvider>();
 
     return MaterialApp.router(
       localizationsDelegates: const [
@@ -29,6 +32,7 @@ class StoryApp extends StatelessWidget {
       darkTheme: theme.dark(),
       title: 'Dicoding Flutter Story App First Submission',
       routerConfig: storyAppRouter.router,
+      locale: provider.locale,
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_state.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'New Post',
+          AppLocalizations.of(context)!.newPostTitle,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -88,7 +89,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 return Center(child: CircularProgressIndicator());
               }
 
-              // success 
+              // success
               if (postProvider.state.status == PostStatus.sucess) {
                 // Handle post submission
                 WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -119,7 +120,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         );
                       },
                 child: Text(
-                  'Share',
+                  AppLocalizations.of(context)!.shareTitle,
                   style: theme.textTheme.labelLarge?.copyWith(
                     color: theme.colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -214,7 +215,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     maxLines: 5,
                     style: theme.textTheme.bodyMedium,
                     decoration: InputDecoration(
-                      hintText: 'Write a caption...',
+                      hintText: AppLocalizations.of(context)!.writeCaptionTitle,
                       hintStyle: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.onSurface.withAlpha(
                           (0.6 * 255).round(),
@@ -245,7 +246,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     Icons.location_on_outlined,
                     color: theme.colorScheme.onSurface,
                   ),
-                  title: Text('Add Location', style: theme.textTheme.bodyLarge),
+                  title: Text(
+                    AppLocalizations.of(context)!.addLocationTitle,
+                    style: theme.textTheme.bodyLarge,
+                  ),
                   trailing: Icon(
                     Icons.chevron_right,
                     color: theme.colorScheme.onSurface,

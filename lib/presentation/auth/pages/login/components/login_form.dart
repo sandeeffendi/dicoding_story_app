@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/constants/form_error_constant.dart';
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_state.dart';
 import 'package:provider/provider.dart';
@@ -469,7 +470,7 @@ class _LoginButtonState extends State<_LoginButton> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Continue',
+                        AppLocalizations.of(context)!.continueTitle,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
