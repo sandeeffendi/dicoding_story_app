@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/app/theme/story_app_text_theme.dart';
 import 'package:intermediate_first_submission/app/theme/story_app_theme.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 
 class StoryApp extends StatelessWidget {
   const StoryApp({super.key});
@@ -12,6 +14,16 @@ class StoryApp extends StatelessWidget {
     MaterialTheme theme = MaterialTheme(textTheme);
 
     return MaterialApp.router(
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('id'), // Indonesian,
+        Locale('en'), // English
+      ],
       themeMode: ThemeMode.system,
       theme: theme.light(),
       darkTheme: theme.dark(),

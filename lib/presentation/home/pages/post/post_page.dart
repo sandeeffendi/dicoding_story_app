@@ -88,7 +88,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 return Center(child: CircularProgressIndicator());
               }
 
-              // success state
+              // success 
               if (postProvider.state.status == PostStatus.sucess) {
                 // Handle post submission
                 WidgetsBinding.instance.addPostFrameCallback((_) {
