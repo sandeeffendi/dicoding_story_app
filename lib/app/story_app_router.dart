@@ -6,6 +6,7 @@ import 'package:intermediate_first_submission/presentation/auth/pages/register/r
 import 'package:intermediate_first_submission/presentation/auth/splash_page.dart';
 import 'package:intermediate_first_submission/presentation/home/home_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/archive/archive_page.dart';
+import 'package:intermediate_first_submission/presentation/home/pages/detail/detail_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/explore/explore_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/feed/feed_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/post/post_page.dart';
@@ -28,6 +29,7 @@ class StoryAppRouter {
   static const String explore = '/explore';
   static const String archive = '/archive';
   static const String profile = '/profile';
+  static const String detail = '/detail';
 
   /* --- Routes --- */
   StoryAppRouter() {
@@ -72,6 +74,13 @@ class StoryAppRouter {
         ),
 
         GoRoute(path: post, builder: (context, state) => CreatePostPage()),
+        GoRoute(
+          path: '$detail/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id'];
+            return DetailPage(id: id!);
+          },
+        ),
       ],
     );
   }

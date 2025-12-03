@@ -194,6 +194,7 @@ class _BuildPostItem extends StatelessWidget {
             ],
           ),
         ),
+        
         // Image
         Image.network(
           story.photoUrl,
@@ -201,6 +202,7 @@ class _BuildPostItem extends StatelessWidget {
           height: 400,
           fit: BoxFit.cover,
         ),
+        
         // Action buttons
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -238,6 +240,7 @@ class _BuildPostItem extends StatelessWidget {
             ],
           ),
         ),
+        
         // Caption
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -265,7 +268,10 @@ class _BuildPostItem extends StatelessWidget {
                   ),
                 ],
               ),
+              
               const SizedBox(height: 4),
+              
+              // user name
               RichText(
                 text: TextSpan(
                   style: theme.textTheme.bodyMedium,
@@ -280,7 +286,10 @@ class _BuildPostItem extends StatelessWidget {
                   ],
                 ),
               ),
+              
               const SizedBox(height: 4),
+              
+              // created at
               Text(
                 timeago.format(story.createdAt),
                 style: theme.textTheme.bodySmall?.copyWith(
@@ -292,6 +301,7 @@ class _BuildPostItem extends StatelessWidget {
             ],
           ),
         ),
+        
         const SizedBox(height: 12),
       ],
     );
