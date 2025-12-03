@@ -5,7 +5,7 @@ class AddStoryRequestModel extends AddStoryRequestEntity {
 
   factory AddStoryRequestModel.fromJson(Map<String, dynamic> json) =>
       AddStoryRequestModel(
-        description: json['description'],
+        description: json['description'] ?? 'not',
         photo: json['photo'],
       );
 

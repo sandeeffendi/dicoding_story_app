@@ -2,8 +2,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intermediate_first_submission/app/story_app_router.dart';
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_provider.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_state.dart';
 import 'package:provider/provider.dart';
 
 class CreatePostPage extends StatefulWidget {
@@ -15,6 +20,26 @@ class CreatePostPage extends StatefulWidget {
 
 class _CreatePostPageState extends State<CreatePostPage> {
   final TextEditingController _descriptionController = TextEditingController();
+  late PostProvider postProvider;
+  late SessionServices sessionServices;
+  String? token;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      if (!mounted) return;
+      context.read<PostProvider>().resetAddStoryState();
+    });
+
+    sessionServices = GetIt.instance<SessionServices>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      token = sessionServices.getAccessToken();
+      postProvider = context.read<PostProvider>();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,31 +60,77 @@ class _CreatePostPageState extends State<CreatePostPage> {
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              // Handle post submission
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Post created!',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onInverseSurface,
+          // create post button
+          Consumer<PostProvider>(
+            builder: (context, postProvider, child) {
+              final imageFile = postProvider.pickedImage;
+
+              // error
+              if (postProvider.state.status == PostStatus.error) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Failed to create post. Please try again later.${postProvider.state.message}',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onInverseSurface,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                      ),
                     ),
+                  );
+                });
+              }
+
+              // loading state
+              if (postProvider.state.status == PostStatus.loading) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              // success state
+              if (postProvider.state.status == PostStatus.sucess) {
+                // Handle post submission
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Post created!',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onInverseSurface,
+                        ),
+                      ),
+                    ),
+                  );
+                  context.go(StoryAppRouter.splash);
+                });
+              }
+
+              return TextButton(
+                onPressed: postProvider.state.status == PostStatus.loading
+                    ? null
+                    : () {
+                        postProvider.addStory(
+                          token: token ?? '',
+                          description: _descriptionController.text.isEmpty
+                              ? ''
+                              : _descriptionController.text,
+                          photo: imageFile!,
+                        );
+                      },
+                child: Text(
+                  'Share',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               );
-              Navigator.pop(context);
             },
-            child: Text(
-              'Share',
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ),
         ],
       ),
+
       body: SingleChildScrollView(
         child: Consumer<PostProvider>(
           builder: (context, postProvider, child) {
@@ -73,13 +144,50 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   child: GestureDetector(
                     onTap: () async {
                       final picker = ImagePicker();
-                      XFile? picked = await picker.pickImage(
-                        source: ImageSource.gallery,
-                      );
 
-                      if (picked == null) return;
-                      final file = File(picked.path);
-                      postProvider.setPickedImage(file);
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return SafeArea(
+                            child: Wrap(
+                              children: [
+                                ListTile(
+                                  leading: Icon(Icons.camera_alt),
+                                  title: Text('Camera'),
+                                  onTap: () async {
+                                    Navigator.pop(context);
+
+                                    final XFile? picked = await picker
+                                        .pickImage(source: ImageSource.camera);
+
+                                    if (picked == null) return;
+
+                                    postProvider.setPickedImage(
+                                      File(picked.path),
+                                    );
+                                  },
+                                ),
+                                ListTile(
+                                  leading: Icon(Icons.photo),
+                                  title: Text('Gallery'),
+                                  onTap: () async {
+                                    Navigator.pop(context);
+
+                                    final XFile? picked = await picker
+                                        .pickImage(source: ImageSource.gallery);
+
+                                    if (picked == null) return;
+
+                                    postProvider.setPickedImage(
+                                      File(picked.path),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     },
                     child: postProvider.pickedImage != null
                         ? Image.file(
@@ -97,6 +205,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           ),
                   ),
                 ),
+
                 // Description input
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -129,6 +238,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     ),
                   ),
                 ),
+
                 // Location button
                 ListTile(
                   leading: Icon(

@@ -31,7 +31,7 @@ class PostProvider extends ChangeNotifier {
   // add story with token trigger method
   Future<void> addStory({
     required String token,
-    required String description,
+    String description = '',
     required File photo,
   }) async {
     _state = _state.copyWith(status: PostStatus.loading);
@@ -58,5 +58,14 @@ class PostProvider extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
+
+  void resetAddStoryState() {
+    _state = _state.copyWith(status: PostStatus.initial);
+    _addStoryData = null;
+    _addStoryResponse = null;
+    _pickedImage = null;
+
+    notifyListeners();
   }
 }
