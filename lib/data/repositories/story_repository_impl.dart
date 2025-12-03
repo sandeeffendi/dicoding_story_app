@@ -1,4 +1,7 @@
 import 'package:intermediate_first_submission/data/datasource/main_remote_datasource.dart';
+import 'package:intermediate_first_submission/data/models/story/add_story_request_model.dart';
+import 'package:intermediate_first_submission/domain/enitities/story/add_story_request_entity.dart';
+import 'package:intermediate_first_submission/domain/enitities/story/add_story_response_entity.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/detail_story_response_entity.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_response_entity.dart';
 import 'package:intermediate_first_submission/domain/repositories/story_repository.dart';
@@ -29,6 +32,25 @@ class StoryRepositoryImpl implements StoryRepository {
       error: response.error,
       message: response.message,
       story: response.story,
+    );
+  }
+
+  @override
+  Future<AddStoryResponseEntity> addStoryWithToken({
+    required String token,
+    required AddStoryRequestEntity storyRequest,
+  }) async {
+    final response = await remoteDatasource.addStoryWithToken(
+      token: token,
+      story: AddStoryRequestModel(
+        description: storyRequest.description,
+        photo: storyRequest.photo,
+      ),
+    );
+
+    return AddStoryResponseEntity(
+      error: response.error,
+      message: response.message,
     );
   }
 }

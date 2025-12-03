@@ -4,7 +4,7 @@ import 'package:intermediate_first_submission/domain/enitities/story/story_entit
 import 'package:intermediate_first_submission/domain/enitities/story/story_response_entity.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_all_story_usecase.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
-import 'package:intermediate_first_submission/presentation/home/provider/feed_state.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_state.dart';
 
 class HomeFeedProvider extends ChangeNotifier {
   final GetAllStoryUsecase getAllStoryUsecase;

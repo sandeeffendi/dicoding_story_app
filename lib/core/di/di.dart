@@ -7,11 +7,13 @@ import 'package:intermediate_first_submission/domain/repositories/auth_repositor
 import 'package:intermediate_first_submission/domain/repositories/story_repository.dart';
 import 'package:intermediate_first_submission/domain/usecases/auth/create_account_usecase.dart';
 import 'package:intermediate_first_submission/domain/usecases/auth/login_usecase.dart';
+import 'package:intermediate_first_submission/domain/usecases/story/add_story_withtoken_usecase.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_all_story_usecase.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
 import 'package:intermediate_first_submission/env/env.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
-import 'package:intermediate_first_submission/presentation/home/provider/feed_provider.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_provider.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -48,6 +50,7 @@ Future<void> init(SharedPreferences prefs) async {
   /* -- Story usecases -- */
   sl.registerLazySingleton(() => GetAllStoryUsecase(sl()));
   sl.registerLazySingleton(() => GetStoryByIdUsecase(sl()));
+  sl.registerLazySingleton(() => AddStoryWithtokenUsecase(sl()));
 
   /* -- State -- */
   sl.registerFactory(
@@ -56,4 +59,5 @@ Future<void> init(SharedPreferences prefs) async {
   sl.registerFactory(
     () => HomeFeedProvider(getAllStoryUsecase: sl(), getStoryByIdUsecase: sl()),
   );
+  sl.registerFactory(() => PostProvider(addStoryWithtokenUsecase: sl()));
 }
