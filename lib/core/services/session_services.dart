@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SessionServices {
   static const String _accessTokenKey = 'access_token';
+  static const String _userName = 'username';
 
   final SharedPreferences _prefs;
   bool _splashFinished = false;
@@ -16,6 +17,16 @@ class SessionServices {
   // save token method
   Future<void> saveToken({required String accessToken}) async {
     await _prefs.setString(_accessTokenKey, accessToken);
+  }
+
+  // save username method
+  Future<void> saveUsername({required String username}) async {
+    await _prefs.setString(_userName, username);
+  }
+
+  // get username method
+  String? getUsename() {
+    return _prefs.getString(_userName);
   }
 
   // get token method

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_entity.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_state.dart';
 import 'package:provider/provider.dart';
@@ -245,7 +246,10 @@ class _BuildPostItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text('Liked by ', style: theme.textTheme.labelSmall),
+                  Text(
+                    AppLocalizations.of(context)!.likedTitle,
+                    style: theme.textTheme.labelSmall,
+                  ),
                   Text(
                     'Mulyono ',
                     style: theme.textTheme.labelSmall?.copyWith(

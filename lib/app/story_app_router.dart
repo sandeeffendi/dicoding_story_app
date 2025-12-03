@@ -19,7 +19,7 @@ class StoryAppRouter {
   // auth page constant
   static const String splash = '/splash';
   static const String login = '/login';
-  static const String register = 'register';
+  static const String register = '/register';
   static const String home = '/home';
 
   // home page constant
@@ -39,7 +39,9 @@ class StoryAppRouter {
 
         if (state.matchedLocation == splash) return null;
 
-        if (!isLoggedIn) return login;
+        final isAuthPage =
+            state.matchedLocation == login || state.matchedLocation == register;
+        if (!isLoggedIn && !isAuthPage) return login;
 
         if (isLoggedIn && (state.matchedLocation == login)) {
           return home;

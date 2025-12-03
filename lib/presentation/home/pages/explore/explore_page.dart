@@ -1,5 +1,6 @@
 // Explore Screen
 import 'package:flutter/material.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -9,8 +10,6 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExplorePage> {
-  String _searchQuery = '';
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -31,14 +30,9 @@ class _ExploreScreenState extends State<ExplorePage> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: TextField(
-            onChanged: (value) {
-              setState(() {
-                _searchQuery = value;
-              });
-            },
             style: theme.textTheme.bodyMedium,
             decoration: InputDecoration(
-              hintText: 'Search',
+              hintText: AppLocalizations.of(context)!.searchTitle,
               hintStyle: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withAlpha(
                   (0.6 * 255).round(),
