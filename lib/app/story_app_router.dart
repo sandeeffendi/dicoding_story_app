@@ -59,7 +59,10 @@ class StoryAppRouter {
         /* --- Auth Pages Route --- */
         GoRoute(path: splash, builder: (context, state) => const SplashPage()),
         GoRoute(path: login, builder: (context, state) => const LoginPage()),
-        GoRoute(path: register, builder: (context, state) => const RegisterPage()),
+        GoRoute(
+          path: register,
+          builder: (context, state) => const RegisterPage(),
+        ),
 
         /* --- Main Routes & Shell Routes --- */
         ShellRoute(
@@ -67,13 +70,25 @@ class StoryAppRouter {
           routes: [
             GoRoute(path: home, builder: (context, state) => const FeedPage()),
             GoRoute(path: feed, builder: (context, state) => const FeedPage()),
-            GoRoute(path: explore, builder: (context, state) => const ExplorePage()),
-            GoRoute(path: archive, builder: (context, state) => const ArchivePage()),
-            GoRoute(path: profile, builder: (context, state) => const ProfilePage()),
+            GoRoute(
+              path: explore,
+              builder: (context, state) => const ExplorePage(),
+            ),
+            GoRoute(
+              path: archive,
+              builder: (context, state) => const ArchivePage(),
+            ),
+            GoRoute(
+              path: profile,
+              builder: (context, state) => const ProfilePage(),
+            ),
           ],
         ),
 
-        GoRoute(path: post, builder: (context, state) => const CreatePostPage()),
+        GoRoute(
+          path: post,
+          builder: (context, state) => const CreatePostPage(),
+        ),
         GoRoute(
           path: '$detail/:id',
           builder: (context, state) {

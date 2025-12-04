@@ -195,7 +195,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 return Center(
                   child: Column(
                     children: [
-                      const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                      const Icon(
+                        Icons.error_outline,
+                        size: 64,
+                        color: Colors.red,
+                      ),
                       const SizedBox(height: 16),
                       Text(
                         'Caught an error, ${provider.state.message}',
@@ -226,7 +230,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 return Center(
                   child: Column(
                     children: [
-                      const Icon(Icons.inbox_outlined, size: 64, color: Colors.grey),
+                      const Icon(
+                        Icons.inbox_outlined,
+                        size: 64,
+                        color: Colors.grey,
+                      ),
                       const SizedBox(height: 64),
                       const Text('No Post Availabale'),
                       const SizedBox(height: 16),

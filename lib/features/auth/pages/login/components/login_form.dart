@@ -7,6 +7,7 @@ import 'package:intermediate_first_submission/generated/l10n/app_localizations.d
 import 'package:intermediate_first_submission/features/auth/provider/auth_provider.dart';
 import 'package:intermediate_first_submission/features/auth/provider/auth_state.dart';
 import 'package:provider/provider.dart';
+
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
