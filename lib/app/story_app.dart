@@ -4,7 +4,7 @@ import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/app/theme/story_app_text_theme.dart';
 import 'package:intermediate_first_submission/app/theme/story_app_theme.dart';
 import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
-import 'package:intermediate_first_submission/presentation/home/provider/profile_proivder/profile_provider.dart';
+import 'package:intermediate_first_submission/features/profile/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class StoryApp extends StatelessWidget {

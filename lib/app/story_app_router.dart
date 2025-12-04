@@ -1,16 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
-import 'package:intermediate_first_submission/presentation/auth/pages/login/login_page.dart';
-import 'package:intermediate_first_submission/presentation/auth/pages/register/register_page.dart';
-import 'package:intermediate_first_submission/presentation/auth/splash_page.dart';
-import 'package:intermediate_first_submission/presentation/home/home_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/archive/archive_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/detail/detail_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/explore/explore_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/feed/feed_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/post/post_page.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/profile/profile_page.dart';
+import 'package:intermediate_first_submission/features/auth/pages/login/login_page.dart';
+import 'package:intermediate_first_submission/features/auth/pages/register/register_page.dart';
+import 'package:intermediate_first_submission/features/auth/pages/splash_page.dart';
+import 'package:intermediate_first_submission/features/home/pages/home_page.dart';
+import 'package:intermediate_first_submission/features/archive/pages/archive_page.dart';
+import 'package:intermediate_first_submission/features/detail/pages/detail_page.dart';
+import 'package:intermediate_first_submission/features/explore/pages/explore_page.dart';
+import 'package:intermediate_first_submission/features/feed/pages/feed_page.dart';
+import 'package:intermediate_first_submission/features/post/pages/post_page.dart';
+import 'package:intermediate_first_submission/features/profile/pages/profile_page.dart';
 
 final storyAppRouter = StoryAppRouter();
 
