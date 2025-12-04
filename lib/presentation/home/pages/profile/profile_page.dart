@@ -81,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             // language preferences
-            Center(child: FlagIcon()),
+            const Center(child: FlagIcon()),
 
             // Logout button
             ListTile(
@@ -92,8 +92,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     AppLocalizations.of(context)!.logOutTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  SizedBox(width: 12),
-                  Icon(Icons.logout_outlined),
+                  const SizedBox(width: 12),
+                  const Icon(Icons.logout_outlined),
                 ],
               ),
               onTap: () {
@@ -195,21 +195,21 @@ class _ProfilePageState extends State<ProfilePage> {
                 return Center(
                   child: Column(
                     children: [
-                      Icon(Icons.error_outline, size: 64, color: Colors.red),
-                      SizedBox(height: 16),
+                      const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                      const SizedBox(height: 16),
                       Text(
                         'Caught an error, ${provider.state.message}',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       ElevatedButton.icon(
                         onPressed: () {
                           provider.getAllStory(
                             sessionServices.getAccessToken().toString(),
                           );
                         },
-                        icon: Icon(Icons.refresh),
-                        label: Text('Retry'),
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Retry'),
                       ),
                     ],
                   ),
@@ -218,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               // loading state
               if (provider.state.status == HomeStatus.loading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
 
               // empty state
@@ -226,15 +226,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 return Center(
                   child: Column(
                     children: [
-                      Icon(Icons.inbox_outlined, size: 64, color: Colors.grey),
-                      SizedBox(height: 64),
-                      Text('No Post Availabale'),
-                      SizedBox(height: 16),
+                      const Icon(Icons.inbox_outlined, size: 64, color: Colors.grey),
+                      const SizedBox(height: 64),
+                      const Text('No Post Availabale'),
+                      const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () => provider.getAllStory(
                           sessionServices.getAccessToken().toString(),
                         ),
-                        child: Text('Load Post'),
+                        child: const Text('Load Post'),
                       ),
                     ],
                   ),

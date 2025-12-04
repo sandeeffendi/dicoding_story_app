@@ -15,7 +15,7 @@ class HomeFeedProvider extends ChangeNotifier {
     required this.getStoryByIdUsecase,
   });
 
-  HomeState _state = HomeState();
+  HomeState _state = const HomeState();
   HomeState get state => _state;
 
   List<StoryEntity>? _listStoryData;

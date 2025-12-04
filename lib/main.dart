@@ -23,7 +23,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => di.sl<PostProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<ProfileProvider>()),
       ],
-      child: StoryApp(),
+      child: const StoryApp(),
     ),
   );
 }

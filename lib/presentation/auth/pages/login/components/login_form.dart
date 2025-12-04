@@ -471,14 +471,14 @@ class _LoginButtonState extends State<_LoginButton> {
                     children: [
                       Text(
                         AppLocalizations.of(context)!.continueTitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 0.5,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Icon(Icons.arrow_forward_rounded, size: 20),
+                      const Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
           ),

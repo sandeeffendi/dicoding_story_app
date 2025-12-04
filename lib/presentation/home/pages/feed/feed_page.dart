@@ -72,21 +72,21 @@ class _FeedPageState extends State<FeedPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline, size: 64, color: Colors.red),
-                  SizedBox(height: 16),
+                  const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                  const SizedBox(height: 16),
                   Text(
                     'Caught an error, ${homeProvider.state.message}',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   ElevatedButton.icon(
                     onPressed: () {
                       homeProvider.getAllStory(
                         sessionServices.getAccessToken().toString(),
                       );
                     },
-                    icon: Icon(Icons.refresh),
-                    label: Text('Retry'),
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Retry'),
                   ),
                 ],
               ),
@@ -95,7 +95,7 @@ class _FeedPageState extends State<FeedPage> {
 
           // Loading state
           if (homeProvider.state.status == HomeStatus.loading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           // Empty state
@@ -104,15 +104,15 @@ class _FeedPageState extends State<FeedPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.inbox_outlined, size: 64, color: Colors.grey),
-                  SizedBox(height: 64),
-                  Text('No Post Availabale'),
-                  SizedBox(height: 16),
+                  const Icon(Icons.inbox_outlined, size: 64, color: Colors.grey),
+                  const SizedBox(height: 64),
+                  const Text('No Post Availabale'),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => homeProvider.getAllStory(
                       sessionServices.getAccessToken().toString(),
                     ),
-                    child: Text('Load Post'),
+                    child: const Text('Load Post'),
                   ),
                 ],
               ),

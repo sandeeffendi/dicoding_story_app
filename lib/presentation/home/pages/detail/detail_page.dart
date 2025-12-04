@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_entity.dart';
 
-// ignore: must_be_immutable
 class DetailPage extends StatefulWidget {
   final String id;
   const DetailPage({super.key, required this.id});
@@ -49,12 +48,12 @@ class _BuildDetailPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // header
         Padding(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.all(8),
           child: Row(children: [CircleAvatar(radius: 16)]),
         ),
       ],

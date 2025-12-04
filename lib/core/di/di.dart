@@ -12,7 +12,6 @@ import 'package:intermediate_first_submission/domain/usecases/story/get_all_stor
 import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
 import 'package:intermediate_first_submission/env/env.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
-import 'package:intermediate_first_submission/presentation/home/pages/profile/profile_page.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/profile_proivder/profile_provider.dart';
@@ -21,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 final sl = GetIt.instance;
 
 Future<void> init(SharedPreferences prefs) async {
-  final baseUrl = Env.dicodingApiEndpoint;
+  const baseUrl = Env.dicodingApiEndpoint;
 
   /* --- Shared Preferences Chain --- */
   sl.registerSingleton<SharedPreferences>(prefs);
@@ -32,7 +31,7 @@ Future<void> init(SharedPreferences prefs) async {
 
   // datasource
   sl.registerLazySingleton<MainRemoteDatasource>(
-    () => MainRemoteDatasource(baseUrl: baseUrl),
+    () => const MainRemoteDatasource(baseUrl: baseUrl),
   );
 
   // repositories

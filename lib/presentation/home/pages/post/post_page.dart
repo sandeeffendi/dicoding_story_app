@@ -86,7 +86,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
               // loading state
               if (postProvider.state.status == PostStatus.loading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
 
               // success
@@ -153,8 +153,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                             child: Wrap(
                               children: [
                                 ListTile(
-                                  leading: Icon(Icons.camera_alt),
-                                  title: Text('Camera'),
+                                  leading: const Icon(Icons.camera_alt),
+                                  title: const Text('Camera'),
                                   onTap: () async {
                                     Navigator.pop(context);
 
@@ -169,8 +169,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   },
                                 ),
                                 ListTile(
-                                  leading: Icon(Icons.photo),
-                                  title: Text('Gallery'),
+                                  leading: const Icon(Icons.photo),
+                                  title: const Text('Gallery'),
                                   onTap: () async {
                                     Navigator.pop(context);
 
