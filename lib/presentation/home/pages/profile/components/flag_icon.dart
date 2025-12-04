@@ -17,7 +17,7 @@ class FlagIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(AppLocalizations.of(context)!.languagePreferencesTitle),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             const Icon(Icons.flag),
           ],
         ),

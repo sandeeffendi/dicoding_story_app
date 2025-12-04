@@ -11,7 +11,7 @@ class PostProvider extends ChangeNotifier {
 
   PostProvider({required this.addStoryWithtokenUsecase});
 
-  PostState _state = PostState();
+  PostState _state = const PostState();
   PostState get state => _state;
 
   AddStoryRequestEntity? _addStoryData;

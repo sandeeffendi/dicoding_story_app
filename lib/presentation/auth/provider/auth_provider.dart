@@ -18,7 +18,7 @@ class AuthProvider extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  AuthState _state = AuthState();
+  AuthState _state = const AuthState();
   AuthState get state => _state;
 
   LoginResultEntity? _loginData;

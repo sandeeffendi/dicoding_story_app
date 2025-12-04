@@ -6,6 +6,7 @@ import 'package:intermediate_first_submission/presentation/auth/pages/register/r
 import 'package:intermediate_first_submission/presentation/auth/splash_page.dart';
 import 'package:intermediate_first_submission/presentation/home/home_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/archive/archive_page.dart';
+import 'package:intermediate_first_submission/presentation/home/pages/detail/detail_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/explore/explore_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/feed/feed_page.dart';
 import 'package:intermediate_first_submission/presentation/home/pages/post/post_page.dart';
@@ -28,6 +29,7 @@ class StoryAppRouter {
   static const String explore = '/explore';
   static const String archive = '/archive';
   static const String profile = '/profile';
+  static const String detail = '/detail';
 
   /* --- Routes --- */
   StoryAppRouter() {
@@ -55,23 +57,30 @@ class StoryAppRouter {
       // generate rote
       routes: [
         /* --- Auth Pages Route --- */
-        GoRoute(path: splash, builder: (context, state) => SplashPage()),
-        GoRoute(path: login, builder: (context, state) => LoginPage()),
-        GoRoute(path: register, builder: (context, state) => RegisterPage()),
+        GoRoute(path: splash, builder: (context, state) => const SplashPage()),
+        GoRoute(path: login, builder: (context, state) => const LoginPage()),
+        GoRoute(path: register, builder: (context, state) => const RegisterPage()),
 
         /* --- Main Routes & Shell Routes --- */
         ShellRoute(
           builder: (context, state, child) => HomePage(child: child),
           routes: [
-            GoRoute(path: home, builder: (context, state) => FeedPage()),
-            GoRoute(path: feed, builder: (context, state) => FeedPage()),
-            GoRoute(path: explore, builder: (context, state) => ExplorePage()),
-            GoRoute(path: archive, builder: (context, state) => ArchivePage()),
-            GoRoute(path: profile, builder: (context, state) => ProfilePage()),
+            GoRoute(path: home, builder: (context, state) => const FeedPage()),
+            GoRoute(path: feed, builder: (context, state) => const FeedPage()),
+            GoRoute(path: explore, builder: (context, state) => const ExplorePage()),
+            GoRoute(path: archive, builder: (context, state) => const ArchivePage()),
+            GoRoute(path: profile, builder: (context, state) => const ProfilePage()),
           ],
         ),
 
-        GoRoute(path: post, builder: (context, state) => CreatePostPage()),
+        GoRoute(path: post, builder: (context, state) => const CreatePostPage()),
+        GoRoute(
+          path: '$detail/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id'];
+            return DetailPage(id: id!);
+          },
+        ),
       ],
     );
   }

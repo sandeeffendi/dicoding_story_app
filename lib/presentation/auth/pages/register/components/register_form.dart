@@ -88,10 +88,10 @@ class RegisterFormState extends State<RegisterForm>
     if (!_agreeToTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Row(
+          content: const Row(
             children: [
               Icon(Icons.info_outline, color: Colors.white),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: Text('Please agree to Terms and Conditions')),
             ],
           ),
@@ -808,7 +808,7 @@ class _RegisterButtonState extends State<_RegisterButton> {
                       color: Colors.white,
                     ),
                   )
-                : Row(
+                : const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -819,7 +819,7 @@ class _RegisterButtonState extends State<_RegisterButton> {
                           letterSpacing: 0.5,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
