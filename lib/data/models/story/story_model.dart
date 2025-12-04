@@ -17,8 +17,8 @@ class StoryModel extends StoryEntity {
     description: json["description"],
     photoUrl: json["photoUrl"],
     createdAt: DateTime.parse(json["createdAt"]),
-    lat: json["lat"]?.toDouble(),
-    lon: json["lon"]?.toDouble(),
+    lat: json["lat"]?.toDouble() ?? 1.0,
+    lon: json["lon"]?.toDouble() ?? 1.0,
   );
 
   Map<String, dynamic> toJson() => {

@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:intermediate_first_submission/domain/enitities/story/detail_story_response_entity.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_entity.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_response_entity.dart';
 import 'package:intermediate_first_submission/domain/usecases/story/get_all_story_usecase.dart';
-import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_state.dart';
 
 class HomeFeedProvider extends ChangeNotifier {
   final GetAllStoryUsecase getAllStoryUsecase;
-  final GetStoryByIdUsecase getStoryByIdUsecase;
 
-  HomeFeedProvider({
-    required this.getAllStoryUsecase,
-    required this.getStoryByIdUsecase,
-  });
+  HomeFeedProvider({required this.getAllStoryUsecase});
 
   HomeState _state = const HomeState();
   HomeState get state => _state;
 
   List<StoryEntity>? _listStoryData;
   List<StoryEntity>? get listStoryData => _listStoryData;
-
-  StoryEntity? _storyData;
-  StoryEntity? get storyData => _storyData;
 
   ListStoryResponseEntity? _listStoryResponse;
   ListStoryResponseEntity? get listStoryResponse => _listStoryResponse;

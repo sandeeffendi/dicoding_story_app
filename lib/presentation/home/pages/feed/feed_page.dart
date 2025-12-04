@@ -1,13 +1,14 @@
 // Home Screen - Feed
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_entity.dart';
 import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_state.dart';
 import 'package:provider/provider.dart';
-
 import 'package:timeago/timeago.dart' as timeago;
 
 class FeedPage extends StatefulWidget {
@@ -104,7 +105,11 @@ class _FeedPageState extends State<FeedPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.inbox_outlined, size: 64, color: Colors.grey),
+                  const Icon(
+                    Icons.inbox_outlined,
+                    size: 64,
+                    color: Colors.grey,
+                  ),
                   const SizedBox(height: 64),
                   const Text('No Post Availabale'),
                   const SizedBox(height: 16),
@@ -167,143 +172,154 @@ class _BuildPostItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Header
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 16,
-                backgroundImage: NetworkImage(story.photoUrl),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                story.name,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        context.go('${StoryAppRouter.detail}/${story.id}');
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 16,
+                  backgroundImage: NetworkImage(story.photoUrl),
                 ),
-              ),
-              const Spacer(),
-              IconButton(
-                icon: Icon(Icons.more_vert, color: theme.colorScheme.onSurface),
-                onPressed: () {},
-              ),
-            ],
+                const SizedBox(width: 8),
+                Text(
+                  story.name,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
           ),
-        ),
-        
-        // Image
-        Image.network(
-          story.photoUrl,
-          width: double.infinity,
-          height: 400,
-          fit: BoxFit.cover,
-        ),
-        
-        // Action buttons
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.favorite_border,
-                  color: theme.colorScheme.onSurface,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.chat_bubble_outline,
-                  color: theme.colorScheme.onSurface,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.send_outlined,
-                  color: theme.colorScheme.onSurface,
-                ),
-                onPressed: () {},
-              ),
-              const Spacer(),
-              IconButton(
-                icon: Icon(
-                  Icons.bookmark_border,
-                  color: theme.colorScheme.onSurface,
-                ),
-                onPressed: () {},
-              ),
-            ],
+
+          // Image
+          Image.network(
+            story.photoUrl,
+            width: double.infinity,
+            height: 400,
+            fit: BoxFit.cover,
           ),
-        ),
-        
-        // Caption
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.likedTitle,
-                    style: theme.textTheme.labelSmall,
+
+          // Action buttons
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.favorite_border,
+                    color: theme.colorScheme.onSurface,
                   ),
-                  Text(
-                    'Mulyono ',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.chat_bubble_outline,
+                    color: theme.colorScheme.onSurface,
                   ),
-                  Text('And ', style: theme.textTheme.labelSmall),
-                  Text(
-                    'Others ',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.send_outlined,
+                    color: theme.colorScheme.onSurface,
                   ),
-                ],
-              ),
-              
-              const SizedBox(height: 4),
-              
-              // user name
-              RichText(
-                text: TextSpan(
-                  style: theme.textTheme.bodyMedium,
+                  onPressed: () {},
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: Icon(
+                    Icons.bookmark_border,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+
+          // Caption
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    TextSpan(
-                      text: '${story.name} ',
-                      style: theme.textTheme.bodyMedium?.copyWith(
+                    Text(
+                      AppLocalizations.of(context)!.likedTitle,
+                      style: theme.textTheme.labelSmall,
+                    ),
+                    Text(
+                      'Mulyono ',
+                      style: theme.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    TextSpan(text: story.description),
+                    Text(
+                      AppLocalizations.of(context)!.andTitle,
+                      style: theme.textTheme.labelSmall,
+                    ),
+                    Text(
+                      'Others ',
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              
-              const SizedBox(height: 4),
-              
-              // created at
-              Text(
-                timeago.format(story.createdAt),
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurface.withAlpha(
-                    (0.6 * 255).round(),
+
+                const SizedBox(height: 4),
+
+                // user name
+                RichText(
+                  text: TextSpan(
+                    style: theme.textTheme.bodyMedium,
+                    children: [
+                      TextSpan(
+                        text: '${story.name} ',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(text: story.description),
+                    ],
                   ),
                 ),
-              ),
-            ],
+
+                const SizedBox(height: 4),
+
+                // created at
+                Text(
+                  timeago.format(story.createdAt),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withAlpha(
+                      (0.6 * 255).round(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        
-        const SizedBox(height: 12),
-      ],
+
+          const SizedBox(height: 12),
+        ],
+      ),
     );
   }
 }

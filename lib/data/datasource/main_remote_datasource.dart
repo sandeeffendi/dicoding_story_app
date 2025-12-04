@@ -212,7 +212,7 @@ class MainRemoteDatasource {
     required String id,
   }) async {
     try {
-      final uri = Uri.parse('$baseUrl//stories/$id');
+      final uri = Uri.parse('$baseUrl/stories/$id');
 
       final response = await http.get(
         uri,
@@ -266,7 +266,7 @@ class MainRemoteDatasource {
     } on HttpException catch (e) {
       throw Exception('HTTP error: ${e.message}');
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      throw Exception('Unexpected error: $e hidup jokowi');
     }
   }
 

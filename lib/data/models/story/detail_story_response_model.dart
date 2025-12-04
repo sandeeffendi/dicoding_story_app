@@ -12,7 +12,7 @@ class DetailStoryResponseModel extends DetailStoryResponseEntity {
       DetailStoryResponseModel(
         error: json["error"],
         message: json["message"],
-        story: StoryModel.fromJson(json),
+        story: StoryModel.fromJson(json['story']),
       );
 
   Map<String, dynamic> toJson() => {

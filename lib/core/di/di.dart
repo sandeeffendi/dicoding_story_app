@@ -12,6 +12,7 @@ import 'package:intermediate_first_submission/domain/usecases/story/get_all_stor
 import 'package:intermediate_first_submission/domain/usecases/story/get_story_by_id_usecase.dart';
 import 'package:intermediate_first_submission/env/env.dart';
 import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/presentation/home/provider/detail_provider/detail_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_provider.dart';
 import 'package:intermediate_first_submission/presentation/home/provider/profile_proivder/profile_provider.dart';
@@ -57,9 +58,8 @@ Future<void> init(SharedPreferences prefs) async {
   sl.registerFactory(
     () => AuthProvider(createAccountUsecase: sl(), loginUsecase: sl()),
   );
-  sl.registerFactory(
-    () => HomeFeedProvider(getAllStoryUsecase: sl(), getStoryByIdUsecase: sl()),
-  );
+  sl.registerFactory(() => HomeFeedProvider(getAllStoryUsecase: sl()));
   sl.registerFactory(() => PostProvider(addStoryWithtokenUsecase: sl()));
   sl.registerFactory(() => ProfileProvider());
+  sl.registerFactory(() => DetailProvider(getStoryByIdUsecase: sl()));
 }
