@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate_first_submission/app/story_app.dart';
-import 'package:intermediate_first_submission/presentation/auth/provider/auth_provider.dart';
-import 'package:intermediate_first_submission/presentation/home/provider/detail_provider/detail_provider.dart';
-import 'package:intermediate_first_submission/presentation/home/provider/feed_provider/feed_provider.dart';
-import 'package:intermediate_first_submission/presentation/home/provider/post_provider/post_provider.dart';
-import 'package:intermediate_first_submission/presentation/home/provider/profile_proivder/profile_provider.dart';
+import 'package:intermediate_first_submission/features/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/features/detail/provider/detail_provider.dart';
+import 'package:intermediate_first_submission/features/feed/provider/feed_provider.dart';
+import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
+import 'package:intermediate_first_submission/features/profile/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/di/di.dart' as di;
