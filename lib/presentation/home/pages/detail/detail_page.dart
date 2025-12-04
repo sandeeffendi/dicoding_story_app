@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/domain/enitities/story/story_entity.dart';
 
 class DetailPage extends StatefulWidget {
@@ -11,13 +13,14 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   late StoryEntity story;
+  late SessionServices sessionServices;
 
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback(callback)
-    
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      sessionServices = GetIt.instance<SessionServices>();
+    });
     
   }
 
@@ -35,7 +38,7 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
 
-      body: _BuildDetailPost(context: context,, story: null,),
+      body: _BuildDetailPost(context: context, story: ,),
     );
   }
 }

@@ -27,10 +27,6 @@ class HomeFeedProvider extends ChangeNotifier {
   ListStoryResponseEntity? _listStoryResponse;
   ListStoryResponseEntity? get listStoryResponse => _listStoryResponse;
 
-  DetailStoryResponseEntity? _detailStoryResponseEntity;
-  DetailStoryResponseEntity? get detailStoryResponseEntity =>
-      _detailStoryResponseEntity;
-
   // get all story trigger method
   Future<void> getAllStory(String token) async {
     _state = _state.copyWith(status: HomeStatus.loading);
@@ -55,6 +51,4 @@ class HomeFeedProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // get story by id trigger method
 }
