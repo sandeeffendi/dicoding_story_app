@@ -52,7 +52,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.close, color: theme.colorScheme.onSurface),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: Text(
           AppLocalizations.of(context)!.newPostTitle,
@@ -156,7 +156,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   leading: const Icon(Icons.camera_alt),
                                   title: const Text('Camera'),
                                   onTap: () async {
-                                    Navigator.pop(context);
+                                    context.pop();
 
                                     final XFile? picked = await picker
                                         .pickImage(source: ImageSource.camera);
@@ -172,7 +172,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                   leading: const Icon(Icons.photo),
                                   title: const Text('Gallery'),
                                   onTap: () async {
-                                    Navigator.pop(context);
+                                    context.pop();
 
                                     final XFile? picked = await picker
                                         .pickImage(source: ImageSource.gallery);
