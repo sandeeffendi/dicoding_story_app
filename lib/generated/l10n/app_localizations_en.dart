@@ -76,4 +76,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get othersTitle => 'Others';
+
+  @override
+  String get locationTitle => 'Location';
 }

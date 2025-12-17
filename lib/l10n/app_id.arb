@@ -21,5 +21,6 @@
   "registerAccountSubtitle": "Lengkapi Informasi",
   "editProfileTitle": "Perbarui Profile",
   "logOutTitle": "Keluar",
-  "othersTitle": "Lainnya"
+  "othersTitle": "Lainnya",
+  "locationTitle" : "Lokasi"
 }
