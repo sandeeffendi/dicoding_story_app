@@ -7,10 +7,14 @@ import 'package:intermediate_first_submission/features/post/provider/post_provid
 import 'package:intermediate_first_submission/features/profile/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timeago/timeago.dart';
 import 'core/di/di.dart' as di;
+import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  timeago.setLocaleMessages('id', IdMessages());
 
   final prefs = await SharedPreferences.getInstance();
 

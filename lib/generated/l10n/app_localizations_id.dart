@@ -73,4 +73,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get logOutTitle => 'Keluar';
+
+  @override
+  String get othersTitle => 'Lainnya';
 }

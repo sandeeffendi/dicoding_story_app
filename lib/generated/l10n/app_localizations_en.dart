@@ -73,4 +73,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logOutTitle => 'Log out';
+
+  @override
+  String get othersTitle => 'Others';
 }
