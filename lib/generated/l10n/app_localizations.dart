@@ -229,6 +229,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log out'**
   String get logOutTitle;
+
+  /// No description provided for @othersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get othersTitle;
 }
 
 class _AppLocalizationsDelegate

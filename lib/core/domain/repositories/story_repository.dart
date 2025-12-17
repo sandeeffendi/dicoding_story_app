@@ -5,7 +5,11 @@ import 'package:intermediate_first_submission/core/domain/enitities/story/story_
 
 abstract class StoryRepository {
   // get all story
-  Future<ListStoryResponseEntity> getAllStory({required String token});
+  Future<ListStoryResponseEntity> getAllStory({
+    required String token,
+    required String size,
+    required String page,
+  });
 
   // get story by id
   Future<DetailStoryResponseEntity> getStoryById({

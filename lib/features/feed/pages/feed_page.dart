@@ -21,16 +21,35 @@ class FeedPage extends StatefulWidget {
 class _FeedPageState extends State<FeedPage> {
   late SessionServices sessionServices;
 
+  final ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
 
     sessionServices = GetIt.instance<SessionServices>();
 
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final token = sessionServices.getAccessToken();
+          context.read<HomeFeedProvider>().getAllStory(token!);
+        });
+      }
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = sessionServices.getAccessToken();
-      context.read<HomeFeedProvider>().getAllStory(token!);
+      context.read<HomeFeedProvider>().resetPagination(token!);
+      context.read<HomeFeedProvider>().getAllStory(token);
     });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -100,7 +119,7 @@ class _FeedPageState extends State<FeedPage> {
           }
 
           // Empty state
-          if (homeProvider.listStoryData == null) {
+          if (homeProvider.listStoryData == []) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -126,34 +145,48 @@ class _FeedPageState extends State<FeedPage> {
 
           // Success state
           return RefreshIndicator(
-            onRefresh: () => homeProvider.getAllStory(
+            onRefresh: () => homeProvider.resetPagination(
               sessionServices.getAccessToken().toString(),
             ),
-            child: ListView.builder(
-              itemCount: listStories!.length,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Column(
-                    children: [
-                      _BuildStoryList(context: context, stories: listStories),
-                      Divider(
-                        height: 1,
-                        color: theme.colorScheme.outline.withAlpha(
-                          (0.2 * 255).round(),
-                        ),
-                      ),
-                      _BuildPostItem(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: listStories.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Column(
+                          children: [
+                            _BuildStoryList(
+                              context: context,
+                              stories: listStories,
+                            ),
+                            Divider(
+                              height: 1,
+                              color: theme.colorScheme.outline.withAlpha(
+                                (0.2 * 255).round(),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+
+                      final storyIndex = index - 1;
+                      return _BuildPostItem(
                         context: context,
-                        story: listStories[index],
-                      ),
-                    ],
-                  );
-                }
-                return _BuildPostItem(
-                  context: context,
-                  story: listStories[index],
-                );
-              },
+                        story: listStories[storyIndex],
+                      );
+                    },
+                  ),
+                ),
+
+                if (homeProvider.state.status == HomeStatus.paginationLoading)
+                  const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: CircularProgressIndicator(),
+                  ),
+              ],
             ),
           );
         },
@@ -171,6 +204,7 @@ class _BuildPostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).languageCode;
 
     return GestureDetector(
       onTap: () {
@@ -276,7 +310,7 @@ class _BuildPostItem extends StatelessWidget {
                       style: theme.textTheme.labelSmall,
                     ),
                     Text(
-                      'Others ',
+                      ' ${AppLocalizations.of(context)!.othersTitle}',
                       style: theme.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -306,7 +340,7 @@ class _BuildPostItem extends StatelessWidget {
 
                 // created at
                 Text(
-                  timeago.format(story.createdAt),
+                  timeago.format(story.createdAt, locale: locale),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurface.withAlpha(
                       (0.6 * 255).round(),
