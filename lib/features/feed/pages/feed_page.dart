@@ -41,7 +41,8 @@ class _FeedPageState extends State<FeedPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = sessionServices.getAccessToken();
-      context.read<HomeFeedProvider>().getAllStory(token!);
+      context.read<HomeFeedProvider>().resetPagination(token!);
+      context.read<HomeFeedProvider>().getAllStory(token);
     });
   }
 
@@ -203,6 +204,7 @@ class _BuildPostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).languageCode;
 
     return GestureDetector(
       onTap: () {
@@ -308,7 +310,7 @@ class _BuildPostItem extends StatelessWidget {
                       style: theme.textTheme.labelSmall,
                     ),
                     Text(
-                      'Others ',
+                      ' ${AppLocalizations.of(context)!.othersTitle}',
                       style: theme.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -338,7 +340,7 @@ class _BuildPostItem extends StatelessWidget {
 
                 // created at
                 Text(
-                  timeago.format(story.createdAt),
+                  timeago.format(story.createdAt, locale: locale),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurface.withAlpha(
                       (0.6 * 255).round(),
