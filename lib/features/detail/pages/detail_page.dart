@@ -160,7 +160,9 @@ class _BuildDetailPost extends StatelessWidget {
               Text(story.name),
               const Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push(StoryAppRouter.location);
+                },
                 icon: Icon(
                   (story.lat == 1 && story.lon == 1)
                       ? Icons.more_vert

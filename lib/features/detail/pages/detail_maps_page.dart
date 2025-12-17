@@ -41,12 +41,21 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
         child: Stack(
           children: [
             GoogleMap(
+              mapToolbarEnabled: false,
+              zoomControlsEnabled: false,
+              myLocationButtonEnabled: false,
+
               mapType: mapType,
               markers: markers,
               initialCameraPosition: CameraPosition(
                 target: dicodingOffice,
                 zoom: 18,
               ),
+              onMapCreated: (controller) {
+                setState(() {
+                  mapController = controller;
+                });
+              },
             ),
           ],
         ),
