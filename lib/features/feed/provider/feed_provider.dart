@@ -12,19 +12,37 @@ class HomeFeedProvider extends ChangeNotifier {
   HomeState _state = const HomeState();
   HomeState get state => _state;
 
-  List<StoryEntity>? _listStoryData;
-  List<StoryEntity>? get listStoryData => _listStoryData;
+  final List<StoryEntity> _listStoryData = [];
+  List<StoryEntity> get listStoryData => _listStoryData;
 
   ListStoryResponseEntity? _listStoryResponse;
   ListStoryResponseEntity? get listStoryResponse => _listStoryResponse;
 
+  int pageItem = 1;
+  int sizeItem = 10;
+  bool _isFetching = false;
+  bool _hasMore = true;
+
   // get all story trigger method
   Future<void> getAllStory(String token) async {
-    _state = _state.copyWith(status: HomeStatus.loading);
+    if (_isFetching || !_hasMore) return;
+
+    _isFetching = true;
+
+    if (pageItem == 1) {
+      _state = _state.copyWith(status: HomeStatus.loading);
+    } else {
+      _state = _state.copyWith(status: HomeStatus.paginationLoading);
+    }
+
     notifyListeners();
 
     try {
-      final result = await getAllStoryUsecase.call(token: token);
+      final result = await getAllStoryUsecase.call(
+        token: token,
+        size: sizeItem.toString(),
+        page: pageItem.toString(),
+      );
 
       if (result.error == true) {
         _state = _state.copyWith(
@@ -32,14 +50,28 @@ class HomeFeedProvider extends ChangeNotifier {
           message: result.message,
         );
       } else {
-        _listStoryResponse = result;
-        _listStoryData = result.listStory;
+        await Future.delayed(const Duration(milliseconds: 500));
+        _listStoryData.addAll(result.listStory);
+        _hasMore = result.listStory.length == sizeItem;
+        pageItem++;
+
         _state = _state.copyWith(status: HomeStatus.success);
       }
     } catch (e) {
       _state = _state.copyWith(status: HomeStatus.error, message: e.toString());
     } finally {
+      _isFetching = false;
       notifyListeners();
     }
+  }
+
+  Future<void> resetPagination(String token) async {
+    pageItem = 1;
+    _hasMore = true;
+    _listStoryData.clear();
+    _state = _state.copyWith(status: HomeStatus.initial);
+    notifyListeners();
+
+    await getAllStory(token);
   }
 }
