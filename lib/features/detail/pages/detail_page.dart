@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
-import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/story_entity.dart';
-import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/features/detail/provider/detail_provider.dart';
 import 'package:intermediate_first_submission/features/detail/provider/detail_state.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -142,6 +142,7 @@ class _BuildDetailPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).languageCode;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +161,12 @@ class _BuildDetailPost extends StatelessWidget {
               const Spacer(),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.more_vert, color: theme.colorScheme.onSurface),
+                icon: Icon(
+                  (story.lat == 1 && story.lon == 1)
+                      ? Icons.more_vert
+                      : Icons.location_pin,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
             ],
           ),
@@ -267,7 +273,7 @@ class _BuildDetailPost extends StatelessWidget {
 
               // created at
               Text(
-                timeago.format(story.createdAt),
+                timeago.format(story.createdAt, locale: locale),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withAlpha(
                     (0.6 * 255).round(),
