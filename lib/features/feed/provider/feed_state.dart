@@ -1,6 +1,6 @@
 import 'package:intermediate_first_submission/core/domain/enitities/story/story_entity.dart';
 
-enum HomeStatus { initial, loading, success, error }
+enum HomeStatus { initial, loading, paginationLoading, success, error }
 
 class HomeState {
   final HomeStatus status;
@@ -13,6 +13,7 @@ class HomeState {
     this.storyData,
   });
 
+  bool get isPaginationLoading => status == HomeStatus.paginationLoading;
   bool get isLoading => status == HomeStatus.loading;
   bool get isError => status == HomeStatus.error;
   bool get isSuccess => status == HomeStatus.success;
