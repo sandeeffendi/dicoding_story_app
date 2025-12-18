@@ -1,5 +1,7 @@
 import 'package:intermediate_first_submission/core/data/datasource/main_remote_datasource.dart';
 import 'package:intermediate_first_submission/core/data/models/story/add_story_request_model.dart';
+import 'package:intermediate_first_submission/core/data/models/story/add_story_response_model.dart';
+import 'package:intermediate_first_submission/core/data/models/story/detail_story_response_model.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_request_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_response_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/detail_story_response_entity.dart';
@@ -22,11 +24,7 @@ class StoryRepositoryImpl implements StoryRepository {
       page: page,
     );
 
-    return ListStoryResponseEntity(
-      error: response.error,
-      message: response.message,
-      listStory: response.listStory,
-    );
+    return response.toEntity();
   }
 
   @override
@@ -36,11 +34,7 @@ class StoryRepositoryImpl implements StoryRepository {
   }) async {
     final response = await remoteDatasource.getStoryById(token: token, id: id);
 
-    return DetailStoryResponseEntity(
-      error: response.error,
-      message: response.message,
-      story: response.story,
-    );
+    return response.toEntity();
   }
 
   @override
@@ -51,14 +45,11 @@ class StoryRepositoryImpl implements StoryRepository {
     final response = await remoteDatasource.addStoryWithToken(
       token: token,
       story: AddStoryRequestModel(
-        description: storyRequest.description,
+        description: storyRequest.description ?? ' ',
         photo: storyRequest.photo,
       ),
     );
 
-    return AddStoryResponseEntity(
-      error: response.error,
-      message: response.message,
-    );
+    return response.toEntity();
   }
 }

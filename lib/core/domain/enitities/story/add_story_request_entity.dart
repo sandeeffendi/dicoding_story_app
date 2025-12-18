@@ -2,7 +2,7 @@ import 'dart:io';
 
 class AddStoryRequestEntity {
   final String? description;
-  final File photo;
+  final List<int> photo;
   final double? lat;
   final double? lon;
 

@@ -1,27 +1,29 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intermediate_first_submission/core/data/models/story/story_model.dart';
+import 'package:intermediate_first_submission/core/domain/enitities/story/story_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/story_response_entity.dart';
 
-class ListStoryResponseModel extends ListStoryResponseEntity {
-  ListStoryResponseModel({
-    required super.error,
-    required super.message,
-    required super.listStory,
-  });
+part 'story_response_model.freezed.dart';
+part 'story_response_model.g.dart';
 
-  factory ListStoryResponseModel.fromJson(Map<String, dynamic> json) =>
-      ListStoryResponseModel(
-        error: json["error"],
-        message: json["message"],
-        listStory: (json["listStory"] as List)
-            .map((item) => StoryModel.fromJson(item))
-            .toList(),
-      );
+@freezed
+sealed class StoryResponseModel with _$StoryResponseModel {
+  const factory StoryResponseModel({
+    required bool error,
+    required String message,
+    required List<StoryModel> listStory,
+  }) = _StoryResponseModel;
 
-  Map<String, dynamic> toJson() => {
-    "error": error,
-    "message": message,
-    "listStory": listStory
-        .map((story) => (story as StoryModel).toJson())
-        .toList(),
-  };
+  factory StoryResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$StoryResponseModelFromJson(json);
+}
+
+extension StoryResponseModelMapper on StoryResponseModel {
+  ListStoryResponseEntity toEntity() {
+    return ListStoryResponseEntity(
+      error: error,
+      message: message,
+      listStory: listStory.map((e) => e.toEntity()).toList(),
+    );
+  }
 }
