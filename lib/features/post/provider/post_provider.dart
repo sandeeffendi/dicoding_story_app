@@ -28,6 +28,10 @@ class PostProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<int>> fileToInt(File photo) async {
+    return await photo.readAsBytes();
+  }
+
   // add story with token trigger method
   Future<void> addStory({
     required String token,
@@ -38,10 +42,12 @@ class PostProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      final photoToInt = await fileToInt(photo);
+
       final result = await addStoryWithtokenUsecase.call(
         token: token,
         description: description,
-        photo: photo,
+        photo: photoToInt,
       );
 
       if (result.error == true) {

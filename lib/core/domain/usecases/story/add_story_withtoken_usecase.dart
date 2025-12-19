@@ -11,8 +11,10 @@ class AddStoryWithtokenUsecase {
   Future<AddStoryResponseEntity> call({
     required String token,
     required String description,
-    required File photo,
+    required List<int> photo,
   }) {
+
+    
     return storyRepository.addStoryWithToken(
       token: token,
       storyRequest: AddStoryRequestEntity(
