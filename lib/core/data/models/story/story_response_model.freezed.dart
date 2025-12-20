@@ -11,24 +11,31 @@ part of 'story_response_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+ListStoryResponseModel _$ListStoryResponseModelFromJson(
+  Map<String, dynamic> json
+) {
+    return _StoryResponseModel.fromJson(
+      json
+    );
+}
 
 /// @nodoc
-mixin _$StoryResponseModel {
+mixin _$ListStoryResponseModel {
 
  bool get error; String get message; List<StoryModel> get listStory;
-/// Create a copy of StoryResponseModel
+/// Create a copy of ListStoryResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$StoryResponseModelCopyWith<StoryResponseModel> get copyWith => _$StoryResponseModelCopyWithImpl<StoryResponseModel>(this as StoryResponseModel, _$identity);
+$ListStoryResponseModelCopyWith<ListStoryResponseModel> get copyWith => _$ListStoryResponseModelCopyWithImpl<ListStoryResponseModel>(this as ListStoryResponseModel, _$identity);
 
-  /// Serializes this StoryResponseModel to a JSON map.
+  /// Serializes this ListStoryResponseModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StoryResponseModel&&(identical(other.error, error) || other.error == error)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.listStory, listStory));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListStoryResponseModel&&(identical(other.error, error) || other.error == error)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.listStory, listStory));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +44,15 @@ int get hashCode => Object.hash(runtimeType,error,message,const DeepCollectionEq
 
 @override
 String toString() {
-  return 'StoryResponseModel(error: $error, message: $message, listStory: $listStory)';
+  return 'ListStoryResponseModel(error: $error, message: $message, listStory: $listStory)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $StoryResponseModelCopyWith<$Res>  {
-  factory $StoryResponseModelCopyWith(StoryResponseModel value, $Res Function(StoryResponseModel) _then) = _$StoryResponseModelCopyWithImpl;
+abstract mixin class $ListStoryResponseModelCopyWith<$Res>  {
+  factory $ListStoryResponseModelCopyWith(ListStoryResponseModel value, $Res Function(ListStoryResponseModel) _then) = _$ListStoryResponseModelCopyWithImpl;
 @useResult
 $Res call({
  bool error, String message, List<StoryModel> listStory
@@ -56,14 +63,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$StoryResponseModelCopyWithImpl<$Res>
-    implements $StoryResponseModelCopyWith<$Res> {
-  _$StoryResponseModelCopyWithImpl(this._self, this._then);
+class _$ListStoryResponseModelCopyWithImpl<$Res>
+    implements $ListStoryResponseModelCopyWith<$Res> {
+  _$ListStoryResponseModelCopyWithImpl(this._self, this._then);
 
-  final StoryResponseModel _self;
-  final $Res Function(StoryResponseModel) _then;
+  final ListStoryResponseModel _self;
+  final $Res Function(ListStoryResponseModel) _then;
 
-/// Create a copy of StoryResponseModel
+/// Create a copy of ListStoryResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? error = null,Object? message = null,Object? listStory = null,}) {
   return _then(_self.copyWith(
@@ -77,8 +84,8 @@ as List<StoryModel>,
 }
 
 
-/// Adds pattern-matching-related methods to [StoryResponseModel].
-extension StoryResponseModelPatterns on StoryResponseModel {
+/// Adds pattern-matching-related methods to [ListStoryResponseModel].
+extension ListStoryResponseModelPatterns on ListStoryResponseModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -204,7 +211,7 @@ return $default(_that.error,_that.message,_that.listStory);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _StoryResponseModel implements StoryResponseModel {
+class _StoryResponseModel implements ListStoryResponseModel {
   const _StoryResponseModel({required this.error, required this.message, required final  List<StoryModel> listStory}): _listStory = listStory;
   factory _StoryResponseModel.fromJson(Map<String, dynamic> json) => _$StoryResponseModelFromJson(json);
 
@@ -218,7 +225,7 @@ class _StoryResponseModel implements StoryResponseModel {
 }
 
 
-/// Create a copy of StoryResponseModel
+/// Create a copy of ListStoryResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -240,14 +247,14 @@ int get hashCode => Object.hash(runtimeType,error,message,const DeepCollectionEq
 
 @override
 String toString() {
-  return 'StoryResponseModel(error: $error, message: $message, listStory: $listStory)';
+  return 'ListStoryResponseModel(error: $error, message: $message, listStory: $listStory)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$StoryResponseModelCopyWith<$Res> implements $StoryResponseModelCopyWith<$Res> {
+abstract mixin class _$StoryResponseModelCopyWith<$Res> implements $ListStoryResponseModelCopyWith<$Res> {
   factory _$StoryResponseModelCopyWith(_StoryResponseModel value, $Res Function(_StoryResponseModel) _then) = __$StoryResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
@@ -266,7 +273,7 @@ class __$StoryResponseModelCopyWithImpl<$Res>
   final _StoryResponseModel _self;
   final $Res Function(_StoryResponseModel) _then;
 
-/// Create a copy of StoryResponseModel
+/// Create a copy of ListStoryResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? error = null,Object? message = null,Object? listStory = null,}) {
   return _then(_StoryResponseModel(

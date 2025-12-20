@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class AddStoryRequestEntity {
   final String? description;
   final List<int> photo;

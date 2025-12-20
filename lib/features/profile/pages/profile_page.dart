@@ -226,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
               }
 
               // empty state
-              if (provider.listStoryData == null) {
+              if (provider.listStoryData.isEmpty) {
                 return Center(
                   child: Column(
                     children: [
@@ -259,7 +259,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisSpacing: 2,
                   mainAxisSpacing: 2,
                 ),
-                itemCount: listStories!.length,
+                itemCount: listStories.length,
                 itemBuilder: (context, index) {
                   return Image.network(
                     listStories[index].photoUrl,

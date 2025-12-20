@@ -2,6 +2,7 @@ import 'package:intermediate_first_submission/core/data/datasource/main_remote_d
 import 'package:intermediate_first_submission/core/data/models/story/add_story_request_model.dart';
 import 'package:intermediate_first_submission/core/data/models/story/add_story_response_model.dart';
 import 'package:intermediate_first_submission/core/data/models/story/detail_story_response_model.dart';
+import 'package:intermediate_first_submission/core/data/models/story/story_response_model.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_request_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_response_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/detail_story_response_entity.dart';

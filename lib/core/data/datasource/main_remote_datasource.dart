@@ -285,15 +285,11 @@ class MainRemoteDatasource {
 
       final request = http.MultipartRequest('POST', uri)
         ..headers['Authorization'] = 'Bearer $token'
-        ..fields['description'] = story.description!.isEmpty
+        ..fields['description'] = story.description.isEmpty
             ? ' '
-            : story.description!;
+            : story.description;
 
-      final requestData = await http.MultipartFile.fromPath(
-        'photo',
-        story.photo.path,
-        filename: story.photo.path.split('/').last,
-      );
+      final requestData = http.MultipartFile.fromBytes('photo', story.photo);
 
       // add file
       request.files.add(requestData);
