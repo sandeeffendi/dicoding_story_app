@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_request_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_response_entity.dart';
 import 'package:intermediate_first_submission/core/domain/repositories/story_repository.dart';
@@ -11,7 +9,7 @@ class AddStoryWithtokenUsecase {
   Future<AddStoryResponseEntity> call({
     required String token,
     required String description,
-    required File photo,
+    required List<int> photo,
   }) {
     return storyRepository.addStoryWithToken(
       token: token,

@@ -1,33 +1,35 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/story_entity.dart';
 
-class StoryModel extends StoryEntity {
-  StoryModel({
-    required super.id,
-    required super.name,
-    required super.description,
-    required super.photoUrl,
-    required super.createdAt,
-    required super.lat,
-    required super.lon,
-  });
+part 'story_model.freezed.dart';
+part 'story_model.g.dart';
 
-  factory StoryModel.fromJson(Map<String, dynamic> json) => StoryModel(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-    photoUrl: json["photoUrl"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    lat: json["lat"]?.toDouble() ?? 1.0,
-    lon: json["lon"]?.toDouble() ?? 1.0,
-  );
+@freezed
+sealed class StoryModel with _$StoryModel {
+  const factory StoryModel({
+    required String id,
+    required String name,
+    required String description,
+    required String photoUrl,
+    required DateTime createdAt,
+    @Default(0) double? lat,
+    @Default(0) double? lon,
+  }) = _StoryModel;
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "photoUrl": photoUrl,
-    "createdAt": createdAt.toIso8601String(),
-    "lat": lat,
-    "lon": lon,
-  };
+  factory StoryModel.fromJson(Map<String, dynamic> json) =>
+      _$StoryModelFromJson(json);
+}
+
+extension StoryModelMapper on StoryModel {
+  StoryEntity toEntity() {
+    return StoryEntity(
+      id: id,
+      name: name,
+      description: description,
+      photoUrl: photoUrl,
+      createdAt: createdAt,
+      lat: lat,
+      lon: lon,
+    );
+  }
 }

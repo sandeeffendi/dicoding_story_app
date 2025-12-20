@@ -4,3 +4,8 @@ linter:
   rules:
     - prefer_const_constructors
     - prefer_const_declarations
+
+analyzer:
+  exclude:
+    - "**/*.freezed.dart"
+    - "**/*.g.dart"

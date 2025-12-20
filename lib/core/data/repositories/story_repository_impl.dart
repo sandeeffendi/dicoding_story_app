@@ -1,5 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:intermediate_first_submission/core/data/datasource/main_remote_datasource.dart';
 import 'package:intermediate_first_submission/core/data/models/story/add_story_request_model.dart';
+import 'package:intermediate_first_submission/core/data/models/story/add_story_response_model.dart';
+import 'package:intermediate_first_submission/core/data/models/story/detail_story_response_model.dart';
+import 'package:intermediate_first_submission/core/data/models/story/story_response_model.dart';
+import 'package:intermediate_first_submission/core/data/repositories/service/image_compression_service.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_request_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/add_story_response_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/detail_story_response_entity.dart';
@@ -8,7 +14,11 @@ import 'package:intermediate_first_submission/core/domain/repositories/story_rep
 
 class StoryRepositoryImpl implements StoryRepository {
   final MainRemoteDatasource remoteDatasource;
-  const StoryRepositoryImpl(this.remoteDatasource);
+  final ImageCompressionService imageCompressionService;
+  const StoryRepositoryImpl(
+    this.remoteDatasource,
+    this.imageCompressionService,
+  );
 
   @override
   Future<ListStoryResponseEntity> getAllStory({
@@ -22,11 +32,7 @@ class StoryRepositoryImpl implements StoryRepository {
       page: page,
     );
 
-    return ListStoryResponseEntity(
-      error: response.error,
-      message: response.message,
-      listStory: response.listStory,
-    );
+    return response.toEntity();
   }
 
   @override
@@ -36,11 +42,7 @@ class StoryRepositoryImpl implements StoryRepository {
   }) async {
     final response = await remoteDatasource.getStoryById(token: token, id: id);
 
-    return DetailStoryResponseEntity(
-      error: response.error,
-      message: response.message,
-      story: response.story,
-    );
+    return response.toEntity();
   }
 
   @override
@@ -48,17 +50,26 @@ class StoryRepositoryImpl implements StoryRepository {
     required String token,
     required AddStoryRequestEntity storyRequest,
   }) async {
+    final compressedImage = await compressBytes(storyRequest.photo);
+
     final response = await remoteDatasource.addStoryWithToken(
       token: token,
       story: AddStoryRequestModel(
-        description: storyRequest.description,
-        photo: storyRequest.photo,
+        description: storyRequest.description ?? ' ',
+        photo: compressedImage,
       ),
     );
 
-    return AddStoryResponseEntity(
-      error: response.error,
-      message: response.message,
+    return response.toEntity();
+  }
+
+  Future<List<int>> compressBytes(List<int> bytes) async {
+    final uint8 = Uint8List.fromList(bytes);
+
+    final compressedUint8 = await imageCompressionService.compressUnder1MB(
+      uint8,
     );
+
+    return compressedUint8.toList();
   }
 }

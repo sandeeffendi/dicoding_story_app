@@ -1,8 +1,10 @@
-import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/core/data/datasource/main_remote_datasource.dart';
+import 'package:intermediate_first_submission/core/data/models/auth/login_response_model.dart';
+import 'package:intermediate_first_submission/core/data/models/auth/register_response_model.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/auth/login_response_entity.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/auth/register_response_entity.dart';
 import 'package:intermediate_first_submission/core/domain/repositories/auth_repository.dart';
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final MainRemoteDatasource remoteDatasource;
@@ -21,10 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
       password: password,
     );
 
-    return RegisterResponseEntity(
-      error: response.error,
-      message: response.message,
-    );
+    return response.toEntity();
   }
 
   @override
@@ -40,10 +39,6 @@ class AuthRepositoryImpl implements AuthRepository {
     await sessionServices.saveToken(accessToken: response.loginResult.token);
     await sessionServices.saveUsername(username: response.loginResult.name);
 
-    return LoginResponseEntity(
-      error: response.error,
-      message: response.message,
-      loginResult: response.loginResult,
-    );
+    return response.toEntity();
   }
 }

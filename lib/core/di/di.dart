@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:intermediate_first_submission/core/data/repositories/service/image_compression_service.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/core/data/datasource/main_remote_datasource.dart';
 import 'package:intermediate_first_submission/core/data/repositories/auth_repository_impl.dart';
@@ -28,6 +29,11 @@ Future<void> init(SharedPreferences prefs) async {
 
   sl.registerSingleton<SessionServices>(SessionServices(prefs));
 
+  /* --- Image Compression Service =--*/
+  sl.registerLazySingleton<ImageCompressionService>(
+    () => ImageCompressionService(),
+  );
+
   /* --- Data Chain --- */
 
   // datasource
@@ -39,7 +45,9 @@ Future<void> init(SharedPreferences prefs) async {
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(sl(), sl()),
   );
-  sl.registerLazySingleton<StoryRepository>(() => StoryRepositoryImpl(sl()));
+  sl.registerLazySingleton<StoryRepository>(
+    () => StoryRepositoryImpl(sl(), sl()),
+  );
 
   /* -- usecases --*/
 
