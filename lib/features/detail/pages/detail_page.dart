@@ -51,83 +51,85 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
 
-      body: Consumer<DetailProvider>(
-        builder: (context, detailProvider, child) {
-          // error state
-          if (detailProvider.state.status == DetailStatus.error) {
-            return Center(
-              child: Column(
-                children: [
-                  const Icon(
-                    Icons.wifi_tethering_error_rounded_outlined,
-                    size: 64,
-                    color: Colors.red,
-                  ),
+      body: SingleChildScrollView(
+        child: Consumer<DetailProvider>(
+          builder: (context, detailProvider, child) {
+            // error state
+            if (detailProvider.state.status == DetailStatus.error) {
+              return Center(
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.wifi_tethering_error_rounded_outlined,
+                      size: 64,
+                      color: Colors.red,
+                    ),
 
-                  Text('Caught an error ${detailProvider.state.message}'),
+                    Text('Caught an error ${detailProvider.state.message}'),
 
-                  const SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      detailProvider.getStoryById(
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        detailProvider.getStoryById(
+                          token: sessionServices.getAccessToken().toString(),
+                          id: widget.id,
+                        );
+                      },
+                      label: const Text('Retry'),
+                      icon: const Icon(Icons.refresh),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            // loading state
+            if (detailProvider.state.status == DetailStatus.loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            // empty state
+            if (detailProvider.storyData == null) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.inbox_outlined,
+                      size: 64,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(height: 64),
+                    ElevatedButton(
+                      onPressed: () => detailProvider.getStoryById(
                         token: sessionServices.getAccessToken().toString(),
                         id: widget.id,
-                      );
-                    },
-                    label: const Text('Retry'),
-                    icon: const Icon(Icons.refresh),
-                  ),
-                ],
-              ),
-            );
-          }
-
-          // loading state
-          if (detailProvider.state.status == DetailStatus.loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          // empty state
-          if (detailProvider.storyData == null) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.inbox_outlined,
-                    size: 64,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(height: 64),
-                  ElevatedButton(
-                    onPressed: () => detailProvider.getStoryById(
-                      token: sessionServices.getAccessToken().toString(),
-                      id: widget.id,
+                      ),
+                      child: const Text('Load Story'),
                     ),
-                    child: const Text('Load Story'),
+                  ],
+                ),
+              );
+            }
+
+            // success state
+            return RefreshIndicator(
+              onRefresh: () => detailProvider.getStoryById(
+                token: sessionServices.getAccessToken().toString(),
+                id: widget.id,
+              ),
+              child: Column(
+                children: [
+                  _BuildDetailPost(
+                    context: context,
+                    story: detailProvider.storyData!,
                   ),
                 ],
               ),
             );
-          }
-
-          // success state
-          return RefreshIndicator(
-            onRefresh: () => detailProvider.getStoryById(
-              token: sessionServices.getAccessToken().toString(),
-              id: widget.id,
-            ),
-            child: Column(
-              children: [
-                _BuildDetailPost(
-                  context: context,
-                  story: detailProvider.storyData!,
-                ),
-              ],
-            ),
-          );
-        },
+          },
+        ),
       ),
     );
   }
