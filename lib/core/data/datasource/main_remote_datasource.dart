@@ -289,7 +289,11 @@ class MainRemoteDatasource {
             ? ' '
             : story.description;
 
-      final requestData = http.MultipartFile.fromBytes('photo', story.photo);
+      final requestData = http.MultipartFile.fromBytes(
+        'photo',
+        story.photo,
+        filename: '${story.photo.toString()}.jpg',
+      );
 
       // add file
       request.files.add(requestData);
