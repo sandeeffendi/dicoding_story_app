@@ -40,7 +40,7 @@ class _DetailPageState extends State<DetailPage> {
         backgroundColor: theme.colorScheme.surface,
         elevation: 0,
         title: Text(
-          'Post',
+          AppLocalizations.of(context)!.postsTitle,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
