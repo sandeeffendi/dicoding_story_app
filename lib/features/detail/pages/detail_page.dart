@@ -165,9 +165,6 @@ class _BuildDetailPost extends StatelessWidget {
                 onPressed: (story.lat == 0 && story.lon == 0)
                     ? () {}
                     : () {
-                        print('lat: ${story.lat}');
-                        print('lon: ${story.lon}');
-
                         context.push(
                           '${StoryAppRouter.location}/${story.lat}/${story.lon}',
                         );

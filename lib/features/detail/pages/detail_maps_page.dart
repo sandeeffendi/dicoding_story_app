@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:geocoding/geocoding.dart' as geo;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intermediate_first_submission/features/detail/provider/detail_maps_provider.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class DetailMapsPage extends StatefulWidget {
   final double storyLat;
@@ -19,69 +21,17 @@ class DetailMapsPage extends StatefulWidget {
 }
 
 class _DetailMapsPageState extends State<DetailMapsPage> {
-  late GoogleMapController mapController;
-
-  final Set<Marker> markers = {};
-
-  final currentPosition = const LatLng(-6.8957473, 107.6337669);
-
-  final MapType mapType = MapType.normal;
-
-  geo.Placemark? placemark;
-
   @override
   void initState() {
     super.initState();
 
-    final currentPositiion = LatLng(widget.storyLat, widget.storyLon);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final LatLng latLng = LatLng(widget.storyLat, widget.storyLon);
-
-      final info = await geo.placemarkFromCoordinates(
-        widget.storyLat,
-        widget.storyLon,
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<DetailMapsProvider>().initializeLocation(
+        lat: widget.storyLat,
+        lon: widget.storyLon,
       );
-
-      final place = info[0];
-      final street = place.street;
-      final String address =
-          '${place.subLocality}, ${place.locality},${place.postalCode},${place.country}';
-
-      setState(() {
-        placemark = place;
-      });
-
-      defineMarker(latLng, street, address);
-    });
-
-    final marker = Marker(
-      markerId: const MarkerId('source'),
-      position: currentPositiion,
-    );
-
-    markers.add(marker);
-  }
-
-  // define marker
-  void defineMarker(LatLng latLng, String? street, String address) {
-    final Marker marker = Marker(
-      markerId: const MarkerId('source'),
-      position: latLng,
-      infoWindow: InfoWindow(
-        title: street ?? 'Unnamed Street',
-        snippet: address,
-      ),
-    );
-
-    setState(() {
-      markers.clear();
-      markers.add(marker);
     });
   }
-
-  // onCurentLocationMarkerPress
-  void onCurrentLocationPress() {}
 
   @override
   Widget build(BuildContext context) {
@@ -93,36 +43,39 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.locationTitle)),
       body: Center(
-        child: Stack(
-          children: [
-            GoogleMap(
-              mapToolbarEnabled: false,
-              zoomControlsEnabled: false,
-              myLocationButtonEnabled: false,
+        child: Consumer<DetailMapsProvider>(
+          builder: (context, mapsProvider, child) {
+            return Stack(
+              children: [
+                GoogleMap(
+                  mapToolbarEnabled: false,
+                  zoomControlsEnabled: false,
+                  myLocationButtonEnabled: false,
+                  mapType: MapType.normal,
+                  markers: mapsProvider.state.markers,
+                  initialCameraPosition: CameraPosition(
+                    target: storyCurrentPosition,
+                    zoom: 18,
+                  ),
+                  onMapCreated: (controller) {
+                    mapsProvider.setMapController(controller);
+                  },
+                ),
 
-              mapType: mapType,
-              markers: markers,
-              initialCameraPosition: CameraPosition(
-                target: storyCurrentPosition,
-                zoom: 18,
-              ),
-              onMapCreated: (controller) async {
-                setState(() {
-                  mapController = controller;
-                });
-              },
-            ),
-
-            if (placemark == null)
-              const SizedBox()
-            else
-              Positioned(
-                bottom: 16,
-                right: 16,
-                left: 16,
-                child: PlacemarkWidget(placemark: placemark!),
-              ),
-          ],
+                if (mapsProvider.state.placemark == null)
+                  const SizedBox()
+                else
+                  Positioned(
+                    bottom: 16,
+                    right: 16,
+                    left: 16,
+                    child: PlacemarkWidget(
+                      placemark: mapsProvider.state.placemark!,
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

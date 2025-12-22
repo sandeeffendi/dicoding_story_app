@@ -1,8 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:intermediate_first_submission/core/data/repositories/service/image_compression_service.dart';
-import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/core/data/datasource/main_remote_datasource.dart';
 import 'package:intermediate_first_submission/core/data/repositories/auth_repository_impl.dart';
+import 'package:intermediate_first_submission/core/data/repositories/service/image_compression_service.dart';
 import 'package:intermediate_first_submission/core/data/repositories/story_repository_impl.dart';
 import 'package:intermediate_first_submission/core/domain/repositories/auth_repository.dart';
 import 'package:intermediate_first_submission/core/domain/repositories/story_repository.dart';
@@ -11,8 +10,10 @@ import 'package:intermediate_first_submission/core/domain/usecases/auth/login_us
 import 'package:intermediate_first_submission/core/domain/usecases/story/add_story_withtoken_usecase.dart';
 import 'package:intermediate_first_submission/core/domain/usecases/story/get_all_story_usecase.dart';
 import 'package:intermediate_first_submission/core/domain/usecases/story/get_story_by_id_usecase.dart';
+import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/env/env.dart';
 import 'package:intermediate_first_submission/features/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/features/detail/provider/detail_maps_provider.dart';
 import 'package:intermediate_first_submission/features/detail/provider/detail_provider.dart';
 import 'package:intermediate_first_submission/features/feed/provider/feed_provider.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
@@ -70,4 +71,5 @@ Future<void> init(SharedPreferences prefs) async {
   sl.registerFactory(() => PostProvider(addStoryWithtokenUsecase: sl()));
   sl.registerFactory(() => ProfileProvider());
   sl.registerFactory(() => DetailProvider(getStoryByIdUsecase: sl()));
+  sl.registerFactory(() => DetailMapsProvider());
 }
