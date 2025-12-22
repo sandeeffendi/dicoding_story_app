@@ -21,5 +21,6 @@
   "registerAccountSubtitle": "Complete your details",
   "editProfileTitle": "Edit Profile",
   "logOutTitle": "Log out",
-  "othersTitle": "Others"
+  "othersTitle": "Others",
+  "locationTitle": "Location"
 }
