@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
+import 'package:geocoding/geocoding.dart' as geo;
 
 class DetailMapsPage extends StatefulWidget {
   const DetailMapsPage({super.key});
@@ -14,7 +15,7 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
 
   final Set<Marker> markers = {};
 
-  final dicodingOffice = LatLng(-6.8957473, 107.6337669);
+  final dicodingOffice = const LatLng(-6.8957473, 107.6337669);
 
   final MapType mapType = MapType.normal;
 
@@ -26,7 +27,9 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
       markerId: const MarkerId('Dicoding Office'),
       position: dicodingOffice,
       onTap: () {
-        mapController.animateCamera(CameraUpdate.newLatLng(dicodingOffice));
+        mapController.animateCamera(
+          CameraUpdate.newLatLngZoom(dicodingOffice, 18),
+        );
       },
     );
 
