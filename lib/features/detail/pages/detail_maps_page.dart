@@ -112,6 +112,16 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
                 });
               },
             ),
+
+            if (placemark == null)
+              const SizedBox()
+            else
+              Positioned(
+                bottom: 16,
+                right: 16,
+                left: 16,
+                child: PlacemarkWidget(placemark: placemark!),
+              ),
           ],
         ),
       ),
