@@ -4,7 +4,15 @@ import 'package:intermediate_first_submission/generated/l10n/app_localizations.d
 import 'package:geocoding/geocoding.dart' as geo;
 
 class DetailMapsPage extends StatefulWidget {
-  const DetailMapsPage({super.key});
+  final double storyLat;
+  final double storyLon;
+
+  const DetailMapsPage({
+    super.key,
+    required this.storyLat,
+
+    required this.storyLon,
+  });
 
   @override
   State<DetailMapsPage> createState() => _DetailMapsPageState();
@@ -15,7 +23,7 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
 
   final Set<Marker> markers = {};
 
-  final dicodingOffice = const LatLng(-6.8957473, 107.6337669);
+  final currentPosition = const LatLng(-6.8957473, 107.6337669);
 
   final MapType mapType = MapType.normal;
 
@@ -23,14 +31,11 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
   void initState() {
     super.initState();
 
+    final currentPositiion = LatLng(widget.storyLat, widget.storyLon);
+
     final marker = Marker(
       markerId: const MarkerId('Dicoding Office'),
-      position: dicodingOffice,
-      onTap: () {
-        mapController.animateCamera(
-          CameraUpdate.newLatLngZoom(dicodingOffice, 18),
-        );
-      },
+      position: currentPositiion,
     );
 
     markers.add(marker);
@@ -38,6 +43,11 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final LatLng storyCurrentPosition = LatLng(
+      widget.storyLat,
+      widget.storyLon,
+    );
+
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.locationTitle)),
       body: Center(
@@ -51,7 +61,7 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
               mapType: mapType,
               markers: markers,
               initialCameraPosition: CameraPosition(
-                target: dicodingOffice,
+                target: storyCurrentPosition,
                 zoom: 18,
               ),
               onMapCreated: (controller) {
@@ -66,3 +76,4 @@ class _DetailMapsPageState extends State<DetailMapsPage> {
     );
   }
 }
+

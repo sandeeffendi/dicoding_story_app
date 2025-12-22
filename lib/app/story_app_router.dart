@@ -1,15 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
+import 'package:intermediate_first_submission/features/archive/pages/archive_page.dart';
 import 'package:intermediate_first_submission/features/auth/pages/login/login_page.dart';
 import 'package:intermediate_first_submission/features/auth/pages/register/register_page.dart';
 import 'package:intermediate_first_submission/features/auth/pages/splash_page.dart';
 import 'package:intermediate_first_submission/features/detail/pages/detail_maps_page.dart';
-import 'package:intermediate_first_submission/features/home/pages/home_page.dart';
-import 'package:intermediate_first_submission/features/archive/pages/archive_page.dart';
 import 'package:intermediate_first_submission/features/detail/pages/detail_page.dart';
 import 'package:intermediate_first_submission/features/explore/pages/explore_page.dart';
 import 'package:intermediate_first_submission/features/feed/pages/feed_page.dart';
+import 'package:intermediate_first_submission/features/home/pages/home_page.dart';
 import 'package:intermediate_first_submission/features/post/pages/post_page.dart';
 import 'package:intermediate_first_submission/features/profile/pages/profile_page.dart';
 
@@ -118,8 +118,13 @@ class StoryAppRouter {
 
         // detial maps route
         GoRoute(
-          path: location,
-          builder: (context, state) => const DetailMapsPage(),
+          path: '$location/:lat/:lon',
+          builder: (context, state) {
+            final double lat = double.parse(state.pathParameters['lat']!);
+            final double lon = double.parse(state.pathParameters['lon']!);
+
+            return DetailMapsPage(storyLat: lat, storyLon: lon);
+          },
         ),
       ],
     );

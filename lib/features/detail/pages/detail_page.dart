@@ -162,14 +162,23 @@ class _BuildDetailPost extends StatelessWidget {
               Text(story.name),
               const Spacer(),
               IconButton(
-                onPressed: () {
-                  context.push(StoryAppRouter.location);
-                },
+                onPressed: (story.lat == 0 && story.lon == 0)
+                    ? () {}
+                    : () {
+                        print('lat: ${story.lat}');
+                        print('lon: ${story.lon}');
+
+                        context.push(
+                          '${StoryAppRouter.location}/${story.lat}/${story.lon}',
+                        );
+                      },
                 icon: Icon(
-                  (story.lat == 1 && story.lon == 1)
+                  (story.lat == 0 && story.lon == 0)
                       ? Icons.more_vert
                       : Icons.location_pin,
-                  color: theme.colorScheme.onSurface,
+                  color: (story.lat == 0 && story.lon == 0)
+                      ? theme.colorScheme.onSurface
+                      : Colors.red,
                 ),
               ),
             ],
