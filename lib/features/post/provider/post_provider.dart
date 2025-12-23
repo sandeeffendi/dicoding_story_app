@@ -23,6 +23,15 @@ class PostProvider extends ChangeNotifier {
   File? _pickedImage;
   File? get pickedImage => _pickedImage;
 
+  double? _selectedLat;
+  double? get selectedLat => _selectedLat;
+
+  double? _selectedLon;
+  double? get selectedLon => _selectedLon;
+
+  String? _selectedLocationName;
+  String? get selectedLocationName => _selectedLocationName;
+
   void setPickedImage(File value) {
     _pickedImage = value;
     notifyListeners();
@@ -37,6 +46,8 @@ class PostProvider extends ChangeNotifier {
     required String token,
     String description = '',
     required File photo,
+    double? lat,
+    double? lon,
   }) async {
     _state = _state.copyWith(status: PostStatus.loading);
     notifyListeners();
@@ -48,6 +59,8 @@ class PostProvider extends ChangeNotifier {
         token: token,
         description: description,
         photo: photoToInt,
+        lat: lat,
+        lon: lon,
       );
 
       if (result.error == true) {
@@ -72,6 +85,26 @@ class PostProvider extends ChangeNotifier {
     _addStoryResponse = null;
     _pickedImage = null;
 
+    notifyListeners();
+  }
+
+  // set selected location
+  void setSelectedLocation({
+    required double lat,
+    required double lon,
+    String? locationName,
+  }) {
+    _selectedLat = lat;
+    _selectedLon = lon;
+    _selectedLocationName = locationName;
+    notifyListeners();
+  }
+
+  // reset selected location
+  void clearSelectedLocation() {
+    _selectedLat = null;
+    _selectedLon = null;
+    _selectedLocationName = null;
     notifyListeners();
   }
 }

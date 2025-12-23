@@ -9,6 +9,8 @@ sealed class AddStoryRequestModel with _$AddStoryRequestModel {
   const factory AddStoryRequestModel({
     required String description,
     required List<int> photo,
+    double? lat,
+    double? lon,
   }) = _AddStoryRequestModel;
 
   factory AddStoryRequestModel.fromJson(Map<String, dynamic> json) =>

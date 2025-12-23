@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddStoryRequestModel {
 
- String get description; List<int> get photo;
+ String get description; List<int> get photo; double? get lat; double? get lon;
 /// Create a copy of AddStoryRequestModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AddStoryRequestModelCopyWith<AddStoryRequestModel> get copyWith => _$AddStoryRe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddStoryRequestModel&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.photo, photo));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddStoryRequestModel&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.photo, photo)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,description,const DeepCollectionEquality().hash(photo));
+int get hashCode => Object.hash(runtimeType,description,const DeepCollectionEquality().hash(photo),lat,lon);
 
 @override
 String toString() {
-  return 'AddStoryRequestModel(description: $description, photo: $photo)';
+  return 'AddStoryRequestModel(description: $description, photo: $photo, lat: $lat, lon: $lon)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AddStoryRequestModelCopyWith<$Res>  {
   factory $AddStoryRequestModelCopyWith(AddStoryRequestModel value, $Res Function(AddStoryRequestModel) _then) = _$AddStoryRequestModelCopyWithImpl;
 @useResult
 $Res call({
- String description, List<int> photo
+ String description, List<int> photo, double? lat, double? lon
 });
 
 
@@ -65,11 +65,13 @@ class _$AddStoryRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of AddStoryRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? description = null,Object? photo = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? description = null,Object? photo = null,Object? lat = freezed,Object? lon = freezed,}) {
   return _then(_self.copyWith(
 description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
-as List<int>,
+as List<int>,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 
@@ -151,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String description,  List<int> photo)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String description,  List<int> photo,  double? lat,  double? lon)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AddStoryRequestModel() when $default != null:
-return $default(_that.description,_that.photo);case _:
+return $default(_that.description,_that.photo,_that.lat,_that.lon);case _:
   return orElse();
 
 }
@@ -172,10 +174,10 @@ return $default(_that.description,_that.photo);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String description,  List<int> photo)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String description,  List<int> photo,  double? lat,  double? lon)  $default,) {final _that = this;
 switch (_that) {
 case _AddStoryRequestModel():
-return $default(_that.description,_that.photo);}
+return $default(_that.description,_that.photo,_that.lat,_that.lon);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -189,10 +191,10 @@ return $default(_that.description,_that.photo);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String description,  List<int> photo)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String description,  List<int> photo,  double? lat,  double? lon)?  $default,) {final _that = this;
 switch (_that) {
 case _AddStoryRequestModel() when $default != null:
-return $default(_that.description,_that.photo);case _:
+return $default(_that.description,_that.photo,_that.lat,_that.lon);case _:
   return null;
 
 }
@@ -204,7 +206,7 @@ return $default(_that.description,_that.photo);case _:
 @JsonSerializable()
 
 class _AddStoryRequestModel implements AddStoryRequestModel {
-  const _AddStoryRequestModel({required this.description, required final  List<int> photo}): _photo = photo;
+  const _AddStoryRequestModel({required this.description, required final  List<int> photo, this.lat = 0, this.lon = 0}): _photo = photo;
   factory _AddStoryRequestModel.fromJson(Map<String, dynamic> json) => _$AddStoryRequestModelFromJson(json);
 
 @override final  String description;
@@ -215,6 +217,8 @@ class _AddStoryRequestModel implements AddStoryRequestModel {
   return EqualUnmodifiableListView(_photo);
 }
 
+@override@JsonKey() final  double? lat;
+@override@JsonKey() final  double? lon;
 
 /// Create a copy of AddStoryRequestModel
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddStoryRequestModel&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._photo, _photo));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddStoryRequestModel&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._photo, _photo)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,description,const DeepCollectionEquality().hash(_photo));
+int get hashCode => Object.hash(runtimeType,description,const DeepCollectionEquality().hash(_photo),lat,lon);
 
 @override
 String toString() {
-  return 'AddStoryRequestModel(description: $description, photo: $photo)';
+  return 'AddStoryRequestModel(description: $description, photo: $photo, lat: $lat, lon: $lon)';
 }
 
 
@@ -249,7 +253,7 @@ abstract mixin class _$AddStoryRequestModelCopyWith<$Res> implements $AddStoryRe
   factory _$AddStoryRequestModelCopyWith(_AddStoryRequestModel value, $Res Function(_AddStoryRequestModel) _then) = __$AddStoryRequestModelCopyWithImpl;
 @override @useResult
 $Res call({
- String description, List<int> photo
+ String description, List<int> photo, double? lat, double? lon
 });
 
 
@@ -266,11 +270,13 @@ class __$AddStoryRequestModelCopyWithImpl<$Res>
 
 /// Create a copy of AddStoryRequestModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? description = null,Object? photo = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? description = null,Object? photo = null,Object? lat = freezed,Object? lon = freezed,}) {
   return _then(_AddStoryRequestModel(
 description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,photo: null == photo ? _self._photo : photo // ignore: cast_nullable_to_non_nullable
-as List<int>,
+as List<int>,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 

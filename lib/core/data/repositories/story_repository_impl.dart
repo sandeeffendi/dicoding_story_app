@@ -57,6 +57,8 @@ class StoryRepositoryImpl implements StoryRepository {
       story: AddStoryRequestModel(
         description: storyRequest.description ?? ' ',
         photo: compressedImage,
+        lat: storyRequest.lat,
+        lon: storyRequest.lon,
       ),
     );
 

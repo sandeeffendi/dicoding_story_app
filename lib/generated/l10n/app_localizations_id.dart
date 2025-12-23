@@ -79,4 +79,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get locationTitle => 'Lokasi';
+
+  @override
+  String get removeLocationTitle => 'Hapus Lokasi';
 }

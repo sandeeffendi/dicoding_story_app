@@ -10,12 +10,16 @@ class AddStoryWithtokenUsecase {
     required String token,
     required String description,
     required List<int> photo,
+    double? lat,
+    double? lon,
   }) {
     return storyRepository.addStoryWithToken(
       token: token,
       storyRequest: AddStoryRequestEntity(
         description: description,
         photo: photo,
+        lat: lat,
+        lon: lon,
       ),
     );
   }

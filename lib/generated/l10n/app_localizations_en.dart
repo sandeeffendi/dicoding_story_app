@@ -79,4 +79,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locationTitle => 'Location';
+
+  @override
+  String get removeLocationTitle => 'Remove Location';
 }
