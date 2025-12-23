@@ -10,6 +10,7 @@ import 'package:intermediate_first_submission/features/detail/pages/detail_page.
 import 'package:intermediate_first_submission/features/explore/pages/explore_page.dart';
 import 'package:intermediate_first_submission/features/feed/pages/feed_page.dart';
 import 'package:intermediate_first_submission/features/home/pages/home_page.dart';
+import 'package:intermediate_first_submission/features/post/pages/post_location_page.dart';
 import 'package:intermediate_first_submission/features/post/pages/post_page.dart';
 import 'package:intermediate_first_submission/features/profile/pages/profile_page.dart';
 
@@ -32,6 +33,7 @@ class StoryAppRouter {
   static const String profile = '/profile';
   static const String detail = '/detail';
   static const String location = '/location';
+  static const String postLocation = '/pickLocation';
 
   /* --- Routes --- */
   StoryAppRouter() {
@@ -125,6 +127,12 @@ class StoryAppRouter {
 
             return DetailMapsPage(storyLat: lat, storyLon: lon);
           },
+        ),
+
+        // post location route
+        GoRoute(
+          path: postLocation,
+          builder: (context, state) => const PostLocationPage(),
         ),
       ],
     );

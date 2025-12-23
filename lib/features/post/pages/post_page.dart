@@ -249,6 +249,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   title: Text(
                     AppLocalizations.of(context)!.addLocationTitle,
                     style: theme.textTheme.bodyLarge,
+                    
                   ),
                   trailing: Icon(
                     Icons.chevron_right,
@@ -256,6 +257,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ),
                   onTap: () {
                     // Handle location selection
+                    context.push(StoryAppRouter.postLocation);
                   },
                 ),
               ],
