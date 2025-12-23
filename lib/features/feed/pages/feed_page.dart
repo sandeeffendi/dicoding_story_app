@@ -1,4 +1,3 @@
-// Home Screen - Feed
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -20,8 +19,9 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
   late SessionServices sessionServices;
-
   final ScrollController scrollController = ScrollController();
+
+  bool _isInitialLoad = true;
 
   @override
   void initState() {
@@ -32,18 +32,38 @@ class _FeedPageState extends State<FeedPage> {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          final token = sessionServices.getAccessToken();
-          context.read<HomeFeedProvider>().getAllStory(token!);
-        });
+        _loadMoreStories();
       }
     });
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final token = sessionServices.getAccessToken();
-      context.read<HomeFeedProvider>().resetPagination(token!);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final goRouterState = GoRouterState.of(context);
+    final shouldRefresh = goRouterState.extra as bool? ?? false;
+
+    if (_isInitialLoad || shouldRefresh) {
+      _isInitialLoad = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _resetFeed();
+      });
+    }
+  }
+
+  void _loadMoreStories() {
+    final token = sessionServices.getAccessToken();
+    if (token != null) {
       context.read<HomeFeedProvider>().getAllStory(token);
-    });
+    }
+  }
+
+  void _resetFeed() {
+    final token = sessionServices.getAccessToken();
+    if (token != null) {
+      context.read<HomeFeedProvider>().resetPagination(token);
+    }
   }
 
   @override

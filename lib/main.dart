@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intermediate_first_submission/app/story_app.dart';
 import 'package:intermediate_first_submission/features/auth/provider/auth_provider.dart';
+import 'package:intermediate_first_submission/features/auth/provider/splash_provider.dart';
 import 'package:intermediate_first_submission/features/detail/provider/detail_maps_provider.dart';
 import 'package:intermediate_first_submission/features/detail/provider/detail_provider.dart';
 import 'package:intermediate_first_submission/features/feed/provider/feed_provider.dart';
@@ -33,6 +34,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => di.sl<DetailProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<DetailMapsProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<PostLocationProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<SplashProvider>()),
       ],
       child: const StoryApp(),
     ),

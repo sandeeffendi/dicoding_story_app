@@ -105,7 +105,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       ),
                     ),
                   );
-                  context.go(StoryAppRouter.splash);
+                  context.go(StoryAppRouter.feed, extra: true);
                 });
               }
 

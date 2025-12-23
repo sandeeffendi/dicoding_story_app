@@ -46,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-          onPressed: () => context.go(StoryAppRouter.splash),
+          onPressed: () => context.pop(),
           icon: Icon(Icons.arrow_back, color: theme.colorScheme.onSurface),
         ),
       ),
