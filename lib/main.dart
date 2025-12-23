@@ -4,6 +4,7 @@ import 'package:intermediate_first_submission/features/auth/provider/auth_provid
 import 'package:intermediate_first_submission/features/detail/provider/detail_maps_provider.dart';
 import 'package:intermediate_first_submission/features/detail/provider/detail_provider.dart';
 import 'package:intermediate_first_submission/features/feed/provider/feed_provider.dart';
+import 'package:intermediate_first_submission/features/post/provider/post_location_provider.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
 import 'package:intermediate_first_submission/features/profile/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => di.sl<ProfileProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<DetailProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<DetailMapsProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<PostLocationProvider>()),
       ],
       child: const StoryApp(),
     ),

@@ -37,6 +37,8 @@ class PostProvider extends ChangeNotifier {
     required String token,
     String description = '',
     required File photo,
+    double? lat,
+    double? lon,
   }) async {
     _state = _state.copyWith(status: PostStatus.loading);
     notifyListeners();
@@ -48,6 +50,8 @@ class PostProvider extends ChangeNotifier {
         token: token,
         description: description,
         photo: photoToInt,
+        lat: lat,
+        lon: lon,
       );
 
       if (result.error == true) {

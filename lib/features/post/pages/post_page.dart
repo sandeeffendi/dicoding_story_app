@@ -117,6 +117,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               ? ''
                               : _descriptionController.text,
                           photo: imageFile!,
+                          // todo: add lat and lon
                         );
                       },
                 child: Text(
@@ -249,7 +250,6 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   title: Text(
                     AppLocalizations.of(context)!.addLocationTitle,
                     style: theme.textTheme.bodyLarge,
-                    
                   ),
                   trailing: Icon(
                     Icons.chevron_right,

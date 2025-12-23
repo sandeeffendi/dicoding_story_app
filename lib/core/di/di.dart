@@ -16,6 +16,7 @@ import 'package:intermediate_first_submission/features/auth/provider/auth_provid
 import 'package:intermediate_first_submission/features/detail/provider/detail_maps_provider.dart';
 import 'package:intermediate_first_submission/features/detail/provider/detail_provider.dart';
 import 'package:intermediate_first_submission/features/feed/provider/feed_provider.dart';
+import 'package:intermediate_first_submission/features/post/provider/post_location_provider.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
 import 'package:intermediate_first_submission/features/profile/provider/profile_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,4 +73,5 @@ Future<void> init(SharedPreferences prefs) async {
   sl.registerFactory(() => ProfileProvider());
   sl.registerFactory(() => DetailProvider(getStoryByIdUsecase: sl()));
   sl.registerFactory(() => DetailMapsProvider());
+  sl.registerFactory(() => PostLocationProvider());
 }
