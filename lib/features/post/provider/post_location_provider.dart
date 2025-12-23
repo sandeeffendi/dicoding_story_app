@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geo;
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_location_state.dart';
+import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 class PostLocationProvider extends ChangeNotifier {
   PostLocationProvider();
@@ -152,10 +155,29 @@ class PostLocationProvider extends ChangeNotifier {
     await initializeUserLocation();
   }
 
+  void disposeResource() {
+    _mapController?.dispose();
+    _mapController = null;
+  }
+
   // reset state
   void reset() {
     _state = const PostLocationState();
+    _mapController?.dispose();
     _mapController = null;
     notifyListeners();
+  }
+
+  // confirm selected location
+  void confirmSelectedLocation(BuildContext context) {
+    if (_state.lat != null && _state.lon != null) {
+      final provider = context.read<PostProvider>();
+      provider.setSelectedLocation(
+        lat: _state.lat!,
+        lon: _state.lon!,
+        locationName: _state.placemark?.name,
+      );
+      context.pop();
+    }
   }
 }

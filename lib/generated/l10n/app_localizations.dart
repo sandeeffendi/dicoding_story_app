@@ -241,6 +241,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Location'**
   String get locationTitle;
+
+  /// No description provided for @removeLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Location'**
+  String get removeLocationTitle;
 }
 
 class _AppLocalizationsDelegate

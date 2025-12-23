@@ -18,8 +18,8 @@ class AddStoryWithtokenUsecase {
       storyRequest: AddStoryRequestEntity(
         description: description,
         photo: photo,
-        lat: lat ?? 0,
-        lon: lon ?? 0,
+        lat: lat,
+        lon: lon,
       ),
     );
   }

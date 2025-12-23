@@ -13,6 +13,14 @@ class PostLocationPage extends StatefulWidget {
 }
 
 class _PostLocationPageState extends State<PostLocationPage> {
+  late PostLocationProvider _locationProvider;
+
+  @override
+  void didChangeDependencies() {
+    _locationProvider = context.read<PostLocationProvider>();
+    super.didChangeDependencies();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -20,6 +28,12 @@ class _PostLocationPageState extends State<PostLocationPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PostLocationProvider>().initializeUserLocation();
     });
+  }
+
+  @override
+  void dispose() {
+    _locationProvider.disposeResource();
+    super.dispose();
   }
 
   @override
@@ -123,6 +137,16 @@ class PlacemarkWidget extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+
+          // confirm location button
+          IconButton(
+            onPressed: () {
+              context.read<PostLocationProvider>().confirmSelectedLocation(
+                context,
+              );
+            },
+            icon: const Icon(Icons.send, color: Colors.green),
           ),
         ],
       ),

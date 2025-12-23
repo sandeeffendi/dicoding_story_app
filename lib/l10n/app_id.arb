@@ -22,5 +22,6 @@
   "editProfileTitle": "Perbarui Profile",
   "logOutTitle": "Keluar",
   "othersTitle": "Lainnya",
-  "locationTitle" : "Lokasi"
+  "locationTitle": "Lokasi",
+  "removeLocationTitle": "Hapus Lokasi"
 }

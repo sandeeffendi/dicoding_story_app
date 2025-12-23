@@ -22,5 +22,6 @@
   "editProfileTitle": "Edit Profile",
   "logOutTitle": "Log out",
   "othersTitle": "Others",
-  "locationTitle": "Location"
+  "locationTitle": "Location",
+  "removeLocationTitle" : "Remove Location"
 }

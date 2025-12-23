@@ -4,12 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
-import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_state.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class CreatePostPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
     Future.microtask(() {
       if (!mounted) return;
       context.read<PostProvider>().resetAddStoryState();
+      context.read<PostProvider>().clearSelectedLocation();
     });
 
     sessionServices = GetIt.instance<SessionServices>();
@@ -107,17 +109,32 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 });
               }
 
+              // empty state
+              if (imageFile == null) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    AppLocalizations.of(context)!.shareTitle,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              }
+
               return TextButton(
                 onPressed: postProvider.state.status == PostStatus.loading
                     ? null
-                    : () {
-                        postProvider.addStory(
+                    : () async {
+                        await postProvider.addStory(
                           token: token ?? '',
                           description: _descriptionController.text.isEmpty
                               ? ''
                               : _descriptionController.text,
-                          photo: imageFile!,
-                          // todo: add lat and lon
+                          photo: imageFile,
+                          lat: postProvider.selectedLat,
+                          lon: postProvider.selectedLon,
                         );
                       },
                 child: Text(
@@ -248,9 +265,23 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     color: theme.colorScheme.onSurface,
                   ),
                   title: Text(
-                    AppLocalizations.of(context)!.addLocationTitle,
+                    postProvider.selectedLocationName ??
+                        AppLocalizations.of(context)!.addLocationTitle,
                     style: theme.textTheme.bodyLarge,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
+                  subtitle: postProvider.selectedLat != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(
+                            '${postProvider.selectedLat}, ${postProvider.selectedLon}',
+                            style: theme.textTheme.bodySmall,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        )
+                      : null,
                   trailing: Icon(
                     Icons.chevron_right,
                     color: theme.colorScheme.onSurface,
@@ -260,6 +291,75 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     context.push(StoryAppRouter.postLocation);
                   },
                 ),
+
+                // preview google maps if user has location data
+                if (postProvider.selectedLat != null &&
+                    postProvider.selectedLon != null) ...[
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Container(
+                      height: 200,
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: theme.colorScheme.outline),
+                      ),
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            postProvider.selectedLat!,
+                            postProvider.selectedLon!,
+                          ),
+                          zoom: 15,
+                        ),
+                        markers: {
+                          Marker(
+                            markerId: const MarkerId('selected-location'),
+                            position: LatLng(
+                              postProvider.selectedLat!,
+                              postProvider.selectedLon!,
+                            ),
+                          ),
+                        },
+                        myLocationButtonEnabled: false,
+                        zoomControlsEnabled: false,
+                        mapToolbarEnabled: false,
+                        scrollGesturesEnabled: false,
+                        zoomGesturesEnabled: false,
+                        rotateGesturesEnabled: false,
+                        tiltGesturesEnabled: false,
+                        liteModeEnabled: true, // Mode lite untuk preview statis
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 70,
+                      right: 70,
+                      bottom: 20,
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        postProvider.clearSelectedLocation();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.removeLocationTitle,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.surface,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ],
             );
           },

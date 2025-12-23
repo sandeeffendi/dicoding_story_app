@@ -288,6 +288,13 @@ class MainRemoteDatasource {
         ..fields['description'] = story.description.isEmpty
             ? ' '
             : story.description;
+      // send location request with LatLng if story has location data
+      if (story.lat != null) {
+        request.fields['lat'] = story.lat.toString();
+      }
+      if (story.lon != null) {
+        request.fields['lon'] = story.lon.toString();
+      }
 
       final requestData = http.MultipartFile.fromBytes(
         'photo',

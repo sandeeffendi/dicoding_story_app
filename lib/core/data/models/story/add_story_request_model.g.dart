@@ -13,6 +13,8 @@ _AddStoryRequestModel _$AddStoryRequestModelFromJson(
   photo: (json['photo'] as List<dynamic>)
       .map((e) => (e as num).toInt())
       .toList(),
+  lat: (json['lat'] as num?)?.toDouble() ?? 0,
+  lon: (json['lon'] as num?)?.toDouble() ?? 0,
 );
 
 Map<String, dynamic> _$AddStoryRequestModelToJson(
@@ -20,4 +22,6 @@ Map<String, dynamic> _$AddStoryRequestModelToJson(
 ) => <String, dynamic>{
   'description': instance.description,
   'photo': instance.photo,
+  'lat': instance.lat,
+  'lon': instance.lon,
 };
