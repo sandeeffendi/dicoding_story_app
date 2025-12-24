@@ -111,14 +111,14 @@ class _LoginFormState extends State<LoginForm>
               ),
               const SizedBox(height: 20),
               Text(
-                'Login Failed',
+                AppLocalizations.of(context)!.loginFailedTitle,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 12),
               Text(
-                message ?? 'Check your username or password and try again.',
+                message ?? AppLocalizations.of(context)!.checkUserNameTitle,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -138,7 +138,7 @@ class _LoginFormState extends State<LoginForm>
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text('Sign Up'),
+                      child: Text(AppLocalizations.of(context)!.signUpTitle),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -153,7 +153,7 @@ class _LoginFormState extends State<LoginForm>
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text('Try Again'),
+                      child: Text(AppLocalizations.of(context)!.tryAgainTitle),
                     ),
                   ),
                 ],
@@ -167,6 +167,8 @@ class _LoginFormState extends State<LoginForm>
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context);
+
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Form(
@@ -183,26 +185,26 @@ class _LoginFormState extends State<LoginForm>
               onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  _removeError(FormErrorConstants.kEmailNullError);
+                  _removeError(local.kEmailNullError);
                 }
                 if (FormErrorConstants.emailValidatorRegExp.hasMatch(value)) {
-                  _removeError(FormErrorConstants.kInvalidEmailError);
+                  _removeError(local.kInvalidEmailError);
                 }
               },
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  _addError(FormErrorConstants.kEmailNullError);
+                  _addError(local.kEmailNullError);
                   return "";
                 }
                 if (!FormErrorConstants.emailValidatorRegExp.hasMatch(value!)) {
-                  _addError(FormErrorConstants.kInvalidEmailError);
+                  _addError(local.kInvalidEmailError);
                   return "";
                 }
                 return null;
               },
               decoration: InputDecoration(
-                labelText: "Email",
-                hintText: "Enter your email",
+                labelText: local!.emailTitle,
+                hintText: "${local.enterYourTitle} ${local.emailTitle}",
                 prefixIcon: const Icon(Icons.email_outlined),
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
                 filled: true,
@@ -249,26 +251,26 @@ class _LoginFormState extends State<LoginForm>
               onFieldSubmitted: (_) => _handleLogin(),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  _removeError(FormErrorConstants.kPassNullError);
+                  _removeError(local.kPassNullError);
                 }
                 if (value.length >= 8) {
-                  _removeError(FormErrorConstants.kShortPassError);
+                  _removeError(local.kShortPassError);
                 }
               },
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  _addError(FormErrorConstants.kPassNullError);
+                  _addError(local.kPassNullError);
                   return "";
                 }
                 if (value!.length < 8) {
-                  _addError(FormErrorConstants.kShortPassError);
+                  _addError(local.kShortPassError);
                   return "";
                 }
                 return null;
               },
               decoration: InputDecoration(
-                labelText: "Password",
-                hintText: "Enter your password",
+                labelText: local.passwordTitle,
+                hintText: "${local.enterYourTitle} ${local.passwordTitle}",
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -331,7 +333,7 @@ class _LoginFormState extends State<LoginForm>
                   ),
                 ),
                 Text(
-                  "Remember me",
+                  local.rememberMeTitle,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const Spacer(),

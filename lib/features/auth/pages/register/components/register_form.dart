@@ -5,6 +5,7 @@ import 'package:intermediate_first_submission/core/constants/form_error_constant
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
 import 'package:intermediate_first_submission/features/auth/provider/auth_provider.dart';
 import 'package:intermediate_first_submission/features/auth/provider/auth_state.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -332,6 +333,8 @@ class RegisterFormState extends State<RegisterForm>
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context);
+
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Form(
@@ -348,26 +351,27 @@ class RegisterFormState extends State<RegisterForm>
               onFieldSubmitted: (_) => _emailFocusNode.requestFocus(),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  _removeError(FormErrorConstants.kNamelNullError);
+                  _removeError(local!.kNamelNullError);
                 }
                 if (FormErrorConstants.nameValidatorRegExp.hasMatch(value)) {
-                  _removeError(FormErrorConstants.kInvalidNameError);
+                  _removeError(local!.kInvalidNameError);
                 }
               },
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  _addError(FormErrorConstants.kNamelNullError);
+                  _addError(local!.kNamelNullError);
                   return "";
                 }
                 if (!FormErrorConstants.nameValidatorRegExp.hasMatch(value!)) {
-                  _addError(FormErrorConstants.kInvalidNameError);
+                  _addError(local!.kInvalidNameError);
                   return "";
                 }
                 return null;
               },
               decoration: InputDecoration(
-                labelText: "Full Name",
-                hintText: "Enter your full name",
+                labelText: AppLocalizations.of(context)!.fullNameTitle,
+                hintText:
+                    "${AppLocalizations.of(context)!.enterYourTitle} ${AppLocalizations.of(context)!.fullNameTitle}",
                 prefixIcon: const Icon(Icons.person_outline_rounded),
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
                 filled: true,
@@ -414,26 +418,26 @@ class RegisterFormState extends State<RegisterForm>
               onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  _removeError(FormErrorConstants.kEmailNullError);
+                  _removeError(local.kEmailNullError);
                 }
                 if (FormErrorConstants.emailValidatorRegExp.hasMatch(value)) {
-                  _removeError(FormErrorConstants.kInvalidEmailError);
+                  _removeError(local.kInvalidEmailError);
                 }
               },
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  _addError(FormErrorConstants.kEmailNullError);
+                  _addError(local.kEmailNullError);
                   return "";
                 }
                 if (!FormErrorConstants.emailValidatorRegExp.hasMatch(value!)) {
-                  _addError(FormErrorConstants.kInvalidEmailError);
+                  _addError(local.kInvalidEmailError);
                   return "";
                 }
                 return null;
               },
               decoration: InputDecoration(
-                labelText: "Email",
-                hintText: "Enter your email",
+                labelText: local!.emailTitle,
+                hintText: '${local.enterYourTitle} ${local.emailTitle}',
                 prefixIcon: const Icon(Icons.email_outlined),
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
                 filled: true,
@@ -481,26 +485,26 @@ class RegisterFormState extends State<RegisterForm>
               onChanged: (value) {
                 setState(() {}); // Rebuild for password strength
                 if (value.isNotEmpty) {
-                  _removeError(FormErrorConstants.kPassNullError);
+                  _removeError(local.kPassNullError);
                 }
                 if (value.length >= 8) {
-                  _removeError(FormErrorConstants.kShortPassError);
+                  _removeError(local.kShortPassError);
                 }
               },
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  _addError(FormErrorConstants.kPassNullError);
+                  _addError(local.kPassNullError);
                   return "";
                 }
                 if (value!.length < 8) {
-                  _addError(FormErrorConstants.kShortPassError);
+                  _addError(local.kShortPassError);
                   return "";
                 }
                 return null;
               },
               decoration: InputDecoration(
-                labelText: "Password",
-                hintText: "Enter your password",
+                labelText: local.passwordTitle,
+                hintText: "${local.enterYourTitle} ${local.passwordTitle}",
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -560,26 +564,27 @@ class RegisterFormState extends State<RegisterForm>
               onFieldSubmitted: (_) => _handleRegister(),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  _removeError(FormErrorConstants.kPassNullError);
+                  _removeError(local.kPassNullError);
                 }
                 if (value.isNotEmpty && value == _passwordController.text) {
-                  _removeError(FormErrorConstants.kMatchPassError);
+                  _removeError(local.kMatchPassError);
                 }
               },
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  _addError(FormErrorConstants.kPassNullError);
+                  _addError(local.kPassNullError);
                   return "";
                 }
                 if (value != _passwordController.text) {
-                  _addError(FormErrorConstants.kMatchPassError);
+                  _addError(local.kMatchPassError);
                   return "";
                 }
                 return null;
               },
               decoration: InputDecoration(
-                labelText: "Confirm Password",
-                hintText: "Re-enter your password",
+                labelText: local.confirmPasswordTitle,
+                hintText:
+                    "${local.enterYourTitle} ${local.confirmPasswordTitle}",
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -654,18 +659,18 @@ class RegisterFormState extends State<RegisterForm>
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(color: Colors.grey[700]),
                           children: [
-                            const TextSpan(text: 'I agree to the '),
+                            TextSpan(text: '${local.agreeDescription} '),
                             TextSpan(
-                              text: 'Terms and Conditions',
+                              text: local.termsDescription,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.underline,
                               ),
                             ),
-                            const TextSpan(text: ' and '),
+                            TextSpan(text: ' ${local.andTitle} '),
                             TextSpan(
-                              text: 'Privacy Policy',
+                              text: local.privacyDescription,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
@@ -762,6 +767,8 @@ class _RegisterButtonState extends State<_RegisterButton> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context);
+
     return Selector<AuthProvider, AuthState>(
       selector: (_, auth) => auth.state,
       builder: (context, state, child) {
@@ -808,19 +815,19 @@ class _RegisterButtonState extends State<_RegisterButton> {
                       color: Colors.white,
                     ),
                   )
-                : const Row(
+                : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Create Account',
-                        style: TextStyle(
+                        local!.createAccountTitle,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 0.5,
                         ),
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.arrow_forward_rounded, size: 20),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
           ),

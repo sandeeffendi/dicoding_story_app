@@ -4,10 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
-import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
-import 'package:intermediate_first_submission/features/profile/components/flag_icon.dart';
 import 'package:intermediate_first_submission/features/feed/provider/feed_provider.dart';
 import 'package:intermediate_first_submission/features/feed/provider/feed_state.dart';
+import 'package:intermediate_first_submission/features/profile/components/flag_icon.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -27,8 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
     sessionServices = GetIt.instance<SessionServices>();
   }
 
-  void logOut() {
-    sessionServices.clearSession();
+  Future<void> logOut() async {
+    await sessionServices.clearSession();
   }
 
   @override
@@ -96,9 +96,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   const Icon(Icons.logout_outlined),
                 ],
               ),
-              onTap: () {
-                logOut();
-                context.go(StoryAppRouter.splash);
+              onTap: () async {
+                await logOut();
+                if (mounted) {
+                  context.go(StoryAppRouter.splash);
+                }
               },
             ),
           ],

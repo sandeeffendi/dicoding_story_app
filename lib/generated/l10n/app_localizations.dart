@@ -253,6 +253,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Post Created'**
   String get postCreatedTitle;
+
+  /// No description provided for @fullNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullNameTitle;
+
+  /// No description provided for @emailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailTitle;
+
+  /// No description provided for @passwordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordTitle;
+
+  /// No description provided for @confirmPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPasswordTitle;
+
+  /// No description provided for @agreeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the'**
+  String get agreeDescription;
+
+  /// No description provided for @termsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Conditions'**
+  String get termsDescription;
+
+  /// No description provided for @privacyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyDescription;
+
+  /// No description provided for @createAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccountTitle;
+
+  /// No description provided for @termsConfirmDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing you confirm that you agree with out Term and Condition'**
+  String get termsConfirmDescription;
+
+  /// No description provided for @enterYourTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your'**
+  String get enterYourTitle;
+
+  /// No description provided for @kEmailNullError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enter your email'**
+  String get kEmailNullError;
+
+  /// No description provided for @kInvalidEmailError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enter Valid Email'**
+  String get kInvalidEmailError;
+
+  /// No description provided for @kPassNullError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enter your password'**
+  String get kPassNullError;
+
+  /// No description provided for @kShortPassError.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too short'**
+  String get kShortPassError;
+
+  /// No description provided for @kMatchPassError.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords don\'t match'**
+  String get kMatchPassError;
+
+  /// No description provided for @kNamelNullError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enter your name'**
+  String get kNamelNullError;
+
+  /// No description provided for @kInvalidNameError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enter your name'**
+  String get kInvalidNameError;
+
+  /// No description provided for @kPhoneNumberNullError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enter your phone number'**
+  String get kPhoneNumberNullError;
+
+  /// No description provided for @kAddressNullError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enter your address'**
+  String get kAddressNullError;
+
+  /// No description provided for @checkUserNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your username or password and try again.'**
+  String get checkUserNameTitle;
+
+  /// No description provided for @loginFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Failed'**
+  String get loginFailedTitle;
+
+  /// No description provided for @tryAgainTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgainTitle;
 }
 
 class _AppLocalizationsDelegate
