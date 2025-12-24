@@ -156,4 +156,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get agreeTermError => 'Please agree to Terms and Conditions';
+
+  @override
+  String get galleryTitle => 'Gallery';
+
+  @override
+  String get cameraTitle => 'Camera';
 }

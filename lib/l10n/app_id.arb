@@ -47,6 +47,7 @@
   "checkUserNameTitle": "Periksa email atau kata sandi dan coba lagi.",
   "loginFailedTitle": "Login Gagal",
   "tryAgainTitle": "Coba Lagi",
-  "agreeTermError" : "Mohon setuju dengan Syarat dan Ketentuan"
-
+  "agreeTermError": "Mohon setuju dengan Syarat dan Ketentuan",
+  "galleryTitle": "Galeri",
+  "cameraTitle": "Kamera"
 }

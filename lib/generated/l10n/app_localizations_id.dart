@@ -156,4 +156,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get agreeTermError => 'Mohon setuju dengan Syarat dan Ketentuan';
+
+  @override
+  String get galleryTitle => 'Galeri';
+
+  @override
+  String get cameraTitle => 'Kamera';
 }

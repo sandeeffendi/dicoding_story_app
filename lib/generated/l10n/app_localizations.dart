@@ -391,6 +391,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please agree to Terms and Conditions'**
   String get agreeTermError;
+
+  /// No description provided for @galleryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get galleryTitle;
+
+  /// No description provided for @cameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get cameraTitle;
 }
 
 class _AppLocalizationsDelegate
