@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/story_entity.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
@@ -46,7 +47,7 @@ class _DetailPageState extends State<DetailPage> {
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-          onPressed: () => context.go(StoryAppRouter.splash),
+          onPressed: () => context.pop(),
           icon: Icon(Icons.arrow_back, color: theme.colorScheme.onSurface),
         ),
       ),
@@ -290,6 +291,48 @@ class _BuildDetailPost extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // preview location if story has location data
+              if (story.lat != 0 && story.lon != 0) ...[
+                const SizedBox(height: 24),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Container(
+                    height: 200,
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: theme.colorScheme.outline),
+                    ),
+                    child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(story.lat!, story.lon!),
+                        zoom: 15,
+                      ),
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId('selected-location'),
+                          position: LatLng(story.lat!, story.lon!),
+                        ),
+                      },
+                      onTap: (argument) {
+                        context.push(
+                          '${StoryAppRouter.location}/${story.lat}/${story.lon}',
+                        );
+                      },
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: false,
+                      mapToolbarEnabled: false,
+                      scrollGesturesEnabled: false,
+                      zoomGesturesEnabled: false,
+                      rotateGesturesEnabled: false,
+                      tiltGesturesEnabled: false,
+                      liteModeEnabled: true, // Mode lite untuk preview statis
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),

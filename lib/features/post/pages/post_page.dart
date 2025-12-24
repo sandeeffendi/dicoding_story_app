@@ -98,14 +98,16 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Post created!',
+                        // todo: add localization
+                        AppLocalizations.of(context)!.postCreatedTitle,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onInverseSurface,
                         ),
                       ),
                     ),
                   );
-                  context.go(StoryAppRouter.splash);
+                  postProvider.resetAddStoryState();
+                  context.go(StoryAppRouter.feed, extra: true);
                 });
               }
 
@@ -258,7 +260,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ),
                 ),
 
-                // Location button
+                // add location button
                 ListTile(
                   leading: Icon(
                     Icons.location_on_outlined,
@@ -335,6 +337,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     ),
                   ),
 
+                  // remove story location button
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 70,

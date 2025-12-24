@@ -19,6 +19,7 @@ import 'package:intermediate_first_submission/features/feed/provider/feed_provid
 import 'package:intermediate_first_submission/features/post/provider/post_location_provider.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
 import 'package:intermediate_first_submission/features/profile/provider/profile_provider.dart';
+import 'package:intermediate_first_submission/features/auth/provider/splash_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -74,4 +75,5 @@ Future<void> init(SharedPreferences prefs) async {
   sl.registerFactory(() => DetailProvider(getStoryByIdUsecase: sl()));
   sl.registerFactory(() => DetailMapsProvider());
   sl.registerFactory(() => PostLocationProvider());
+  sl.registerFactory(() => SplashProvider(sl()));
 }

@@ -82,4 +82,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get removeLocationTitle => 'Hapus Lokasi';
+
+  @override
+  String get postCreatedTitle => 'Unggahan telah dibuat';
 }

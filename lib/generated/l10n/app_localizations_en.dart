@@ -82,4 +82,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get removeLocationTitle => 'Remove Location';
+
+  @override
+  String get postCreatedTitle => 'Post Created';
 }

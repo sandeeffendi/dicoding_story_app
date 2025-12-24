@@ -23,5 +23,6 @@
   "logOutTitle": "Log out",
   "othersTitle": "Others",
   "locationTitle": "Location",
-  "removeLocationTitle" : "Remove Location"
+  "removeLocationTitle": "Remove Location",
+  "postCreatedTitle" : "Post Created"
 }

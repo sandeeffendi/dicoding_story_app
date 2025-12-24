@@ -23,5 +23,6 @@
   "logOutTitle": "Keluar",
   "othersTitle": "Lainnya",
   "locationTitle": "Lokasi",
-  "removeLocationTitle": "Hapus Lokasi"
+  "removeLocationTitle": "Hapus Lokasi",
+  "postCreatedTitle": "Unggahan telah dibuat"
 }
