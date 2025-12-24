@@ -98,13 +98,15 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Post created!',
+                        // todo: add localization
+                        AppLocalizations.of(context)!.postCreatedTitle,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onInverseSurface,
                         ),
                       ),
                     ),
                   );
+                  postProvider.resetAddStoryState();
                   context.go(StoryAppRouter.feed, extra: true);
                 });
               }

@@ -247,6 +247,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove Location'**
   String get removeLocationTitle;
+
+  /// No description provided for @postCreatedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Post Created'**
+  String get postCreatedTitle;
 }
 
 class _AppLocalizationsDelegate
