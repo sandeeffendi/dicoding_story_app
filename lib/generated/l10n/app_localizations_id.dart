@@ -153,4 +153,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tryAgainTitle => 'Coba Lagi';
+
+  @override
+  String get agreeTermError => 'Mohon setuju dengan Syarat dan Ketentuan';
 }

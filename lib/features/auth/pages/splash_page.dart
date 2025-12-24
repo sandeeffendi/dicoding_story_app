@@ -13,16 +13,30 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   bool _hasNavigated = false;
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
     _hasNavigated = false;
+    _initialized = false;
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initialized = true;
+      // Reset synchronously BEFORE build() can see old state
       context.read<SplashProvider>().reset();
-      context.read<SplashProvider>().startAnimation();
-    });
+
+      // Start animation after frame
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          context.read<SplashProvider>().startAnimation();
+        }
+      });
+    }
   }
 
   void _onAnimationEnd() {

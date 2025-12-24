@@ -46,5 +46,6 @@
   "kAddressNullError": "Please Enter your address",
   "checkUserNameTitle": "Check your username or password and try again.",
   "loginFailedTitle": "Login Failed",
-  "tryAgainTitle": "Try Again"
+  "tryAgainTitle": "Try Again",
+  "agreeTermError" : "Please agree to Terms and Conditions"
 }

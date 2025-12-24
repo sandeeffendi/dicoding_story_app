@@ -385,6 +385,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try Again'**
   String get tryAgainTitle;
+
+  /// No description provided for @agreeTermError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please agree to Terms and Conditions'**
+  String get agreeTermError;
 }
 
 class _AppLocalizationsDelegate

@@ -153,4 +153,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tryAgainTitle => 'Try Again';
+
+  @override
+  String get agreeTermError => 'Please agree to Terms and Conditions';
 }

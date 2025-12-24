@@ -46,5 +46,7 @@
   "kAddressNullError": "Silahkan Masukkan Alamat Anda",
   "checkUserNameTitle": "Periksa email atau kata sandi dan coba lagi.",
   "loginFailedTitle": "Login Gagal",
-  "tryAgainTitle": "Coba Lagi"
+  "tryAgainTitle": "Coba Lagi",
+  "agreeTermError" : "Mohon setuju dengan Syarat dan Ketentuan"
+
 }
