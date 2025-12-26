@@ -162,6 +162,7 @@ class _BuildDetailPost extends StatelessWidget {
               const SizedBox(width: 8),
               Text(story.name),
               const Spacer(),
+              // Location button
               IconButton(
                 onPressed: (story.lat == 0 && story.lon == 0)
                     ? () {}

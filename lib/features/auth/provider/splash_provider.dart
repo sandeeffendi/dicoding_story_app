@@ -35,7 +35,6 @@ class SplashProvider extends ChangeNotifier {
       _state = _state.copyWith(phase: SplashPhase.fadeOut, opacity: 0.0);
       notifyListeners();
     } else if (_state.isFadeOut) {
-      // Fade out complete, ready to navigate
       _state = _state.copyWith(phase: SplashPhase.navigating);
       notifyListeners();
     }
