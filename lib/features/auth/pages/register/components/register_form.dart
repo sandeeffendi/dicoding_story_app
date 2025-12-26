@@ -208,6 +208,7 @@ class RegisterFormState extends State<RegisterForm>
               ),
               const SizedBox(height: 20),
               Text(
+                // todo: localize
                 'Account Created!',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,

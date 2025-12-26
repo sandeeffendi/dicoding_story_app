@@ -13,40 +13,37 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   bool _hasNavigated = false;
-  bool _initialized = false;
+  late SplashProvider _provider;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _provider = context.read<SplashProvider>();
+  }
 
   @override
   void initState() {
     super.initState();
     _hasNavigated = false;
-    _initialized = false;
-  }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_initialized) {
-      _initialized = true;
-      // Reset synchronously BEFORE build() can see old state
-      context.read<SplashProvider>().reset();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
 
-      // Start animation after frame
+      _provider.resetToInitial();
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          context.read<SplashProvider>().startAnimation();
-        }
+        if (!mounted) return;
+        _provider.startFadeInAnimation();
       });
-    }
+    });
   }
 
   void _onAnimationEnd() {
-    final provider = context.read<SplashProvider>();
-    provider.onAnimationEnd();
+    _provider.onAnimationEnd();
   }
 
   void _navigateToNextPage() {
-    final provider = context.read<SplashProvider>();
-    if (provider.isLoggedIn()) {
+    if (_provider.isLoggedIn()) {
       context.go(StoryAppRouter.home);
     } else {
       context.go(StoryAppRouter.login);
@@ -60,7 +57,9 @@ class _SplashPageState extends State<SplashPage> {
     if (state.isNavigating && !_hasNavigated) {
       _hasNavigated = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _navigateToNextPage();
+        if (mounted) {
+          _navigateToNextPage();
+        }
       });
     }
 
