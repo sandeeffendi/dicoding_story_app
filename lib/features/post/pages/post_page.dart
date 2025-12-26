@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
+import 'package:intermediate_first_submission/core/config/flavor_config.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_provider.dart';
 import 'package:intermediate_first_submission/features/post/provider/post_state.dart';
@@ -264,108 +265,111 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ),
                 ),
 
-                // add location button
-                ListTile(
-                  leading: Icon(
-                    Icons.location_on_outlined,
-                    color: theme.colorScheme.onSurface,
+                // add location button - only visible for paid flavor
+                if (FlavorConfig.isMapsEnabled) ...[
+                  ListTile(
+                    leading: Icon(
+                      Icons.location_on_outlined,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    title: Text(
+                      postProvider.selectedLocationName ??
+                          AppLocalizations.of(context)!.addLocationTitle,
+                      style: theme.textTheme.bodyLarge,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    subtitle: postProvider.selectedLat != null
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: Text(
+                              '${postProvider.selectedLat}, ${postProvider.selectedLon}',
+                              style: theme.textTheme.bodySmall,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          )
+                        : null,
+                    trailing: Icon(
+                      Icons.chevron_right,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    onTap: () {
+                      // Handle location selection
+                      context.push(StoryAppRouter.postLocation);
+                    },
                   ),
-                  title: Text(
-                    postProvider.selectedLocationName ??
-                        AppLocalizations.of(context)!.addLocationTitle,
-                    style: theme.textTheme.bodyLarge,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  subtitle: postProvider.selectedLat != null
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: Text(
-                            '${postProvider.selectedLat}, ${postProvider.selectedLon}',
-                            style: theme.textTheme.bodySmall,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        )
-                      : null,
-                  trailing: Icon(
-                    Icons.chevron_right,
-                    color: theme.colorScheme.onSurface,
-                  ),
-                  onTap: () {
-                    // Handle location selection
-                    context.push(StoryAppRouter.postLocation);
-                  },
-                ),
 
-                // preview google maps if user has location data
-                if (postProvider.selectedLat != null &&
-                    postProvider.selectedLon != null) ...[
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Container(
-                      height: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: theme.colorScheme.outline),
-                      ),
-                      child: GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(
-                            postProvider.selectedLat!,
-                            postProvider.selectedLon!,
-                          ),
-                          zoom: 15,
+                  // preview google maps if user has location data
+                  if (postProvider.selectedLat != null &&
+                      postProvider.selectedLon != null) ...[
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Container(
+                        height: 200,
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: theme.colorScheme.outline),
                         ),
-                        markers: {
-                          Marker(
-                            markerId: const MarkerId('selected-location'),
-                            position: LatLng(
+                        child: GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(
                               postProvider.selectedLat!,
                               postProvider.selectedLon!,
                             ),
+                            zoom: 15,
                           ),
-                        },
-                        myLocationButtonEnabled: false,
-                        zoomControlsEnabled: false,
-                        mapToolbarEnabled: false,
-                        scrollGesturesEnabled: false,
-                        zoomGesturesEnabled: false,
-                        rotateGesturesEnabled: false,
-                        tiltGesturesEnabled: false,
-                        liteModeEnabled: true, // Mode lite untuk preview statis
+                          markers: {
+                            Marker(
+                              markerId: const MarkerId('selected-location'),
+                              position: LatLng(
+                                postProvider.selectedLat!,
+                                postProvider.selectedLon!,
+                              ),
+                            ),
+                          },
+                          myLocationButtonEnabled: false,
+                          zoomControlsEnabled: false,
+                          mapToolbarEnabled: false,
+                          scrollGesturesEnabled: false,
+                          zoomGesturesEnabled: false,
+                          rotateGesturesEnabled: false,
+                          tiltGesturesEnabled: false,
+                          liteModeEnabled:
+                              true, // Mode lite untuk preview statis
+                        ),
                       ),
                     ),
-                  ),
 
-                  // remove story location button
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 70,
-                      right: 70,
-                      bottom: 20,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        postProvider.clearSelectedLocation();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                    // remove story location button
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 70,
+                        right: 70,
+                        bottom: 20,
                       ),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.removeLocationTitle,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.surface,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          postProvider.clearSelectedLocation();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.removeLocationTitle,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: theme.colorScheme.surface,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ],
               ],
             );

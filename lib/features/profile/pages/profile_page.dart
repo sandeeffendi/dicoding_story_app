@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
     sessionServices = GetIt.instance<SessionServices>();
   }
 
-  Future<void> logOut() async {
+  void logOut() async {
     await sessionServices.clearSession();
   }
 
@@ -96,11 +96,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   const Icon(Icons.logout_outlined),
                 ],
               ),
-              onTap: () async {
-                await logOut();
-                if (mounted) {
-                  context.go(StoryAppRouter.splash);
-                }
+              onTap: () {
+                logOut();
+                context.go(StoryAppRouter.splash);
               },
             ),
           ],

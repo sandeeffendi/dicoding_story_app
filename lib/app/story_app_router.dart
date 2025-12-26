@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intermediate_first_submission/core/config/flavor_config.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/features/archive/pages/archive_page.dart';
 import 'package:intermediate_first_submission/features/auth/pages/login/login_page.dart';
@@ -44,6 +45,13 @@ class StoryAppRouter {
         final isLoggedIn = session.isLoggedIn();
 
         if (state.matchedLocation == splash) return null;
+
+        // Block post location route for free flavor
+        if (!FlavorConfig.isMapsEnabled) {
+          if (state.matchedLocation == postLocation) {
+            return home;
+          }
+        }
 
         final isAuthPage =
             state.matchedLocation == login || state.matchedLocation == register;

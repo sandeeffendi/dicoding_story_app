@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
+import 'package:intermediate_first_submission/core/config/flavor_config.dart';
 import 'package:intermediate_first_submission/core/domain/enitities/story/story_entity.dart';
 import 'package:intermediate_first_submission/core/services/session_services.dart';
 import 'package:intermediate_first_submission/features/feed/provider/feed_provider.dart';
@@ -81,11 +82,36 @@ class _FeedPageState extends State<FeedPage> {
         automaticallyImplyLeading: false,
         backgroundColor: theme.colorScheme.surface,
         elevation: 0,
-        title: Text(
-          'Dicodinggram',
-          style: theme.textTheme.headlineMedium?.copyWith(
-            color: theme.colorScheme.onSurface,
-          ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Dicodinggram',
+              style: theme.textTheme.headlineSmall?.copyWith(
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+            if (FlavorConfig.currentFlavor == FlavorType.paid) ...[
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Colors.amber, Colors.orange],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  'PREMIUM',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ],
         ),
         actions: [
           IconButton(

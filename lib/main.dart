@@ -15,7 +15,7 @@ import 'package:timeago/timeago.dart';
 
 import 'core/di/di.dart' as di;
 
-void main() async {
+void mainApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   timeago.setLocaleMessages('id', IdMessages());
