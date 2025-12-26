@@ -49,5 +49,10 @@
   "tryAgainTitle": "Try Again",
   "agreeTermError": "Please agree to Terms and Conditions",
   "galleryTitle": "Gallery",
-  "cameraTitle": "Camera"
+  "cameraTitle": "Camera",
+  "accountCreatedTitle": "Account Created!",
+  "accountCreatedSubTitle": "Your account has been created successfully.",
+  "getStartedTitle": "Get Started",
+  "unableCreateAccountTitle": "Unable to create account. Please try again.",
+  "registerFailedTitle": "Registration Failed"
 }

@@ -162,4 +162,20 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get cameraTitle => 'Kamera';
+
+  @override
+  String get accountCreatedTitle => 'Akun telah dibuat!';
+
+  @override
+  String get accountCreatedSubTitle => 'Akunmu telah berhasil dibuat.';
+
+  @override
+  String get getStartedTitle => 'Mulai Sekarang';
+
+  @override
+  String get unableCreateAccountTitle =>
+      'Gagal membuat akun. Silahkan coba lagi nanti.';
+
+  @override
+  String get registerFailedTitle => 'Registrasi Gagal';
 }

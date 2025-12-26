@@ -147,14 +147,15 @@ class RegisterFormState extends State<RegisterForm>
               ),
               const SizedBox(height: 20),
               Text(
-                'Registration Failed',
+                AppLocalizations.of(context)!.registerFailedTitle,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 12),
               Text(
-                message ?? 'Unable to create account. Please try again.',
+                message ??
+                    AppLocalizations.of(context)!.unableCreateAccountTitle,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -173,7 +174,7 @@ class RegisterFormState extends State<RegisterForm>
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text('Try Again'),
+                  child: Text(AppLocalizations.of(context)!.tryAgainTitle),
                 ),
               ),
             ],
@@ -209,14 +210,14 @@ class RegisterFormState extends State<RegisterForm>
               const SizedBox(height: 20),
               Text(
                 // todo: localize
-                'Account Created!',
+                AppLocalizations.of(context)!.accountCreatedTitle,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 12),
               Text(
-                'Your account has been created successfully.',
+                AppLocalizations.of(context)!.accountCreatedSubTitle,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -237,7 +238,7 @@ class RegisterFormState extends State<RegisterForm>
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text('Get Started'),
+                  child: Text(AppLocalizations.of(context)!.getStartedTitle),
                 ),
               ),
             ],

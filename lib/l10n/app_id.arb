@@ -49,5 +49,10 @@
   "tryAgainTitle": "Coba Lagi",
   "agreeTermError": "Mohon setuju dengan Syarat dan Ketentuan",
   "galleryTitle": "Galeri",
-  "cameraTitle": "Kamera"
+  "cameraTitle": "Kamera",
+  "accountCreatedTitle": "Akun telah dibuat!",
+  "accountCreatedSubTitle": "Akunmu telah berhasil dibuat.",
+  "getStartedTitle": "Mulai Sekarang",
+  "unableCreateAccountTitle": "Gagal membuat akun. Silahkan coba lagi nanti.",
+  "registerFailedTitle": "Registrasi Gagal"
 }

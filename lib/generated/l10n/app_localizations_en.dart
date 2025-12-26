@@ -162,4 +162,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cameraTitle => 'Camera';
+
+  @override
+  String get accountCreatedTitle => 'Account Created!';
+
+  @override
+  String get accountCreatedSubTitle =>
+      'Your account has been created successfully.';
+
+  @override
+  String get getStartedTitle => 'Get Started';
+
+  @override
+  String get unableCreateAccountTitle =>
+      'Unable to create account. Please try again.';
+
+  @override
+  String get registerFailedTitle => 'Registration Failed';
 }

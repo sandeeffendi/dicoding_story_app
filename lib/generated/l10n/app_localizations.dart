@@ -403,6 +403,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Camera'**
   String get cameraTitle;
+
+  /// No description provided for @accountCreatedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Created!'**
+  String get accountCreatedTitle;
+
+  /// No description provided for @accountCreatedSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been created successfully.'**
+  String get accountCreatedSubTitle;
+
+  /// No description provided for @getStartedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStartedTitle;
+
+  /// No description provided for @unableCreateAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to create account. Please try again.'**
+  String get unableCreateAccountTitle;
+
+  /// No description provided for @registerFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Failed'**
+  String get registerFailedTitle;
 }
 
 class _AppLocalizationsDelegate
