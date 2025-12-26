@@ -85,4 +85,98 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get postCreatedTitle => 'Post Created';
+
+  @override
+  String get fullNameTitle => 'Full Name';
+
+  @override
+  String get emailTitle => 'Email';
+
+  @override
+  String get passwordTitle => 'Password';
+
+  @override
+  String get confirmPasswordTitle => 'Confirm Password';
+
+  @override
+  String get agreeDescription => 'I agree to the';
+
+  @override
+  String get termsDescription => 'Terms and Conditions';
+
+  @override
+  String get privacyDescription => 'Privacy Policy';
+
+  @override
+  String get createAccountTitle => 'Create Account';
+
+  @override
+  String get termsConfirmDescription =>
+      'By continuing you confirm that you agree with out Term and Condition';
+
+  @override
+  String get enterYourTitle => 'Enter your';
+
+  @override
+  String get kEmailNullError => 'Please Enter your email';
+
+  @override
+  String get kInvalidEmailError => 'Please Enter Valid Email';
+
+  @override
+  String get kPassNullError => 'Please Enter your password';
+
+  @override
+  String get kShortPassError => 'Password is too short';
+
+  @override
+  String get kMatchPassError => 'Passwords don\'t match';
+
+  @override
+  String get kNamelNullError => 'Please Enter your name';
+
+  @override
+  String get kInvalidNameError => 'Please Enter your name';
+
+  @override
+  String get kPhoneNumberNullError => 'Please Enter your phone number';
+
+  @override
+  String get kAddressNullError => 'Please Enter your address';
+
+  @override
+  String get checkUserNameTitle =>
+      'Check your username or password and try again.';
+
+  @override
+  String get loginFailedTitle => 'Login Failed';
+
+  @override
+  String get tryAgainTitle => 'Try Again';
+
+  @override
+  String get agreeTermError => 'Please agree to Terms and Conditions';
+
+  @override
+  String get galleryTitle => 'Gallery';
+
+  @override
+  String get cameraTitle => 'Camera';
+
+  @override
+  String get accountCreatedTitle => 'Account Created!';
+
+  @override
+  String get accountCreatedSubTitle =>
+      'Your account has been created successfully.';
+
+  @override
+  String get getStartedTitle => 'Get Started';
+
+  @override
+  String get unableCreateAccountTitle =>
+      'Unable to create account. Please try again.';
+
+  @override
+  String get registerFailedTitle => 'Registration Failed';
 }

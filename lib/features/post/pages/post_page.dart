@@ -174,7 +174,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               children: [
                                 ListTile(
                                   leading: const Icon(Icons.camera_alt),
-                                  title: const Text('Camera'),
+                                  title: Text(
+                                    AppLocalizations.of(context)!.cameraTitle,
+                                  ),
                                   onTap: () async {
                                     context.pop();
 
@@ -190,7 +192,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                 ),
                                 ListTile(
                                   leading: const Icon(Icons.photo),
-                                  title: const Text('Gallery'),
+                                  title: Text(
+                                    AppLocalizations.of(context)!.galleryTitle,
+                                  ),
                                   onTap: () async {
                                     context.pop();
 

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/features/auth/pages/register/components/register_form.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Sign Up")),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.signUpTitle)),
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
@@ -37,7 +39,7 @@ class RegisterPage extends StatelessWidget {
                   const RegisterForm(),
                   const SizedBox(height: 16),
                   Text(
-                    'By continuing your confirm that you agree \nwith our Term and Condition',
+                    local.termsConfirmDescription,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),

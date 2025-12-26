@@ -85,4 +85,97 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get postCreatedTitle => 'Unggahan telah dibuat';
+
+  @override
+  String get fullNameTitle => 'Nama Lengkap';
+
+  @override
+  String get emailTitle => 'Email';
+
+  @override
+  String get passwordTitle => 'Kata Sandi';
+
+  @override
+  String get confirmPasswordTitle => 'Konfirmasi Kata Sandi';
+
+  @override
+  String get agreeDescription => 'Saya setuju dengan';
+
+  @override
+  String get termsDescription => 'Syarat dan Ketentuan';
+
+  @override
+  String get privacyDescription => 'Kebijakan Privasi';
+
+  @override
+  String get createAccountTitle => 'Buat Akun';
+
+  @override
+  String get termsConfirmDescription =>
+      'Dengan melanjutkan anda telah setuju dengan Syarat dan Ketentuan kami';
+
+  @override
+  String get enterYourTitle => 'Masukkan';
+
+  @override
+  String get kEmailNullError => 'Silahkan Masukkan Email Anda';
+
+  @override
+  String get kInvalidEmailError => 'Silahkan Masukkan Email Yang Terdaftar';
+
+  @override
+  String get kPassNullError => 'Silahkan Masukkan Email Anda';
+
+  @override
+  String get kShortPassError => 'Kata Sandi terlalu singkat';
+
+  @override
+  String get kMatchPassError => 'Kata Sandi tidak sesuai';
+
+  @override
+  String get kNamelNullError => 'Silahkan Masukkan Nama Anda';
+
+  @override
+  String get kInvalidNameError => 'Silahkan Masukkan Nama Anda';
+
+  @override
+  String get kPhoneNumberNullError => 'Silahkan Masukkan Nomor Telefon Anda';
+
+  @override
+  String get kAddressNullError => 'Silahkan Masukkan Alamat Anda';
+
+  @override
+  String get checkUserNameTitle =>
+      'Periksa email atau kata sandi dan coba lagi.';
+
+  @override
+  String get loginFailedTitle => 'Login Gagal';
+
+  @override
+  String get tryAgainTitle => 'Coba Lagi';
+
+  @override
+  String get agreeTermError => 'Mohon setuju dengan Syarat dan Ketentuan';
+
+  @override
+  String get galleryTitle => 'Galeri';
+
+  @override
+  String get cameraTitle => 'Kamera';
+
+  @override
+  String get accountCreatedTitle => 'Akun telah dibuat!';
+
+  @override
+  String get accountCreatedSubTitle => 'Akunmu telah berhasil dibuat.';
+
+  @override
+  String get getStartedTitle => 'Mulai Sekarang';
+
+  @override
+  String get unableCreateAccountTitle =>
+      'Gagal membuat akun. Silahkan coba lagi nanti.';
+
+  @override
+  String get registerFailedTitle => 'Registrasi Gagal';
 }

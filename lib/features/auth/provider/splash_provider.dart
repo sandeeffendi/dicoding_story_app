@@ -10,6 +10,16 @@ class SplashProvider extends ChangeNotifier {
   SplashState _state = const SplashState();
   SplashState get state => _state;
 
+  void resetToInitial() {
+    _state = const SplashState();
+    notifyListeners();
+  }
+
+  void startFadeInAnimation() {
+    _state = _state.copyWith(phase: SplashPhase.fadeIn, opacity: 1.0);
+    notifyListeners();
+  }
+
   void startAnimation() {
     _state = _state.copyWith(phase: SplashPhase.fadeIn, opacity: 1.0);
     notifyListeners();

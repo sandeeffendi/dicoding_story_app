@@ -45,5 +45,6 @@ class SessionServices {
   // clear session method
   Future<void> clearSession() async {
     await _prefs.remove(_accessTokenKey);
+    await _prefs.remove(_userName);
   }
 }

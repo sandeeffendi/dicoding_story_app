@@ -13,6 +13,13 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   bool _hasNavigated = false;
+  late SplashProvider _provider;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _provider = context.read<SplashProvider>();
+  }
 
   @override
   void initState() {
@@ -20,19 +27,23 @@ class _SplashPageState extends State<SplashPage> {
     _hasNavigated = false;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<SplashProvider>().reset();
-      context.read<SplashProvider>().startAnimation();
+      if (!mounted) return;
+
+      _provider.resetToInitial();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _provider.startFadeInAnimation();
+      });
     });
   }
 
   void _onAnimationEnd() {
-    final provider = context.read<SplashProvider>();
-    provider.onAnimationEnd();
+    _provider.onAnimationEnd();
   }
 
   void _navigateToNextPage() {
-    final provider = context.read<SplashProvider>();
-    if (provider.isLoggedIn()) {
+    if (_provider.isLoggedIn()) {
       context.go(StoryAppRouter.home);
     } else {
       context.go(StoryAppRouter.login);
@@ -46,7 +57,9 @@ class _SplashPageState extends State<SplashPage> {
     if (state.isNavigating && !_hasNavigated) {
       _hasNavigated = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _navigateToNextPage();
+        if (mounted) {
+          _navigateToNextPage();
+        }
       });
     }
 

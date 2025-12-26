@@ -1,11 +1,12 @@
-enum SplashPhase { fadeIn, visible, fadeOut, navigating }
+enum SplashPhase { initial, fadeIn, visible, fadeOut, navigating }
 
 class SplashState {
   final SplashPhase phase;
   final double opacity;
 
-  const SplashState({this.phase = SplashPhase.fadeIn, this.opacity = 0.0});
+  const SplashState({this.phase = SplashPhase.initial, this.opacity = 0.0});
 
+  bool get isInitial => phase == SplashPhase.initial;
   bool get isFadeIn => phase == SplashPhase.fadeIn;
   bool get isVisible => phase == SplashPhase.visible;
   bool get isFadeOut => phase == SplashPhase.fadeOut;
