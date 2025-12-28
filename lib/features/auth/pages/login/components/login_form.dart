@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:intermediate_first_submission/app/story_app_router.dart';
 import 'package:intermediate_first_submission/core/constants/form_error_constant.dart';
 import 'package:intermediate_first_submission/core/utils/keyboard_util.dart';
-import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:intermediate_first_submission/features/auth/provider/auth_provider.dart';
 import 'package:intermediate_first_submission/features/auth/provider/auth_state.dart';
+import 'package:intermediate_first_submission/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
@@ -22,10 +22,7 @@ class _LoginFormState extends State<LoginForm>
   final _passwordController = TextEditingController();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
-  final _errors = <String>[];
 
-  bool _remember = false;
-  bool _obscurePassword = true;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -62,15 +59,11 @@ class _LoginFormState extends State<LoginForm>
   }
 
   void _addError(String error) {
-    if (!_errors.contains(error)) {
-      setState(() => _errors.add(error));
-    }
+    authProvider.addLoginError(error);
   }
 
   void _removeError(String error) {
-    if (_errors.contains(error)) {
-      setState(() => _errors.remove(error));
-    }
+    authProvider.removeLoginError(error);
   }
 
   void _handleLogin() {
@@ -175,7 +168,7 @@ class _LoginFormState extends State<LoginForm>
         key: _formKey,
         child: Column(
           children: [
-            // Email Field with improved design
+            // email field
             TextFormField(
               controller: _emailController,
               focusNode: _emailFocusNode,
@@ -241,149 +234,172 @@ class _LoginFormState extends State<LoginForm>
 
             const SizedBox(height: 16),
 
-            // Password Field with show/hide toggle
-            TextFormField(
-              controller: _passwordController,
-              focusNode: _passwordFocusNode,
-              obscureText: _obscurePassword,
-              autofillHints: const [AutofillHints.password],
-              textInputAction: TextInputAction.done,
-              onFieldSubmitted: (_) => _handleLogin(),
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  _removeError(local.kPassNullError);
-                }
-                if (value.length >= 8) {
-                  _removeError(local.kShortPassError);
-                }
-              },
-              validator: (value) {
-                if (value?.isEmpty ?? true) {
-                  _addError(local.kPassNullError);
-                  return "";
-                }
-                if (value!.length < 8) {
-                  _addError(local.kShortPassError);
-                  return "";
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: local.passwordTitle,
-                hintText: "${local.enterYourTitle} ${local.passwordTitle}",
-                prefixIcon: const Icon(Icons.lock_outline_rounded),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscurePassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: Colors.grey[600],
+            // password field
+            Selector<AuthProvider, bool>(
+              selector: (_, auth) => auth.loginFormState.obscurePassword,
+              builder: (context, obscurePassword, child) {
+                return TextFormField(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  obscureText: obscurePassword,
+                  autofillHints: const [AutofillHints.password],
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _handleLogin(),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      _removeError(local.kPassNullError);
+                    }
+                    if (value.length >= 8) {
+                      _removeError(local.kShortPassError);
+                    }
+                  },
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      _addError(local.kPassNullError);
+                      return "";
+                    }
+                    if (value!.length < 8) {
+                      _addError(local.kShortPassError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: local.passwordTitle,
+                    hintText: "${local.enterYourTitle} ${local.passwordTitle}",
+                    prefixIcon: const Icon(Icons.lock_outline_rounded),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: Colors.grey[600],
+                      ),
+                      onPressed: () =>
+                          authProvider.toggleLoginPasswordVisibility(),
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    filled: true,
+                    fillColor: Colors.grey[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.grey[200]!,
+                        width: 1,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.red[300]!, width: 1),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.red[400]!, width: 2),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
                   ),
-                  onPressed: () =>
-                      setState(() => _obscurePassword = !_obscurePassword),
-                ),
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                filled: true,
-                fillColor: Colors.grey[50],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[200]!, width: 1),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 2,
-                  ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.red[300]!, width: 1),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.red[400]!, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-              ),
+                );
+              },
             ),
 
             const SizedBox(height: 12),
 
-            // Remember Me & Forgot Password with better styling
-            Row(
-              children: [
-                Transform.scale(
-                  scale: 0.9,
-                  child: Checkbox(
-                    value: _remember,
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+            // remember me & forgot password
+            Selector<AuthProvider, bool>(
+              selector: (_, auth) => auth.loginFormState.remember,
+              builder: (context, remember, child) {
+                return Row(
+                  children: [
+                    Transform.scale(
+                      scale: 0.9,
+                      child: Checkbox(
+                        value: remember,
+                        activeColor: Theme.of(context).colorScheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        onChanged: (value) =>
+                            authProvider.setRemember(value ?? false),
+                      ),
                     ),
-                    onChanged: (value) =>
-                        setState(() => _remember = value ?? false),
-                  ),
-                ),
-                Text(
-                  local.rememberMeTitle,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const Spacer(),
-              ],
+                    Text(
+                      local.rememberMeTitle,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const Spacer(),
+                  ],
+                );
+              },
             ),
 
-            // Form Errors with better design
-            if (_errors.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.red[200]!),
-                ),
-                child: Column(
-                  children: _errors
-                      .map(
-                        (error) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.error_outline,
-                                color: Colors.red[700],
-                                size: 16,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  error,
-                                  style: TextStyle(
-                                    color: Colors.red[700],
-                                    fontSize: 13,
-                                  ),
+            // form errors
+            Selector<AuthProvider, List<String>>(
+              selector: (_, auth) => auth.loginFormState.errors,
+              builder: (context, errors, child) {
+                if (errors.isEmpty) return const SizedBox.shrink();
+                return Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red[50],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.red[200]!),
+                      ),
+                      child: Column(
+                        children: errors
+                            .map(
+                              (error) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red[700],
+                                      size: 16,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        error,
+                                        style: TextStyle(
+                                          color: Colors.red[700],
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ],
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
 
             const SizedBox(height: 24),
 
-            // Login Button with enhanced design
+            // login button
             _LoginButton(
               onPressed: _handleLogin,
               onError: _showErrorDialog,
@@ -428,7 +444,7 @@ class _LoginButtonState extends State<_LoginButton> {
       builder: (context, state, child) {
         final isLoading = state.status == AuthStatus.loading;
 
-        // Handle state changes
+        // handle state changes
         if (_lastStatus != state.status) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!mounted) return;

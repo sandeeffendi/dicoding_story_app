@@ -92,4 +92,94 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // LOGIN FORM STATE
+  LoginFormState _loginFormState = const LoginFormState();
+  LoginFormState get loginFormState => _loginFormState;
+
+  void addLoginError(String error) {
+    if (!_loginFormState.errors.contains(error)) {
+      final newErrors = [..._loginFormState.errors, error];
+      _loginFormState = _loginFormState.copyWith(errors: newErrors);
+      notifyListeners();
+    }
+  }
+
+  void removeLoginError(String error) {
+    if (_loginFormState.errors.contains(error)) {
+      final newErrors = _loginFormState.errors
+          .where((e) => e != error)
+          .toList();
+      _loginFormState = _loginFormState.copyWith(errors: newErrors);
+      notifyListeners();
+    }
+  }
+
+  void toggleLoginPasswordVisibility() {
+    _loginFormState = _loginFormState.copyWith(
+      obscurePassword: !_loginFormState.obscurePassword,
+    );
+    notifyListeners();
+  }
+
+  void setRemember(bool value) {
+    _loginFormState = _loginFormState.copyWith(remember: value);
+    notifyListeners();
+  }
+
+  void resetLoginFormState() {
+    _loginFormState = const LoginFormState();
+    notifyListeners();
+  }
+
+  //  REGSITER FORM STATE
+  RegisterFormState _registerFormState = const RegisterFormState();
+  RegisterFormState get registerFormState => _registerFormState;
+
+  void addRegisterError(String error) {
+    if (!_registerFormState.errors.contains(error)) {
+      final newErrors = [..._registerFormState.errors, error];
+      _registerFormState = _registerFormState.copyWith(errors: newErrors);
+      notifyListeners();
+    }
+  }
+
+  void removeRegisterError(String error) {
+    if (_registerFormState.errors.contains(error)) {
+      final newErrors = _registerFormState.errors
+          .where((e) => e != error)
+          .toList();
+      _registerFormState = _registerFormState.copyWith(errors: newErrors);
+      notifyListeners();
+    }
+  }
+
+  void toggleRegisterPasswordVisibility() {
+    _registerFormState = _registerFormState.copyWith(
+      obscurePassword: !_registerFormState.obscurePassword,
+    );
+    notifyListeners();
+  }
+
+  void toggleRegisterConfirmPasswordVisibility() {
+    _registerFormState = _registerFormState.copyWith(
+      obscureConfirmPassword: !_registerFormState.obscureConfirmPassword,
+    );
+    notifyListeners();
+  }
+
+  void setAgreeToTerms(bool value) {
+    _registerFormState = _registerFormState.copyWith(agreeToTerms: value);
+    notifyListeners();
+  }
+
+  void resetRegisterFormState() {
+    _registerFormState = const RegisterFormState();
+    notifyListeners();
+  }
+
+  // trigger rebuild password strength indicator method
+  void triggerPasswordStrengthRebuild() {
+    notifyListeners();
+  }
 }

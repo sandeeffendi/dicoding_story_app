@@ -30,3 +30,58 @@ class AuthState {
     );
   }
 }
+
+// login form state
+class LoginFormState {
+  final List<String> errors;
+  final bool obscurePassword;
+  final bool remember;
+
+  const LoginFormState({
+    this.errors = const [],
+    this.obscurePassword = true,
+    this.remember = false,
+  });
+
+  LoginFormState copyWith({
+    List<String>? errors,
+    bool? obscurePassword,
+    bool? remember,
+  }) {
+    return LoginFormState(
+      errors: errors ?? this.errors,
+      obscurePassword: obscurePassword ?? this.obscurePassword,
+      remember: remember ?? this.remember,
+    );
+  }
+}
+
+// regsiter form state
+class RegisterFormState {
+  final List<String> errors;
+  final bool obscurePassword;
+  final bool obscureConfirmPassword;
+  final bool agreeToTerms;
+
+  const RegisterFormState({
+    this.errors = const [],
+    this.obscurePassword = true,
+    this.obscureConfirmPassword = true,
+    this.agreeToTerms = false,
+  });
+
+  RegisterFormState copyWith({
+    List<String>? errors,
+    bool? obscurePassword,
+    bool? obscureConfirmPassword,
+    bool? agreeToTerms,
+  }) {
+    return RegisterFormState(
+      errors: errors ?? this.errors,
+      obscurePassword: obscurePassword ?? this.obscurePassword,
+      obscureConfirmPassword:
+          obscureConfirmPassword ?? this.obscureConfirmPassword,
+      agreeToTerms: agreeToTerms ?? this.agreeToTerms,
+    );
+  }
+}

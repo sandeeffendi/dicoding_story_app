@@ -28,12 +28,6 @@ class RegisterFormState extends State<RegisterForm>
   final _passwordFocusNode = FocusNode();
   final _confirmPasswordFocusNode = FocusNode();
 
-  final _errors = <String>[];
-
-  bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
-  bool _agreeToTerms = false;
-
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -74,19 +68,16 @@ class RegisterFormState extends State<RegisterForm>
   }
 
   void _addError(String error) {
-    if (!_errors.contains(error)) {
-      setState(() => _errors.add(error));
-    }
+    authProvider.addRegisterError(error);
   }
 
   void _removeError(String error) {
-    if (_errors.contains(error)) {
-      setState(() => _errors.remove(error));
-    }
+    authProvider.removeRegisterError(error);
   }
 
   void _handleRegister() {
-    if (!_agreeToTerms) {
+    final agreeToTerms = authProvider.registerFormState.agreeToTerms;
+    if (!agreeToTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -412,7 +403,7 @@ class RegisterFormState extends State<RegisterForm>
 
             const SizedBox(height: 16),
 
-            // Email Field
+            // email field
             TextFormField(
               controller: _emailController,
               focusNode: _emailFocusNode,
@@ -478,262 +469,299 @@ class RegisterFormState extends State<RegisterForm>
 
             const SizedBox(height: 16),
 
-            // Password Field
-            TextFormField(
-              controller: _passwordController,
-              focusNode: _passwordFocusNode,
-              obscureText: _obscurePassword,
-              autofillHints: const [AutofillHints.newPassword],
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
-              onChanged: (value) {
-                setState(() {}); // Rebuild for password strength
-                if (value.isNotEmpty) {
-                  _removeError(local.kPassNullError);
-                }
-                if (value.length >= 8) {
-                  _removeError(local.kShortPassError);
-                }
-              },
-              validator: (value) {
-                if (value?.isEmpty ?? true) {
-                  _addError(local.kPassNullError);
-                  return "";
-                }
-                if (value!.length < 8) {
-                  _addError(local.kShortPassError);
-                  return "";
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: local.passwordTitle,
-                hintText: "${local.enterYourTitle} ${local.passwordTitle}",
-                prefixIcon: const Icon(Icons.lock_outline_rounded),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscurePassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: Colors.grey[600],
+            // password Field
+            Selector<AuthProvider, bool>(
+              selector: (_, auth) => auth.registerFormState.obscurePassword,
+              builder: (context, obscurePassword, child) {
+                return TextFormField(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  obscureText: obscurePassword,
+                  autofillHints: const [AutofillHints.newPassword],
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) =>
+                      _confirmPasswordFocusNode.requestFocus(),
+                  onChanged: (value) {
+                    authProvider
+                        .triggerPasswordStrengthRebuild(); // rebuild password strength
+                    if (value.isNotEmpty) {
+                      _removeError(local.kPassNullError);
+                    }
+                    if (value.length >= 8) {
+                      _removeError(local.kShortPassError);
+                    }
+                  },
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      _addError(local.kPassNullError);
+                      return "";
+                    }
+                    if (value!.length < 8) {
+                      _addError(local.kShortPassError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: local.passwordTitle,
+                    hintText: "${local.enterYourTitle} ${local.passwordTitle}",
+                    prefixIcon: const Icon(Icons.lock_outline_rounded),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: Colors.grey[600],
+                      ),
+                      onPressed: () =>
+                          authProvider.toggleRegisterPasswordVisibility(),
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    filled: true,
+                    fillColor: Colors.grey[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.grey[200]!,
+                        width: 1,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.red[300]!, width: 1),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.red[400]!, width: 2),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
                   ),
-                  onPressed: () =>
-                      setState(() => _obscurePassword = !_obscurePassword),
-                ),
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                filled: true,
-                fillColor: Colors.grey[50],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[200]!, width: 1),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 2,
-                  ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.red[300]!, width: 1),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.red[400]!, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-              ),
+                );
+              },
             ),
 
-            // Password Strength Indicator
+            // password strenth indicator
             _buildPasswordStrengthIndicator(),
 
             const SizedBox(height: 16),
 
-            // Confirm Password Field
-            TextFormField(
-              controller: _confirmPasswordController,
-              focusNode: _confirmPasswordFocusNode,
-              obscureText: _obscureConfirmPassword,
-              autofillHints: const [AutofillHints.newPassword],
-              textInputAction: TextInputAction.done,
-              onFieldSubmitted: (_) => _handleRegister(),
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  _removeError(local.kPassNullError);
-                }
-                if (value.isNotEmpty && value == _passwordController.text) {
-                  _removeError(local.kMatchPassError);
-                }
+            // confirm password field
+            Selector<AuthProvider, bool>(
+              selector: (_, auth) =>
+                  auth.registerFormState.obscureConfirmPassword,
+              builder: (context, obscureConfirmPassword, child) {
+                return TextFormField(
+                  controller: _confirmPasswordController,
+                  focusNode: _confirmPasswordFocusNode,
+                  obscureText: obscureConfirmPassword,
+                  autofillHints: const [AutofillHints.newPassword],
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _handleRegister(),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      _removeError(local.kPassNullError);
+                    }
+                    if (value.isNotEmpty && value == _passwordController.text) {
+                      _removeError(local.kMatchPassError);
+                    }
+                  },
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      _addError(local.kPassNullError);
+                      return "";
+                    }
+                    if (value != _passwordController.text) {
+                      _addError(local.kMatchPassError);
+                      return "";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: local.confirmPasswordTitle,
+                    hintText:
+                        "${local.enterYourTitle} ${local.confirmPasswordTitle}",
+                    prefixIcon: const Icon(Icons.lock_outline_rounded),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscureConfirmPassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: Colors.grey[600],
+                      ),
+                      onPressed: () => authProvider
+                          .toggleRegisterConfirmPasswordVisibility(),
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    filled: true,
+                    fillColor: Colors.grey[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.grey[200]!,
+                        width: 1,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.red[300]!, width: 1),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.red[400]!, width: 2),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                  ),
+                );
               },
-              validator: (value) {
-                if (value?.isEmpty ?? true) {
-                  _addError(local.kPassNullError);
-                  return "";
-                }
-                if (value != _passwordController.text) {
-                  _addError(local.kMatchPassError);
-                  return "";
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: local.confirmPasswordTitle,
-                hintText:
-                    "${local.enterYourTitle} ${local.confirmPasswordTitle}",
-                prefixIcon: const Icon(Icons.lock_outline_rounded),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureConfirmPassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: Colors.grey[600],
-                  ),
-                  onPressed: () => setState(
-                    () => _obscureConfirmPassword = !_obscureConfirmPassword,
-                  ),
-                ),
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                filled: true,
-                fillColor: Colors.grey[50],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey[200]!, width: 1),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 2,
-                  ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.red[300]!, width: 1),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.red[400]!, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-              ),
             ),
 
             const SizedBox(height: 20),
 
-            // Terms and Conditions Checkbox
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Transform.scale(
-                  scale: 0.9,
-                  child: Checkbox(
-                    value: _agreeToTerms,
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+            // terms and condition check box
+            Selector<AuthProvider, bool>(
+              selector: (_, auth) => auth.registerFormState.agreeToTerms,
+              builder: (context, agreeToTerms, child) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Transform.scale(
+                      scale: 0.9,
+                      child: Checkbox(
+                        value: agreeToTerms,
+                        activeColor: Theme.of(context).colorScheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        onChanged: (value) =>
+                            authProvider.setAgreeToTerms(value ?? false),
+                      ),
                     ),
-                    onChanged: (value) =>
-                        setState(() => _agreeToTerms = value ?? false),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: GestureDetector(
-                      onTap: () =>
-                          setState(() => _agreeToTerms = !_agreeToTerms),
-                      child: RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(color: Colors.grey[700]),
-                          children: [
-                            TextSpan(text: '${local.agreeDescription} '),
-                            TextSpan(
-                              text: local.termsDescription,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.underline,
-                              ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: GestureDetector(
+                          onTap: () =>
+                              authProvider.setAgreeToTerms(!agreeToTerms),
+                          child: RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.grey[700]),
+                              children: [
+                                TextSpan(text: '${local.agreeDescription} '),
+                                TextSpan(
+                                  text: local.termsDescription,
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                                TextSpan(text: ' ${local.andTitle} '),
+                                TextSpan(
+                                  text: local.privacyDescription,
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
                             ),
-                            TextSpan(text: ' ${local.andTitle} '),
-                            TextSpan(
-                              text: local.privacyDescription,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
 
-            // Form Errors
-            if (_errors.isNotEmpty) ...[
-              const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.red[200]!),
-                ),
-                child: Column(
-                  children: _errors
-                      .map(
-                        (error) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.error_outline,
-                                color: Colors.red[700],
-                                size: 16,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  error,
-                                  style: TextStyle(
-                                    color: Colors.red[700],
-                                    fontSize: 13,
-                                  ),
+            // form errors
+            Selector<AuthProvider, List<String>>(
+              selector: (_, auth) => auth.registerFormState.errors,
+              builder: (context, errors, child) {
+                if (errors.isEmpty) return const SizedBox.shrink();
+                return Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red[50],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.red[200]!),
+                      ),
+                      child: Column(
+                        children: errors
+                            .map(
+                              (error) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red[700],
+                                      size: 16,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        error,
+                                        style: TextStyle(
+                                          color: Colors.red[700],
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ],
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
 
             const SizedBox(height: 24),
 
-            // Register Button
+            // register button
             _RegisterButton(
               onPressed: _handleRegister,
               onError: _showErrorDialog,
@@ -778,7 +806,7 @@ class _RegisterButtonState extends State<_RegisterButton> {
       builder: (context, state, child) {
         final isLoading = state.status == AuthStatus.loading;
 
-        // Handle state changes
+        // handle state changes
         if (_lastStatus != state.status) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!mounted) return;
